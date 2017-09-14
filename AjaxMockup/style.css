@@ -1,0 +1,65 @@
+.loginbox {       
+    background-color:#FFFFFF;
+    color:#000000;
+    font-weight:bold;
+    margin:5px auto;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    padding: 5px;
+    padding-top: 15px;
+    height:120px;        
+    width: 360px;
+    border-style: solid;
+    border-width: 1px;
+    border-color:#000000;
+}
+
+.content {
+    background-color:#FFFFFF;
+    color:#000000;
+    font-weight:bold;
+    margin:5px auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 12px;      
+    width: 600px;
+    border-style: solid;
+    border-width: 1px;
+    border-color:#000000;
+    position: relative;
+}
+
+body {
+    background-color: #535566;
+}
+
+ul {
+    list-style-type: none;
+}
+
+button.logout_button {
+    position: absolute;
+    top:10px;
+    right:10px;
+}
+
+ul.concertlist {
+    position: relative;
+    margin:0px;
+    padding:0px;
+}
+
+ul.concertlist li {
+    border: 1px solid black;
+    margin: 4px;
+    padding: 6px;
+}
+
+ul.technicianlist li {
+    border: 0px transparent;
+}
+
+button.concert_button {
+    position: absolute;
+    right:10px;
+}
