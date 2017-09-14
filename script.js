@@ -52,6 +52,12 @@ $(document).ready(function(){
         }
         // Get from database
         let concertID = 0;
+        /* Refaktorering
+        let listContainer = $("<ul></ul>").addClass("concertlist");
+        for (i in l) {
+            listContainer.append...
+        }
+        */
         let str = "<ul class='concertlist'>";
         for (i in l) {
             str+= "<li><span>"+l[i]+"</span><button class='concert_button' id='"+concertID+"'>Mer info</button>"+"</li>";
@@ -164,8 +170,8 @@ $(document).ready(function(){
         let concertID = parseInt(this.id);
         console.log("Get concert info");
         $(this).after(getConcertInfo(concertID));
-        // Denne funksjonen skjuler bare knappen etter å ha blitt kallet, kan alltids forbedres
-        $(this).css("display","none");
+        // Denne funksjonen skjuler bare knappen etter å ha blitt kallet, alternativ: bruk $(...).toggle();
+        $(this).hide();
     });
 
     // VIKTIG FUNKSJON: Kan injsere innhold i DOM-treet etter ajax-oppdatering.
