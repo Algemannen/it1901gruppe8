@@ -4,11 +4,9 @@
 var options = "";
 
 // Brukervariabler
-var usertype = 0;
-var username = "NONAME";
-var userid = 0;
+var user = {type: 0, id: 0, name: "NONAME"};
 
-// Variable som refererer til siden sinnhold
+// Variable som refererer til sidens innhold
 var listofconcerts = [];
 var listoftechnicians = [];
 
@@ -28,56 +26,53 @@ $(document).ready(function(){
     // Database queries
 
     // Lager et html-element med teknikere som hører til en konsert
-    function getListOfTechnicians(concertID) {
+    function getListOfTechnicians(bruker, concertID) {
         // TODO database-call: (userid,concertID)
         let l = ["Jens", "Nils", "Truls"];
 
-        // Vi bygger HTML-element
-        let str = "<ul class='technicianlist'>";
+        // Vi bygger et HTML-element
+        let listContainer = $("<ul></ul>").addClass("technicianlist");
         for (i in l) {
-            str+= "<li>"+l[i]+"</li>";
+            let listPoint = $("<li></li>").text( l[i]);
+            listContainer.append(listPoint);
         }
-        str+="</ul>";
-        return str;
+        return listContainer;
     }
 
     // Lager et html-element med konserter
-    function getListOfConcertes() {
+    function getListOfConcertes(bruker) {
         // TODO: database-call: (userid)
         let l = []
-        if (usertype == 1) {
+        if (bruker.type == 1) {
             l = ["Konsert 1", "Konsert 2", "Konsert 3", "Konsert 4", "Konsert 5"];
-        } else if (usertype == 2) {
+        } else if (bruker.type == 2) {
             l = ["Konsert 1", "Konsert 2"];
         }
         // Get from database
         let concertID = 0;
-        /* Refaktorering
+
+        // Vi bygger et element
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in l) {
-            listContainer.append...
+            let listPoint = $("<li></li>");
+            let concertInfo = $("<span></span>").text(l[i]);
+            let concertButton = $("<button></button>").addClass("concert_button").attr("id",concertID).text("Mer info");
+            listPoint.append(concertInfo, concertButton);
+            listContainer.append(listPoint);
         }
-        */
-        let str = "<ul class='concertlist'>";
-        for (i in l) {
-            str+= "<li><span>"+l[i]+"</span><button class='concert_button' id='"+concertID+"'>Mer info</button>"+"</li>";
-        }
-        str+="</ul>";
-        return str;
+        return listContainer;
     }
 
     // Lager et html-element med informasjon om en konsert
-    function getConcertInfo(concertID) {
+    function getConcertInfo(bruker, concertID) {
         // TODO: database-call(userid, concertID)
-        let str ="<div>";
-        str += "informasjon om konsert med ID:"+concertID;
-        if (usertype == 1) {
-            str += "<br> Teknikere: "
-            str+=getListOfTechnicians(concertID);
+
+        // Vi bygger et HTML-element
+        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID);
+        if (bruker.type = 1) {
+            container.append("<br> Teknikere", getListOfTechnicians(bruker, concertID));
         }
-        str += "</div>";
-        console.log(str);
-        return str;
+        return container;
     }
     
 
@@ -85,7 +80,7 @@ $(document).ready(function(){
 
     // Tegner siden på nytt etter brukertype
     function redraw() {
-        switch(usertype) {
+        switch(user.type) {
             case 0: // Ikke pålogget
                 $.ajax({url: "no_user.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
@@ -102,9 +97,9 @@ $(document).ready(function(){
                 }});
                 break;
             default:
-                $("#root").html("<p>Error: invalid usertype "+usertype+"</p>");
+                $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
-        console.log("Pagestate:"+usertype);
+        console.log("Pagestate:"+user.type);
     }
 
     // Finner sidens URL-addresse
@@ -116,13 +111,13 @@ $(document).ready(function(){
 
     // Henter informasjon fra bruker- og passord-felt og prøver å logge inn
     function logon() {
-        username = $("#username_field").val();
-        console.log("Username "+username);
+        user.name = $("#username_field").val();
+        console.log("Username "+user.name);
         // TODO
-        if (username.charAt(0) == 'a') {
-            usertype = 1;
-        } else if (username.charAt(0) == 'b') {
-            usertype = 2;
+        if (user.name.charAt(0) == 'a') {
+            user.type = 1;
+        } else if (user.name.charAt(0) == 'b') {
+            user.type = 2;
         }
         redraw();
     }
@@ -137,7 +132,7 @@ $(document).ready(function(){
 
     // Debug-knapper
     $(".debug_button").click(function() {
-        usertype = parseInt(this.id);
+        user.type = parseInt(this.id);
         redraw();
     });
 
@@ -169,15 +164,15 @@ $(document).ready(function(){
     $('body').on('click', ".concert_button", function () {
         let concertID = parseInt(this.id);
         console.log("Get concert info");
-        $(this).after(getConcertInfo(concertID));
+        $(this).after(getConcertInfo(user,concertID));
         // Denne funksjonen skjuler bare knappen etter å ha blitt kallet, alternativ: bruk $(...).toggle();
         $(this).hide();
     });
 
     // VIKTIG FUNKSJON: Kan injsere innhold i DOM-treet etter ajax-oppdatering.
     $(document).ajaxComplete(function() {
-        $('#username').html(username);
-        $('#listofconcerts').html(getListOfConcertes());
+        $('#username').html(user.name);
+        $('#listofconcerts').append(getListOfConcertes(user));
     });
 
     
