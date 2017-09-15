@@ -6,10 +6,6 @@ var options = "";
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
 
-// Variable som refererer til sidens innhold
-var listofconcerts = [];
-var listoftechnicians = [];
-
 // Functions to run after DOM is ready
 $(document).ready(function(){
     // Initsiering
