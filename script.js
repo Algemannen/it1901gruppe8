@@ -144,7 +144,6 @@ $(document).ready(function(){
         user.name = $("#username_field").val();
         password = $('#password_field').val();
         console.log("Username "+user.name);
-        // TODO
 
         $.ajax({ url: '/database.php',
         data: {username: user.name, password: password},
@@ -153,7 +152,7 @@ $(document).ready(function(){
                     user.type = parseInt(output);
                     redraw();
                  }
-        });    
+        });
     }
 
     // Logger ut, for nå så laster den bare siden på nytt
