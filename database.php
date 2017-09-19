@@ -11,9 +11,9 @@
 			if ($db->connect_error){
 				die("Connection Failed: " . $db->connect_error);
 			}
-			$bandNavn = $db->query("SELECT navn FROM band"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
+			$fornavn = $db->query("SELECT fornavn FROM bruker"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
 
-			echo "<span>" . $bandNavn . "</span>"
+			echo "<span>" . $fornavn . "</span>"
 
 			/*ser ntnu selv viser gammelt format så bruker det de anbefaler. Kommentert ut kode er kode for hvordan nettsider mener det skal gjøres nå. Hvis det som står over
 			fungerer - slett utkommentert kode.
