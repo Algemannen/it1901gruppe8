@@ -9,7 +9,7 @@
 		<?php
 			$db = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival");
 			if ($db->connect_error){
-				die("Connection Failed: " . $db->connection_error);
+				die("Connection Failed: " . $db->connect_error);
 			}
 			$bandNavn = $db->query("SELECT navn FROM band"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
 
