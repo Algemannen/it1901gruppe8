@@ -11,9 +11,19 @@
 			if ($db->connect_error){
 				die("Connection Failed: " . $db->connect_error);
 			}
-			$fornavn = $db->query("SELECT fornavn FROM bruker"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
+			$fornavn = $db->query("SELECT * FROM bruker"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
 
-			echo "<span>" . $fornavn . "</span>"
+
+
+			if ($fornavn->num_rows > 0) {
+			    // output data of each row
+			    while($row = $fornavn->fetch_assoc()) {
+			        echo "id: " . $row["uid"]. " - Name: " . $row["fornavn"]. " " . $row["etternavn"]. "<br>";
+			    }
+			} else {
+			    echo "0 results";
+			}
+			$db->close();
 
 			/*ser ntnu selv viser gammelt format så bruker det de anbefaler. Kommentert ut kode er kode for hvordan nettsider mener det skal gjøres nå. Hvis det som står over
 			fungerer - slett utkommentert kode.
