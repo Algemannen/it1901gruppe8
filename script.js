@@ -40,20 +40,18 @@ $(document).ready(function(){
         // TODO: database-call: (userid)
         let l = []
         if (bruker.type == 1) {
-            l = ["Konsert 1", "Konsert 2", "Konsert 3", "Konsert 4", "Konsert 5"];
+            l = [{name: "Konsert 1", id:0}, {name: "Konsert 2", id:1}, {name: "Konsert 3", id:2}, {name: "Konsert 4", id:3}, {name:"Konsert 5", id:4}];
         } else if (bruker.type == 2) {
-            l = ["Konsert 1", "Konsert 2"];
+            l = [{name:"Konsert 1", id:0}, {name: "Konsert 2", id:1}];
         }
-        // Get from database
-        let concertID = 0;
 
         // Vi bygger et element
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in l) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(l[i]);
+            let concertInfo = $("<span></span>").text(l[i].name);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(user, concertID));
+            listPoint.append(concertInfo, concertButton, getConcertInfo(user, l[i].id));
             listContainer.append(listPoint);
         }
         return listContainer;
@@ -163,7 +161,7 @@ $(document).ready(function(){
         $(this).next('.concertInfo').toggle();
     });
 
-    // VIKTIG FUNKSJON: Kan injsere innhold i DOM-treet etter ajax-oppdatering.
+    // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
     $(document).ajaxComplete(function() {
         $('#username').html(user.name);
         $('#listofconcerts').append(getListOfConcertes(user));
