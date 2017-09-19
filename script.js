@@ -21,6 +21,39 @@ $(document).ready(function(){
 
     // Database queries
 
+    function getListOfScenes(bruker) {
+        
+        l = [{name: "stor", id:0}, {name: "middels", id:1}, {name: "liten", id:2}];
+        
+        let container = $("<ul></ul>").addClass("scenelist");
+        let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
+        container.append(backButton);
+
+        for (i in l) {
+            let scenePoint = $("<li></li>");
+            let scene =  $("<button></button>").text(l[i].name).addClass("scene_button");
+            let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
+            scenePoint.append(scene,concerts);
+            container.append(scenePoint);
+        }
+        return container;
+    }
+
+    // Lager et html-element med konserter filtrert etter scene
+    function getListOfConcertesByScene(bruker, scene) {
+        // TODO: database-call: (userid)
+        let l = []
+        if (bruker.type == 1 && scene.id == 0) {
+            l = [{name: "Konsert 1", id:0}, {name: "Konsert 2", id:1}];
+        } else if (bruker.type == 1 && scene.id == 1) {
+            l = [{name: "Konsert 3", id:2}];
+        } else if (bruker.type == 1 && scene.id == 2) {
+            l = [{name: "Konsert 4", id:3}, {name:"Konsert 5", id:4}];
+        }
+
+        return buildListOfConcerts(bruker,l);
+    }
+
     // Lager et html-element med konserter
     function getListOfConcertes(bruker) {
         // TODO: database-call: (userid)
@@ -30,14 +63,17 @@ $(document).ready(function(){
         } else if (bruker.type == 2) {
             l = [{name:"Konsert 1", id:0}, {name: "Konsert 2", id:1}];
         }
+        return buildListOfConcerts(bruker,l);
+    }
 
-        // Vi bygger et element
+    // Bygger en korrekt liste av scener
+    function buildListOfConcerts(bruker,list) {
         let listContainer = $("<ul></ul>").addClass("concertlist");
-        for (i in l) {
+        for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(l[i].name);
+            let concertInfo = $("<span></span>").text(list[i].name);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(user, l[i].id));
+            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].id));
             listContainer.append(listPoint);
         }
         return listContainer;
@@ -166,10 +202,27 @@ $(document).ready(function(){
         }
     });
 
+    // Fang trykk på knapp for mer informasjon om scene
+    $('body').on('click', ".scene_button", function () {
+        let concertID = parseInt(this.id);
+        $(this).next('.concertlist').show();
+        $(".scene_button_back").show()
+        $(".scene_button").hide();
+    });
+
+    // Fang trykk på knapp for mindre informasjon om scene
+    $('body').on('click', ".scene_button_back", function () {
+        let concertID = parseInt(this.id);
+        $('.concertlist').hide();
+        $('.scene_button_back').hide();
+        $(".scene_button").show();
+    });
+
     // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
     $(document).ajaxComplete(function() {
         $('#username').html(user.name);
         $('#listofconcerts').append(getListOfConcertes(user));
+        $('#listofscenes').append(getListOfScenes(user));
     });
 
     
