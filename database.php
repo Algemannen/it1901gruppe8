@@ -1,29 +1,26 @@
+<?php
+	$dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival");
+	if ($dbconn->connect_error){
+		die("Connection Failed: " . $dbconn->connect_error);
+	}
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-		<?php
-			$db = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival");
-			if ($db->connect_error){
-				die("Connection Failed: " . $db->connect_error);
-			}
-			$fornavn = $db->query("SELECT * FROM bruker"); //Funksjon for hvordan lagre brukers fornavn fra liste bruker inn i en variabel $fornavn
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ;
+
+	$login_id = $dbconn->query($sql); //Funksjon for hvordan lagre brukers fornavn fra liste bruker inn i en variabel $fornavn
 
 
-
-			if ($fornavn->num_rows > 0) {
-			    // output data of each row
-			    while($row = $fornavn->fetch_assoc()) {
-			        echo "id: " . $row["uid"]. " - Name: " . $row["fornavn"]. " " . $row["etternavn"]. "<br>";
-			    }
-			} else {
-			    echo "0 results";
-			}
-			$db->close();
+	if ($login_id->num_rows > 0) {
+	    // output data of each row
+	    while($row = $login_id->fetch_assoc()) {
+	        echo $row["brukertype"];
+	    }
+	} else {
+	    echo "0";
+	}
+	$dbconn->close();
 
 			/*ser ntnu selv viser gammelt format så bruker det de anbefaler. Kommentert ut kode er kode for hvordan nettsider mener det skal gjøres nå. Hvis det som står over
 			fungerer - slett utkommentert kode.
@@ -34,6 +31,4 @@
 
 			Vi må bare se hvilken som virker */
 
-		?>
-	</body>
-</html>
+?>
