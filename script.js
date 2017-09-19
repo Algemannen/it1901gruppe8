@@ -150,15 +150,11 @@ $(document).ready(function(){
         data: {username: user.name, password: password},
         type: 'post',
         success: function(output) {
+                    user.type = parseInt(output);
                      alert(output);
                  }
         });
-
-        if (user.name.charAt(0) == 'a') {
-            user.type = 1;
-        } else if (user.name.charAt(0) == 'b') {
-            user.type = 2;
-        }
+        
         redraw();
     }
 
