@@ -22,9 +22,9 @@ $(document).ready(function(){
     // Database queries
 
     function getListOfScenes(bruker) {
-        
+
         l = [{name: "stor", id:0}, {name: "middels", id:1}, {name: "liten", id:2}];
-        
+
         let container = $("<ul></ul>").addClass("scenelist");
         let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
         container.append(backButton);
@@ -91,7 +91,7 @@ $(document).ready(function(){
         container.hide();
         return container;
     }
-    
+
     // Lager et html-element med teknikere som hører til en konsert
     function getListOfTechnicians(bruker, concertID) {
         // TODO database-call: (userid,concertID)
@@ -137,7 +137,7 @@ $(document).ready(function(){
         var a = document.createElement('a');
         a.href = url;
         return a;
-    } 
+    }
 
     // Henter informasjon fra bruker- og passord-felt og prøver å logge inn
     function logon() {
@@ -151,11 +151,9 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
                     user.type = parseInt(output);
-                     alert(output);
+                    redraw();
                  }
-        });
-        
-        redraw();
+        });    
     }
 
     // Logger ut, for nå så laster den bare siden på nytt
@@ -204,7 +202,7 @@ $(document).ready(function(){
         if ($.trim($(this).text()) === "Mer info") {
             $(this).text("Skjul");
         } else {
-            $(this).text("Mer info");        
+            $(this).text("Mer info");
         }
     });
 
@@ -231,6 +229,6 @@ $(document).ready(function(){
         $('#listofscenes').append(getListOfScenes(user));
     });
 
-    
+
 
 });
