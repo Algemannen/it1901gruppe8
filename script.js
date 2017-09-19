@@ -150,11 +150,11 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
                     user.type = parseInt(output);
-                    alert(output);
+                    redraw();
                  }
         });
         
-        redraw();
+        
     }
 
     // Logger ut, for nå så laster den bare siden på nytt
