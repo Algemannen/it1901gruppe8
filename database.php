@@ -11,7 +11,7 @@
 			if ($db->connect_error){
 				die("Connection Failed: " . $db->connect_error);
 			}
-			$fornavn = $db->query("SELECT * FROM bruker"); //Funksjon for hvordan lagre bandnavn fra liste band inn i en variabel $bandNavn
+			$fornavn = $db->query("SELECT * FROM bruker"); //Funksjon for hvordan lagre brukers fornavn fra liste bruker inn i en variabel $fornavn
 
 
 
