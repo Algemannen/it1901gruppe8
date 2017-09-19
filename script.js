@@ -39,7 +39,7 @@ $(document).ready(function(){
         return container;
     }
 
-    // Lager et html-element med konserter
+    // Lager et html-element med konserter filtrert etter scene
     function getListOfConcertesByScene(bruker, scene) {
         // TODO: database-call: (userid)
         let l = []
@@ -51,16 +51,7 @@ $(document).ready(function(){
             l = [{name: "Konsert 4", id:3}, {name:"Konsert 5", id:4}];
         }
 
-        // Vi bygger et element
-        let listContainer = $("<ul></ul>").addClass("concertlist");
-        for (i in l) {
-            let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(l[i].name);
-            let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(user, l[i].id));
-            listContainer.append(listPoint);
-        }
-        return listContainer;
+        return buildListOfConcerts(bruker,l);
     }
 
     // Lager et html-element med konserter
@@ -72,14 +63,17 @@ $(document).ready(function(){
         } else if (bruker.type == 2) {
             l = [{name:"Konsert 1", id:0}, {name: "Konsert 2", id:1}];
         }
+        return buildListOfConcerts(bruker,l);
+    }
 
-        // Vi bygger et element
+    // Bygger en korrekt liste av scener
+    function buildListOfConcerts(bruker,list) {
         let listContainer = $("<ul></ul>").addClass("concertlist");
-        for (i in l) {
+        for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(l[i].name);
+            let concertInfo = $("<span></span>").text(list[i].name);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(user, l[i].id));
+            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].id));
             listContainer.append(listPoint);
         }
         return listContainer;
