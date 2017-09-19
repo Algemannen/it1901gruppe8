@@ -63,3 +63,12 @@ button.concert_button {
     position: absolute;
     right:10px;
 }
+
+ul.scenelist {
+    margin:0px;
+    padding:0px;
+}
+
+li.scenePoint {
+    display:inline;
+}

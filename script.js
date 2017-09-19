@@ -30,7 +30,7 @@ $(document).ready(function(){
         container.append(backButton);
 
         for (i in l) {
-            let scenePoint = $("<li></li>");
+            let scenePoint = $("<li></li>").addClass("scenePoint");
             let scene =  $("<button></button>").text(l[i].name).addClass("scene_button");
             let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
             scenePoint.append(scene,concerts);
