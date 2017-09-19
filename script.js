@@ -142,8 +142,18 @@ $(document).ready(function(){
     // Henter informasjon fra bruker- og passord-felt og prøver å logge inn
     function logon() {
         user.name = $("#username_field").val();
+        password = $('#password_field').val();
         console.log("Username "+user.name);
         // TODO
+
+        $.ajax({ url: '/database.php',
+        data: {username: user.name, password: password},
+        type: 'post',
+        success: function(output) {
+                     alert(output);
+                 }
+        });
+
         if (user.name.charAt(0) == 'a') {
             user.type = 1;
         } else if (user.name.charAt(0) == 'b') {
