@@ -157,7 +157,13 @@ $(document).ready(function(){
     // Fang trykk på knapp for mer informasjon om konsert
     $('body').on('click', ".concert_button", function () {
         let concertID = parseInt(this.id);
-        $(this).next('.concertInfo').toggle();
+        $(this).next('.concertInfo').slideToggle();
+
+        if ($.trim($(this).text()) === "Mer info") {
+            $(this).text("Skjul");
+        } else {
+            $(this).text("Mer info");        
+        }
     });
 
     // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
