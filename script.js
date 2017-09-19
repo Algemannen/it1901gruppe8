@@ -52,8 +52,8 @@ $(document).ready(function(){
         for (i in l) {
             let listPoint = $("<li></li>");
             let concertInfo = $("<span></span>").text(l[i]);
-            let concertButton = $("<button></button>").addClass("concert_button").attr("id",concertID).text("Mer info");
-            listPoint.append(concertInfo, concertButton);
+            let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
+            listPoint.append(concertInfo, concertButton, getConcertInfo(user, concertID));
             listContainer.append(listPoint);
         }
         return listContainer;
@@ -64,10 +64,11 @@ $(document).ready(function(){
         // TODO: database-call(userid, concertID)
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID);
+        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo");
         if (bruker.type = 1) {
             container.append("<br> Teknikere", getListOfTechnicians(bruker, concertID));
         }
+        container.hide();
         return container;
     }
     
@@ -159,10 +160,7 @@ $(document).ready(function(){
     // Fang trykk på knapp for mer informasjon om konsert
     $('body').on('click', ".concert_button", function () {
         let concertID = parseInt(this.id);
-        console.log("Get concert info");
-        $(this).after(getConcertInfo(user,concertID));
-        // Denne funksjonen skjuler bare knappen etter å ha blitt kallet, alternativ: bruk $(...).toggle();
-        $(this).hide();
+        $(this).next('.concertInfo').toggle();
     });
 
     // VIKTIG FUNKSJON: Kan injsere innhold i DOM-treet etter ajax-oppdatering.
