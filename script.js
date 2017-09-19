@@ -21,20 +21,6 @@ $(document).ready(function(){
 
     // Database queries
 
-    // Lager et html-element med teknikere som hører til en konsert
-    function getListOfTechnicians(bruker, concertID) {
-        // TODO database-call: (userid,concertID)
-        let l = ["Jens", "Nils", "Truls"];
-
-        // Vi bygger et HTML-element
-        let listContainer = $("<ul></ul>").addClass("technicianlist");
-        for (i in l) {
-            let listPoint = $("<li></li>").text( l[i]);
-            listContainer.append(listPoint);
-        }
-        return listContainer;
-    }
-
     // Lager et html-element med konserter
     function getListOfConcertes(bruker) {
         // TODO: database-call: (userid)
@@ -70,6 +56,19 @@ $(document).ready(function(){
         return container;
     }
     
+    // Lager et html-element med teknikere som hører til en konsert
+    function getListOfTechnicians(bruker, concertID) {
+        // TODO database-call: (userid,concertID)
+        let l = ["Jens", "Nils", "Truls"];
+
+        // Vi bygger et HTML-element
+        let listContainer = $("<ul></ul>").addClass("technicianlist");
+        for (i in l) {
+            let listPoint = $("<li></li>").text( l[i]);
+            listContainer.append(listPoint);
+        }
+        return listContainer;
+    }
 
     // FUNCTIONS
 
