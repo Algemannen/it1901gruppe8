@@ -144,14 +144,13 @@ $(document).ready(function(){
         user.name = $("#username_field").val();
         password = $('#password_field').val();
         console.log("Username "+user.name);
-        // TODO
-
+   
         $.ajax({ url: '/database.php',
         data: {username: user.name, password: password},
         type: 'post',
         success: function(output) {
                     user.type = parseInt(output);
-                     alert(output);
+                    alert(output);
                  }
         });
         
