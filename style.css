@@ -23,10 +23,25 @@
   border-bottom-color: rgba(60,60,60,.4);
   border-right-color: rgba(60,60,60,.4);
   bottom:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
 }
 
+#password_field::placeholder, #username_field::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+
+#password_field, #username_field {
+    width: 80%;
+}
+
+
+
 .loginbox input, .loginbox button {
-  width: 212px;
   border: 1px solid;
   border-bottom-color: rgba(255,255,255,.5);
   border-right-color: rgba(60,60,60,.35);
@@ -39,11 +54,14 @@
   letter-spacing: .075em;
   color: #fff;
   text-shadow: 0 1px 0 rgba(0,0,0,.1);
+}
+
+.loginbox input {
   margin-bottom: 19px;
 }
 
 .login_button {
-    justify-content: center;
+    width: 89%;
 }
 
 .content {
@@ -53,7 +71,7 @@
     margin:5px auto;
     margin-top: 50px;
     margin-bottom: 50px;
-    padding: 12px;      
+    padding: 12px;
     width: 600px;
     border-style: solid;
     border-width: 1px;
@@ -62,9 +80,11 @@
 }
 
 body {
-    background-image: url("img/bg.jpeg");
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background: url(img/bg.jpeg) no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-color: #454547;
     font-family: "Candara", "Charcoal", sans-serif;
 }

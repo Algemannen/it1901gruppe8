@@ -149,6 +149,7 @@ $(document).ready(function(){
         data: {username: user.name, password: password},
         type: 'post',
         success: function(output) {
+                    alert(output);
                     user.type = parseInt(output);
                     redraw();
                  }
