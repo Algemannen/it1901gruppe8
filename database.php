@@ -14,10 +14,6 @@
 	$konTek = $dbconn->query($konrig) //
 	$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
 
-	$login_id = $dbconn->query($sql); //Henter ut svarene fra databasen, ved hjelp av sql-setningen
-
-
-
 	if ($login_id->num_rows > 0) { //Sjekker om du får noe data returnert fra databasen
 	    // output data of each row
 	    while($row = $login_id->fetch_assoc()) { //Returnerer brukertype, som er et nummer. Hvis brukertype ikke fins, får man returnert 0.
