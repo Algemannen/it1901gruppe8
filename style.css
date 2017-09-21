@@ -29,6 +29,7 @@
   justify-content: center;
   align-items: center;
   align-self: center;
+  color: #DDDCCA;
 }
 
 #password_field::placeholder, #username_field::placeholder {
