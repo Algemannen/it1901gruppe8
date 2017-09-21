@@ -66,22 +66,6 @@ button {
     border-bottom-color: rgba(60,60,60,.8);
     border-right-color: rgba(60,60,60,.8);
     position: relative;
-
-
-    width: 212px;
-  border: 1px solid;
-  border-bottom-color: rgba(255,255,255,.5);
-  border-right-color: rgba(60,60,60,.35);
-  border-top-color: rgba(60,60,60,.35);
-  border-left-color: rgba(80,80,80,.45);
-  background-color: rgba(0,0,0,.2);
-  background-repeat: no-repeat;
-  padding: 8px 24px 8px 10px;
-  font: bold .875em/1.25em "Candara", "Charcoal", sans-serif;
-  letter-spacing: .075em;
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0,0,0,.1);
-  margin-bottom: 19px;
 }
 
 body {
