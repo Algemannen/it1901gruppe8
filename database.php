@@ -7,13 +7,12 @@
 	$username = $_POST['username']; //Henter ut brukernavn fra input-feltet på brukersiden
 	$password = $_POST['password']; //Henter ut passord fra input-feltet på brukersiden
 
-	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ;
+	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
+
 	$konrig = "SELECT uid FROM konsert_rigging"
 
 	$konTek = $dbconn->query($konrig) //
 	$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
-
-	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
 
 	$login_id = $dbconn->query($sql); //Henter ut svarene fra databasen, ved hjelp av sql-setningen
 
