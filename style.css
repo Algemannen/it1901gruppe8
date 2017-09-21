@@ -130,10 +130,16 @@ ul.concertlist {
     padding:0px;
 }
 
+
 ul.concertlist li {
-    border: 1px solid black;
+    border: 1px solid;
     margin: 4px;
     padding: 6px;
+
+    border-bottom-color: rgba(255,255,255,.8);
+    border-right-color: rgba(255,255,255,.8);
+    border-top-color: rgba(60,60,60,.8);
+    border-left-color: rgba(60,60,60,.8);
 }
 
 ul.technicianlist li {
