@@ -31,9 +31,11 @@ $(document).ready(function(){
 
         for (i in l) {
             let scenePoint = $("<li></li>").addClass("scenePoint");
+            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
             let scene =  $("<button></button>").text(l[i].name).addClass("scene_button");
             let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
-            scenePoint.append(scene,concerts);
+            buttonContainer.append(scene);
+            scenePoint.append(buttonContainer,concerts);
             container.append(scenePoint);
         }
         return container;
@@ -146,14 +148,24 @@ $(document).ready(function(){
         console.log("Username "+user.name);
 
         $.ajax({ url: '/database.php',
-        data: {username: user.name, password: password},
-        type: 'post',
-        success: function(output) {
-                    alert(output);
-                    user.type = parseInt(output);
-                    redraw();
-                 }
+            data: {username: user.name, password: password},
+            type: 'post',
+            success: function(output) {
+                user.type = parseInt(output);
+                if (user.type === 0) {
+                    alert("Feil passord eller brukernavn.");
+                }
+                redraw();
+            },
+            error: function(xmlhttprequest, textstatus, message) {
+                if(textstatus==="timeout") {
+                    alert("Timeout feil, kan ikke koble til databasen");
+                } else {
+                    alert("Error: "+message);
+                }
+            }
         });
+
     }
 
     // Logger ut, for nå så laster den bare siden på nytt
@@ -209,7 +221,9 @@ $(document).ready(function(){
     // Fang trykk på knapp for mer informasjon om scene
     $('body').on('click', ".scene_button", function () {
         let concertID = parseInt(this.id);
-        $(this).next('.concertlist').show();
+        //$(".scenelist_c").addClass('.scenelist');
+        //$(".scenelist_c").removeClass('.scenelist_c')
+        $(this).parent().next('.concertlist').show();
         $(".scene_button_back").show()
         $(".scene_button").hide();
     });
@@ -217,9 +231,12 @@ $(document).ready(function(){
     // Fang trykk på knapp for mindre informasjon om scene
     $('body').on('click', ".scene_button_back", function () {
         let concertID = parseInt(this.id);
+        //$(".scenelist").addClass('.scenelist_c');
+        //$(".scenelist").removeClass('.scenelist')
         $('.concertlist').hide();
         $('.scene_button_back').hide();
         $(".scene_button").show();
+
     });
 
     // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
