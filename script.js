@@ -146,13 +146,24 @@ $(document).ready(function(){
         console.log("Username "+user.name);
 
         $.ajax({ url: '/database.php',
-        data: {username: user.name, password: password},
-        type: 'post',
-        success: function(output) {
-                    user.type = parseInt(output);
-                    redraw();
-                 }
+            data: {username: user.name, password: password},
+            type: 'post',
+            success: function(output) {
+                user.type = parseInt(output);
+                if (user.type === 0) {
+                    alert("Feil passord eller brukernavn.");
+                }
+                redraw();
+            },
+            error: function(xmlhttprequest, textstatus, message) {
+                if(textstatus==="timeout") {
+                    alert("Timeout feil, kan ikke koble til databasen");
+                } else {
+                    alert(textstatus);
+                }
+            }
         });
+
     }
 
     // Logger ut, for nå så laster den bare siden på nytt
