@@ -8,8 +8,11 @@
 	$password = $_POST['password'];
 
 	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ;
+	$konrig = "SELECT uid FROM konsert_rigging"
 
-	$login_id = $dbconn->query($sql); //Funksjon for hvordan lagre brukers fornavn fra liste bruker inn i en variabel $fornavn
+	$konTek = $dbconn->query($konrig) //
+	$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
+
 
 
 	if ($login_id->num_rows > 0) {
