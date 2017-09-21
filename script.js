@@ -159,7 +159,7 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
-                    alert(textstatus);
+                    alert("Error: "+message);
                 }
             }
         });
