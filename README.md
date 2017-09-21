@@ -1,6 +1,6 @@
-Pålogging til database, steg-for-steg:
+Pï¿½logging til database, steg-for-steg:
 
-Steg 1: Gå til https://mysqladmin.stud.ntnu.no/ i nettleseren din
+Steg 1: Gï¿½ til https://mysqladmin.stud.ntnu.no/ i nettleseren din
 
 Steg 2: Logg inn med brukernavn 'it1901group8' og passord 'nullstressjoggedress'
 
@@ -8,4 +8,10 @@ Steg 3: ?????
 
 Steg 4: Profit
 
+BrukerType - BrukerId- Brukernavn - Passord:
 
+ArrangÃ¸r - 1 - kakemannen123 - admin
+
+Tekniker - 2 - 123abc - lol
+
+Manager - 3 - Manager1 - Manager

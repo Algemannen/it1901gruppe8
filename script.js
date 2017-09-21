@@ -120,7 +120,7 @@ $(document).ready(function(){
                 break;
             case 1: // Bruker er arrangør
                 $.ajax({url: "arrang.html",dataType: 'html', success: function(result){
-                        $("#root").html(result);
+                    $("#root").html(result);
                 }});
                 break;
             case 2: // Bruker er teknikker
