@@ -9,9 +9,6 @@
 
 	$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
 
-	$konrig = "SELECT uid FROM konsert_rigging"
-
-	$konTek = $dbconn->query($konrig) //
 	$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
 
 	if ($login_id->num_rows > 0) { //Sjekker om du får noe data returnert fra databasen
@@ -22,6 +19,11 @@
 	} else {
 	    echo "0";
 	}
+
+	$konrig = "SELECT uid FROM konsert_rigging"
+
+	$konTek = $dbconn->query($konrig) //
+	
 	$dbconn->close(); //Lukker oppkoblingen til databasen
 
 
