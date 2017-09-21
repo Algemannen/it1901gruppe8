@@ -20,11 +20,9 @@
 	    echo "0";
 	}
 
-	$konrig = "SELECT uid FROM konsert_rigging"
+	# $konrig = "SELECT uid FROM konsert_rigging"
 
-	$konTek = $dbconn->query($konrig) //
-	
+	# $konTek = $dbconn->query($konrig) //
+
 	$dbconn->close(); //Lukker oppkoblingen til databasen
-
-
 ?>
