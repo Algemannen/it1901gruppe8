@@ -206,9 +206,8 @@ $(document).ready(function(){
             type: 'post',
             success: function(output) {
 
-                assertType(output,"number");
-
                 user.type = parseInt(output);
+                
                 if (user.type === 0) {
                     alert("Feil passord eller brukernavn.");
                 }
