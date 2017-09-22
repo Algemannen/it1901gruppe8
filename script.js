@@ -23,7 +23,24 @@ $(document).ready(function(){
 
     function getListOfScenes(bruker) {
 
-        l = [{name: "stor", id:0}, {name: "middels", id:1}, {name: "liten", id:2}];
+        l = [];
+
+        $.ajax({ url: '/database.php?method=getListOfScenes',
+        data: {username: user.name, usertype: user.type},
+        type: 'post',
+        success: function(output) {
+            l = jQuery.parseJSON(output);
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
 
         let container = $("<ul></ul>").addClass("scenelist");
         let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
@@ -43,28 +60,49 @@ $(document).ready(function(){
 
     // Lager et html-element med konserter filtrert etter scene
     function getListOfConcertesByScene(bruker, scene) {
-        // TODO: database-call: (userid)
         let l = []
-        if (bruker.type == 1 && scene.id == 0) {
-            l = [{name: "Konsert 1", id:0}, {name: "Konsert 2", id:1}];
-        } else if (bruker.type == 1 && scene.id == 1) {
-            l = [{name: "Konsert 3", id:2}];
-        } else if (bruker.type == 1 && scene.id == 2) {
-            l = [{name: "Konsert 4", id:3}, {name:"Konsert 5", id:4}];
+
+        $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
+        data: {username: user.name, usertype: user.type, sceneid: scene.id},
+        type: 'post',
+        success: function(output) {
+            l = jQuery.parseJSON(output);
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
+        });
 
         return buildListOfConcerts(bruker,l);
     }
 
     // Lager et html-element med konserter
     function getListOfConcertes(bruker) {
-        // TODO: database-call: (userid)
-        let l = []
-        if (bruker.type == 1) {
-            l = [{name: "Konsert 1", id:0}, {name: "Konsert 2", id:1}, {name: "Konsert 3", id:2}, {name: "Konsert 4", id:3}, {name:"Konsert 5", id:4}];
-        } else if (bruker.type == 2) {
-            l = [{name:"Konsert 1", id:0}, {name: "Konsert 2", id:1}];
+        let l = [];
+
+        $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
+        data: {username: user.name, usertype: user.type},
+        type: 'post',
+        success: function(output) {
+            l = jQuery.parseJSON(output);
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
+        });
+
         return buildListOfConcerts(bruker,l);
     }
 
@@ -83,7 +121,6 @@ $(document).ready(function(){
 
     // Lager et html-element med informasjon om en konsert
     function getConcertInfo(bruker, concertID) {
-        // TODO: database-call(userid, concertID)
 
         // Vi bygger et HTML-element
         let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo");
@@ -116,22 +153,39 @@ $(document).ready(function(){
             case 0: // Ikke pålogget
                 $.ajax({url: "no_user.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             case 1: // Bruker er arrangør
                 $.ajax({url: "arrang.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             case 2: // Bruker er teknikker
                 $.ajax({url: "tekni.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
         console.log("Pagestate:"+user.type);
+    }
+
+    function assertType(object, type) {
+        if (jQuery.type(object) !== type) {
+            console.log("Fatal typefeil: "+object+" er ikke "+type);
+            alert("Fatal typefeil: "+object+" er ikke "+type);
+        }
+
     }
 
     // Finner sidens URL-addresse
@@ -147,11 +201,13 @@ $(document).ready(function(){
         password = $('#password_field').val();
         console.log("Username "+user.name);
 
-        $.ajax({ url: '/database.php',
-            data: {username: user.name, password: password, method: 'login'},
+        $.ajax({ url: '/database.php?method=login',
+            data: {username: user.name, password: password},
             type: 'post',
             success: function(output) {
+
                 user.type = parseInt(output);
+
                 if (user.type === 0) {
                     alert("Feil passord eller brukernavn.");
                 }
@@ -161,7 +217,7 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
-                    alert("Error: "+message);
+                    console.log("Error: "+message);
                 }
             }
         });
@@ -240,12 +296,12 @@ $(document).ready(function(){
     });
 
     // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
-    $(document).ajaxComplete(function() {
+    /*$(document).ajaxComplete(function() {
         $('#username').html(user.name);
         $('#listofconcerts').append(getListOfConcertes(user));
         $('#listofscenes').append(getListOfScenes(user));
     });
-
+    */
 
 
 });
