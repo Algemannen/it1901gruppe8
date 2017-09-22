@@ -153,9 +153,6 @@ $(document).ready(function(){
             case 0: // Ikke pålogget
                 $.ajax({url: "no_user.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
-                    $('#username').html(user.name);
-                    $('#listofconcerts').append(getListOfConcertes(user));
-                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             case 1: // Bruker er arrangør
