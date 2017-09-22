@@ -148,7 +148,7 @@ $(document).ready(function(){
         console.log("Username "+user.name);
 
         $.ajax({ url: '/database.php',
-            data: {username: user.name, password: password},
+            data: {username: user.name, password: password, method: 'login'},
             type: 'post',
             success: function(output) {
                 user.type = parseInt(output);
