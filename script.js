@@ -37,7 +37,7 @@ $(document).ready(function(){
             if(textstatus==="timeout") {
                 alert("Timeout feil, kan ikke koble til databasen");
             } else {
-                alert("Error: "+message);
+                console.log("Error: "+message);
             }
         }
         });
@@ -74,7 +74,7 @@ $(document).ready(function(){
             if(textstatus==="timeout") {
                 alert("Timeout feil, kan ikke koble til databasen");
             } else {
-                alert("Error: "+message);
+                console.log("Error: "+message);
             }
         }
         });
@@ -98,7 +98,7 @@ $(document).ready(function(){
             if(textstatus==="timeout") {
                 alert("Timeout feil, kan ikke koble til databasen");
             } else {
-                alert("Error: "+message);
+                console.log("Error: "+message);
             }
         }
         });
@@ -209,7 +209,7 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
-                    alert("Error: "+message);
+                    console.log("Error: "+message);
                 }
             }
         });
