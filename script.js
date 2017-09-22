@@ -30,8 +30,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            assert(output[0].name,"string");
-            assert(output[0].id,"number");
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -67,8 +67,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            assert(output[0].name,"string");
-            assert(output[0].id,"number");
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -91,8 +91,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            assert(output[0].name,"string");
-            assert(output[0].id,"number");
+            assertType(output[0].name,"string");
+            assertType(output[0].id,"number");
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -153,16 +153,25 @@ $(document).ready(function(){
             case 0: // Ikke pålogget
                 $.ajax({url: "no_user.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             case 1: // Bruker er arrangør
                 $.ajax({url: "arrang.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             case 2: // Bruker er teknikker
                 $.ajax({url: "tekni.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
+                    $('#username').html(user.name);
+                    $('#listofconcerts').append(getListOfConcertes(user));
+                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             default:
@@ -288,12 +297,12 @@ $(document).ready(function(){
     });
 
     // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
-    $(document).ajaxComplete(function() {
+    /*$(document).ajaxComplete(function() {
         $('#username').html(user.name);
         $('#listofconcerts').append(getListOfConcertes(user));
         $('#listofscenes').append(getListOfScenes(user));
     });
-
+    */
 
 
 });
