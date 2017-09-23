@@ -32,9 +32,14 @@
 			$sql = "SELECT * FROM konsert";
 			$konserter = $dbconn->query($sql);
 
-			$result = array($konserter->fetch_assoc());
+			$result = array();
 
-			echo json_encode($result);
+			while($row = $konserter->fetch_assoc()) {
+			   $encode[] = $row;
+			}
+
+			echo json_encode($encode);
+
 
 			/*if ($konserter->num_rows > 0) {
 				while($row = $konserter->fetch_assoc()) {
