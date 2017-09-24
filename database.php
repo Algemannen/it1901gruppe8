@@ -56,9 +56,5 @@
 	}
 
 
-	# $konrig = "SELECT uid FROM konsert_rigging"
-
-	# $konTek = $dbconn->query($konrig) //
-
 	$dbconn->close(); //Lukker oppkoblingen til databasen
 ?>
