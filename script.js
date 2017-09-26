@@ -31,8 +31,8 @@ $(document).ready(function(){
         success: function(output) {
           console.log(output);
             l = jQuery.parseJSON(output);
-            assertType(output[0].name,"string");
-            assertType(output[0].id,"number");
+            assertType(output[0].navn,"string");
+            assertType(output[0].sid,"number");
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -50,7 +50,7 @@ $(document).ready(function(){
         for (i in l) {
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            let scene =  $("<button></button>").text(l[i].name).addClass("scene_button");
+            let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
             let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
             buttonContainer.append(scene);
             scenePoint.append(buttonContainer,concerts);
@@ -64,7 +64,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.id},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
@@ -170,7 +170,6 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     $('#listofconcerts').append(getListOfConcertes(user));
-                    $('#listofscenes').append(getListOfScenes(user));
                 }});
                 break;
             default:
@@ -181,8 +180,7 @@ $(document).ready(function(){
 
     function assertType(object, type) {
         if (jQuery.type(object) !== type) {
-            console.log("Fatal typefeil: "+object+" er ikke "+type);
-            alert("Fatal typefeil: "+object+" er ikke "+type);
+            console.log("Fatal typefeil: "+object+" er "+jQuery.type(object)+",og ikke "+type);
         }
 
     }
@@ -293,14 +291,6 @@ $(document).ready(function(){
         $(".scene_button").show();
 
     });
-
-    // VIKTIG FUNKSJON: Kan injesere innhold i DOM-treet etter ajax-oppdatering.
-    /*$(document).ajaxComplete(function() {
-        $('#username').html(user.name);
-        $('#listofconcerts').append(getListOfConcertes(user));
-        $('#listofscenes').append(getListOfScenes(user));
-    });
-    */
 
 
 });
