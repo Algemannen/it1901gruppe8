@@ -47,6 +47,7 @@ $(document).ready(function(){
         container.append(backButton);
 
         for (i in l) {
+            console.log("Sceneobjekt: "+l[i]);
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
             let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
