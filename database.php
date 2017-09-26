@@ -44,13 +44,12 @@
 
 		case 'getCompleteListOfConcerts':
 			#$sql = "SELECT * FROM konsert";
-			$uid = $_POST['uid'];
 
 			$sql = "SELECT *
 				FROM konsert
+				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
-				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE uid ='" . $uid . "'";
+				INNER JOIN band ON konsert_band.bid = band.bid";
 			$konserter = $dbconn->query($sql);
 
 			$encode = array();
