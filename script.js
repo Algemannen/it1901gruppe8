@@ -98,15 +98,9 @@ $(document).ready(function(){
             l = jQuery.parseJSON(output);
             console.log(l);
            
-            let scenePoint = $("<li></li>").addClass("scenePoint");
-            let concerts = buildListOfConcerts(bruker,l).hide();
-            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
+            let concerts = buildListOfConcerts(bruker,l);
             
-            let scene =  $("<button></button>").text("Dummy").addClass("scene_button");
-            buttonContainer.append(scene);
-            scenePoint.append(buttonContainer,concerts);
-            
-            $('scenelist').append(scenePoint);
+            $('scenelist').append(concerts);
             
         },
         error: function(xmlhttprequest, textstatus, message) {
