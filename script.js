@@ -57,7 +57,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: bruker.name, usertype: bruker.type, sceneid: scene.sid},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
             console.log("+>"+output);
@@ -90,7 +90,7 @@ $(document).ready(function(){
         let l = [];
 
         $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
-        data: {username: bruker.name, usertype: bruker.type},
+        data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
