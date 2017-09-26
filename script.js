@@ -131,25 +131,41 @@ $(document).ready(function(){
 
         // Vi bygger et HTML-element
         let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo");
-        if (bruker.type = 1) {
-            container.append("<br> Teknikere", getListOfTechnicians(bruker, concertID));
-        }
+        getListOfTechnicians(bruker, concertID);
         container.hide();
         return container;
     }
 
     // Lager et html-element med teknikere som hører til en konsert
     function getListOfTechnicians(bruker, concertID) {
-        // TODO database-call: (userid,concertID)
-        let l = ["Jens", "Nils", "Truls"];
 
-        // Vi bygger et HTML-element
-        let listContainer = $("<ul></ul>").addClass("technicianlist");
-        for (i in l) {
-            let listPoint = $("<li></li>").text( l[i]);
-            listContainer.append(listPoint);
+        $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
+        data: {username: user.name, usertype: user.type, concertid: concertID},
+        type: 'post',
+        success: function(output) {
+            l = jQuery.parseJSON(output);
+
+            // Vi bygger et HTML-element
+            let listContainer = $("<ul></ul>").addClass("technicianlist");
+            for (i in l) {
+                let listPoint = $("<li></li>").text( l[i].navn);
+                listContainer.append(listPoint);
+            }
+
+            if (bruker.type = 1) {
+                $('.concertInfo').append("<br> Teknikere", listContainer);
+            }
+            
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
-        return listContainer;
+        });
+
     }
 
     // FUNCTIONS
