@@ -66,7 +66,7 @@
 
 			$sid = $_POST['sceneid'];
 
-			$sql = "SELECT * FROM konsert WHERE sid ="  . $sid;
+			$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
 			$konsertListe = $dbconn->query($sql);
 
 			$konListeEncode = array();
