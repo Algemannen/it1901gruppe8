@@ -79,6 +79,20 @@
 
 			break;
 
+		case 'getListOfTechs':
+
+			$sql = "SELECT * FROM konsert_rigging";
+			$teknikere = $dbconn->query($sql);
+			$tekEncode = array();
+
+			while($row = $teknikere->fetch_assoc()){
+				$tekEncode[] = $row;
+			}
+
+			echo json_encode($tekEncode);
+
+			break;
+
 		default:
 			echo "Ingen metode spesifisert";
 			break;
