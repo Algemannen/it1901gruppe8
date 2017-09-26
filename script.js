@@ -98,12 +98,8 @@ $(document).ready(function(){
             console.log(l);
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
-            let concerts = buildListOfConcerts(bruker,l).hide();
-            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            
-            let scene =  $("<button></button>").text("Dummy").addClass("scene_button");
-            buttonContainer.append(scene);
-            scenePoint.append(buttonContainer,concerts);
+            let concerts = buildListOfConcerts(bruker,l);
+            scenePoint.append(concerts);
             
             $('scenelist').append(scenePoint);
             $('#listofconcerts').append(scenePoint);
