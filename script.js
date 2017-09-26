@@ -106,7 +106,7 @@ $(document).ready(function(){
             scenePoint.append(buttonContainer,concerts);
             
             $('scenelist').append(scenePoint);
-            $('listofconcerts').append(scenePoint);
+            $('#listofconcerts').append(scenePoint);
             
         },
         error: function(xmlhttprequest, textstatus, message) {
