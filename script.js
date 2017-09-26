@@ -37,6 +37,7 @@ $(document).ready(function(){
             container.append(backButton);
 
             for (i in l) {
+                console.log("New scene "+i);
                 getListOfConcertesByScene(bruker,l[i])
             }
 
