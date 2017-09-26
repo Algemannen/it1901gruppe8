@@ -63,7 +63,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.id},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
