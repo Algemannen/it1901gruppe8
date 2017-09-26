@@ -61,9 +61,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
-            console.log("+>"+output);
             l = jQuery.parseJSON(output);
-            console.log("->"+l);
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
@@ -98,7 +96,7 @@ $(document).ready(function(){
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
 
-            $('.scenelist').append(scenePoint);
+            $('#listofconcerts').append(scenePoint);
 
         },
         error: function(xmlhttprequest, textstatus, message) {
