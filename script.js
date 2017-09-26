@@ -109,7 +109,6 @@ $(document).ready(function(){
             
             $('scenelist').append(scenePoint);
             
-            $('scenelist').append(scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
