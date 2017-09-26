@@ -139,7 +139,7 @@ $(document).ready(function(){
     // Lager et html-element med teknikere som hører til en konsert
     function getListOfTechnicians(bruker, concertID) {
 
-        $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
+        $.ajax({ url: '/database.php?method=getListOfTechs',
         data: {username: user.name, usertype: user.type, concertid: concertID},
         type: 'post',
         success: function(output) {
