@@ -29,6 +29,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
+          console.log(output);
             l = jQuery.parseJSON(output);
             assertType(output[0].name,"string");
             assertType(output[0].id,"number");
