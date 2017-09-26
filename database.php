@@ -81,14 +81,15 @@
 
 		case 'getListOfTechs':
 
-			$konsertid = $_POST['konsertid'];
+			$konsertid = $_POST['concertid'];
 
 			$sql = "SELECT *
-				FROM brukere
-				INNER JOIN konsert_rigging ON brukere.uid = konsert_rigging.uid
-				WHERE konsert_rigging.kid = " . $konsertid ."";
+				FROM bruker
+				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
+				WHERE kid = " . $konsertid ."";
 			$teknikere = $dbconn->query($sql);
 			$tekEncode = array();
+
 
 			while($row = $teknikere->fetch_assoc()){
 				$tekEncode[] = $row;

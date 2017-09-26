@@ -30,13 +30,13 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            
+
             let container = $("<ul></ul>").addClass("scenelist");
             $('#listofscenes').append(container);
 
             for (i in l) {
                 console.log("New scene "+i);
-                
+
                 getListOfConcertesByScene(bruker,l[i])
             }
 
@@ -50,7 +50,7 @@ $(document).ready(function(){
         }
         });
 
-        
+
     }
 
     // Lager et html-element med konserter filtrert etter scene
@@ -81,7 +81,7 @@ $(document).ready(function(){
         }
         });
 
-        
+
     }
 
     // Lager et html-element med konserter
@@ -97,9 +97,9 @@ $(document).ready(function(){
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
-            
+
             $('.scenelist').append(scenePoint);
-            
+
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -110,7 +110,7 @@ $(document).ready(function(){
         }
         });
 
-        
+
     }
 
     // Bygger en korrekt liste av scener
@@ -148,7 +148,7 @@ $(document).ready(function(){
             // Vi bygger et HTML-element
             let listContainer = $("<ul></ul>").addClass("technicianlist");
             for (i in l) {
-                let listPoint = $("<li></li>").text(l[i].uid);
+                let listPoint = $("<li></li>").text(l[i].fornavn +' '+ l[i].etternavn);
                 listContainer.append(listPoint);
             }
 
@@ -157,7 +157,7 @@ $(document).ready(function(){
                 $('#cid'+concertID).append("<div>Teknikere: </dib>",listContainer);
             }
 
-            
+
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
