@@ -28,11 +28,25 @@
 
 			break;
 
+		case 'getListOfScenes':
+			$sql = "SELECT * FROM scene";
+			$scener = $dbconn->query($sql);
+
+			$sceneEncode = array();
+
+			while($row = $scener->fetch_assoc()) {
+				$sceneEncode[] = $row;
+			}
+
+			echo json_encode($sceneEncode);
+
+			break;
+
 		case 'getCompleteListOfConcerts':
 			$sql = "SELECT * FROM konsert";
 			$konserter = $dbconn->query($sql);
 
-			$result = array();
+			$encode = array();
 
 			while($row = $konserter->fetch_assoc()) {
 			   $encode[] = $row;
