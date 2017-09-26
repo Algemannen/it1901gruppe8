@@ -50,7 +50,7 @@ $(document).ready(function(){
                 scenePoint.append(buttonContainer,concerts);
                 container.append(scenePoint);
             }
-            return container;
+            $('#listofscenes').append(container);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -73,7 +73,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            return buildListOfConcerts(bruker,l);
+            $('#listofconcerts').append(buildListOfConcerts(bruker,l));
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -96,7 +96,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            return buildListOfConcerts(bruker,l);
+            $('#listofconcerts').append(buildListOfConcerts(bruker,l));
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -163,15 +163,15 @@ $(document).ready(function(){
                 $.ajax({url: "arrang.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    $('#listofconcerts').append(getListOfConcertes(user));
-                    $('#listofscenes').append(getListOfScenes(user));
+                    getListOfConcertes(user);
+                    getListOfScenes(user);
                 }});
                 break;
             case 2: // Bruker er teknikker
                 $.ajax({url: "tekni.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    $('#listofconcerts').append(getListOfConcertes(user));
+                    getListOfConcertes(user);
                 }});
                 break;
             default:
