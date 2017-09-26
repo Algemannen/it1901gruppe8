@@ -34,6 +34,23 @@ $(document).ready(function(){
             console.log("+++++++>"+l);
             assertType(l[0].navn,"string");
             assertType(l[0].sid,"number");
+
+            let container = $("<ul></ul>").addClass("scenelist");
+            let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
+            container.append(backButton);
+    
+            console.log("--->"+l);
+            for (i in l) {
+                console.log("Sceneobjekt: "+l[i]);
+                let scenePoint = $("<li></li>").addClass("scenePoint");
+                let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
+                let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
+                let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
+                buttonContainer.append(scene);
+                scenePoint.append(buttonContainer,concerts);
+                container.append(scenePoint);
+            }
+            return container;
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -44,22 +61,7 @@ $(document).ready(function(){
         }
         });
 
-        let container = $("<ul></ul>").addClass("scenelist");
-        let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
-        container.append(backButton);
-
-        console.log("--->"+l);
-        for (i in l) {
-            console.log("Sceneobjekt: "+l[i]);
-            let scenePoint = $("<li></li>").addClass("scenePoint");
-            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
-            let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
-            buttonContainer.append(scene);
-            scenePoint.append(buttonContainer,concerts);
-            container.append(scenePoint);
-        }
-        return container;
+        
     }
 
     // Lager et html-element med konserter filtrert etter scene
