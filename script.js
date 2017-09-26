@@ -67,13 +67,10 @@ $(document).ready(function(){
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l).hide();
-            let sceneContainer = $("<ul></ul>");
-            let sceneHead = $("<li></li>").text("Scene "+scene.sid).css("display","inline");
+            let sceneHead = $("<li></li>").text("Scene "+scene.sid);
 
             scenePoint.append(concerts);
-            sceneContainer.append(sceneHead,scenePoint);
-
-            $('.scenelist').append(sceneContainer);
+            $('.scenelist').append(sceneHead,scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
