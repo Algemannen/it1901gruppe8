@@ -30,7 +30,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
           console.log(output);
-            l = jQuery.parseJSON(output.toString());
+            l = jQuery.parseJSON(output);
+            console.log("+++++++>"+l);
             assertType(l[0].navn,"string");
             assertType(l[0].sid,"number");
         },
