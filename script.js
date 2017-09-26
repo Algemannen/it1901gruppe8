@@ -118,27 +118,27 @@ $(document).ready(function(){
             let listPoint = $("<li></li>").text("Konsert "+list[i].kid);
             let concertInfo = $("<span></span>").text(list[i].navn);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].kid));
+            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
             listContainer.append(listPoint);
         }
         return listContainer;
     }
 
     // Lager et html-element med informasjon om en konsert
-    function getConcertInfo(bruker, concertID) {
+    function getConcertInfo(bruker, concert) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo").attr('id', 'cid'+concertID);
-        getListOfTechnicians(bruker, concertID);
+        let container = $("<div></div>").text("informasjon om konsert med ID:"+concert.navn).addClass("concertInfo").attr('id', 'cid'+concert.kid);
+        getListOfTechnicians(bruker, concert);
         container.hide();
         return container;
     }
 
     // Lager et html-element med teknikere som hører til en konsert
-    function getListOfTechnicians(bruker, concertID) {
+    function getListOfTechnicians(bruker, concert) {
 
         $.ajax({ url: '/database.php?method=getListOfTechs',
-        data: {username: user.name, usertype: user.type, concertid: concertID},
+        data: {username: user.name, usertype: user.type, concertid: concert.cid},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
@@ -152,7 +152,7 @@ $(document).ready(function(){
 
             if (bruker.type = 1) {
                 listContainer.append(listContainer);
-                $('#cid'+concertID).append("<div>Teknikere: </dib>",listContainer);
+                $('#cid'+concert.kid).append("<div>Teknikere: </dib>",listContainer);
             }
 
 
