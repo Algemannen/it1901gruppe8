@@ -153,8 +153,10 @@ $(document).ready(function(){
             }
 
             if (bruker.type = 1) {
-                $('.concertInfo').append("<br> Teknikere", listContainer);
+                listContainer.append(listContainer);
+                $('.concertInfo').append("Teknikere <br>",listContainer);
             }
+
             
         },
         error: function(xmlhttprequest, textstatus, message) {
