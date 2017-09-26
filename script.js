@@ -70,9 +70,9 @@ $(document).ready(function(){
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
             let sceneHead = $("<h1></h1>").html("Scene "+scene.sid);
 
-            scenePoint.append(sceneHead,concerts);
+            scenePoint.append(concerts);
             
-            $('.scenelist').append(scenePoint);
+            $('.scenelist').append(sceneHead,scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
