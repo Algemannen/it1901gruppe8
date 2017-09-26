@@ -62,7 +62,7 @@
 					echo json_encode($row);
 				}
 			}*/
-		case 'getListOfConcertesByScene':
+		case 'getListOfConcertsByScene':
 
 			$sid = $_POST['sceneid'];
 
@@ -77,6 +77,7 @@
 
 			echo json_encode($konListeEncode);
 
+			break;
 
 		default:
 			echo "Ingen metode spesifisert";
