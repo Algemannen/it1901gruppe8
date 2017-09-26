@@ -59,7 +59,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
+        data: {username: bruker.name, usertype: bruker.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
             console.log("+>"+output);
@@ -74,7 +74,7 @@ $(document).ready(function(){
             buttonContainer.append(scenebutton);
             scenePoint.append(buttonContainer,concerts);
             
-            $('scenelist').append(scenePoint);
+            $('.scenelist').append(scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -93,7 +93,7 @@ $(document).ready(function(){
         let l = [];
 
         $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
-        data: {username: user.name, usertype: user.type},
+        data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
@@ -102,8 +102,7 @@ $(document).ready(function(){
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
             
-            $('scenelist').append(scenePoint);
-            $('#listofconcerts').append(scenePoint);
+            $('.scenelist').append(scenePoint);
             
         },
         error: function(xmlhttprequest, textstatus, message) {
