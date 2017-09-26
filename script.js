@@ -67,8 +67,7 @@ $(document).ready(function(){
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l).hide();
-            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            let sceneHead = $("<li></li>").html("Scene "+scene.sid);
+            let sceneHead = $("<li></li>").text("Scene "+scene.sid);
 
             scenePoint.append(concerts);
             
@@ -119,7 +118,7 @@ $(document).ready(function(){
     function buildListOfConcerts(bruker,list) {
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
-            let listPoint = $("<li></li>");
+            let listPoint = $("<li></li>").text("Konsert "+list[i].kid);
             let concertInfo = $("<span></span>").text(list[i].name);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].id));
