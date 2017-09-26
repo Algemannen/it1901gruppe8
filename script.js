@@ -30,8 +30,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            assertType(output[0].name,"string");
-            assertType(output[0].cid,"number");
+            assertType(output[0].navn,"string");
+            assertType(output[0].sid,"number");
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -49,7 +49,7 @@ $(document).ready(function(){
         for (i in l) {
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            let scene =  $("<button></button>").text(l[i].name).addClass("scene_button");
+            let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
             let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
             buttonContainer.append(scene);
             scenePoint.append(buttonContainer,concerts);
