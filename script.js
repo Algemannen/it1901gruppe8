@@ -128,8 +128,18 @@ $(document).ready(function(){
     function getConcertInfo(bruker, concert) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert med ID:"+concert.navn).addClass("concertInfo").attr('id', 'cid'+concert.kid);
-        getListOfTechnicians(bruker, concert);
+        let container = $("<div></div>").text("informasjon om konsert:"+concert.navn).addClass("concertInfo").attr('id', 'cid'+concert.kid);
+        
+        if (bruker.type===1) {
+            getListOfTechnicians(bruker, concert);
+        } else if (bruker.type===2) {
+            let concertDate = $("<span></span>").text(concert.dato);
+            let concertScene = $("<span></span>").text(concert.navn);
+            let start = $("<span></span>").text(concert.start_tid);
+            let slutt = $("<span></span>").text(concert.slut_tid);
+            container.append("Scene "+concertScene,"Dato "+concertDate,"Start "+start,"Slutt "+slutt);
+        }
+
         container.hide();
         return container;
     }
