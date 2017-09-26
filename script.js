@@ -148,7 +148,7 @@ $(document).ready(function(){
             // Vi bygger et HTML-element
             let listContainer = $("<ul></ul>").addClass("technicianlist");
             for (i in l) {
-                let listPoint = $("<li></li>").text( l[i].navn);
+                let listPoint = $("<li></li>").text(l[i].uid);
                 listContainer.append(listPoint);
             }
 
