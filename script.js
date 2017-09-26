@@ -29,10 +29,10 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
-          console.log(output);
             l = jQuery.parseJSON(output);
-
+            
             let container = $("<ul></ul>").addClass("scenelist");
+            $('#listofscenes').append(container);
             let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
             container.append(backButton);
 
@@ -61,7 +61,6 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = jQuery.parseJSON(output);
             console.log(l);
 
@@ -95,7 +94,6 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = jQuery.parseJSON(output);
             console.log(l);
 
@@ -108,6 +106,7 @@ $(document).ready(function(){
             scenePoint.append(buttonContainer,concerts);
             
             $('scenelist').append(scenePoint);
+            $('listofconcerts').append(scenePoint);
             
         },
         error: function(xmlhttprequest, textstatus, message) {
