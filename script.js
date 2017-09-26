@@ -36,6 +36,7 @@ $(document).ready(function(){
 
             for (i in l) {
                 console.log("New scene "+i);
+                
                 getListOfConcertesByScene(bruker,l[i])
             }
 
@@ -69,7 +70,7 @@ $(document).ready(function(){
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
             let sceneHead = $("<h1></h1>").html("Scene "+scene.sid);
 
-            scenePoint.append(concerts);
+            scenePoint.append(sceneHead,concerts);
             
             $('.scenelist').append(scenePoint);
         },
