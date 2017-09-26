@@ -115,7 +115,7 @@ $(document).ready(function(){
     function buildListOfConcerts(bruker,list) {
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
-            let listPoint = $("<li></li>").text("Konsert "+list[i].kid);
+            let listPoint = $("<li></li>").text("Konsert: ");
             let concertInfo = $("<span></span>").text(list[i].navn);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
@@ -133,11 +133,12 @@ $(document).ready(function(){
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
         } else if (bruker.type===2) {
+            console.log(concert);
             let concertDate = $("<span></span>").text(concert.dato);
             let concertScene = $("<span></span>").text(concert.navn);
             let start = $("<span></span>").text(concert.start_tid);
-            let slutt = $("<span></span>").text(concert.slut_tid);
-            container.append("Scene "+concertScene,"Dato "+concertDate,"Start "+start,"Slutt "+slutt);
+            let slutt = $("<span></span>").text(concert.slutt_tid);
+            container.append("<br>Scene ",concertScene,"<br>Dato ",concertDate,"<br>Start ",start,"<br>Slutt ",slutt);
         }
 
         container.hide();
