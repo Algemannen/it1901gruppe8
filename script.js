@@ -67,7 +67,7 @@ $(document).ready(function(){
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
-            let sceneHead = $("<li></li>").text("Scene "+scene.sid);
+            let sceneHead = $("<li></li>").text("Scene: "+scene.navn);
 
             scenePoint.append(concerts);
             $('.scenelist').append(sceneHead,scenePoint);
