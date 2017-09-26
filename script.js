@@ -73,6 +73,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
+            return buildListOfConcerts(bruker,l);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -83,7 +84,7 @@ $(document).ready(function(){
         }
         });
 
-        return buildListOfConcerts(bruker,l);
+        
     }
 
     // Lager et html-element med konserter
@@ -95,6 +96,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
+            return buildListOfConcerts(bruker,l);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -105,7 +107,7 @@ $(document).ready(function(){
         }
         });
 
-        return buildListOfConcerts(bruker,l);
+        
     }
 
     // Bygger en korrekt liste av scener
