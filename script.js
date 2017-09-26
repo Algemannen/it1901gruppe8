@@ -31,8 +31,6 @@ $(document).ready(function(){
         success: function(output) {
           console.log(output);
             l = jQuery.parseJSON(output);
-            assertType(l[0].navn,"string");
-            assertType(l[0].sid,"number");
 
             let container = $("<ul></ul>").addClass("scenelist");
             let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
