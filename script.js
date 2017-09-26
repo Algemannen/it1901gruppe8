@@ -138,7 +138,7 @@ $(document).ready(function(){
     function getListOfTechnicians(bruker, concert) {
 
         $.ajax({ url: '/database.php?method=getListOfTechs',
-        data: {username: user.name, usertype: user.type, concertid: concert.cid},
+        data: {username: user.name, usertype: user.type, concertid: concert.kid},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
@@ -152,7 +152,7 @@ $(document).ready(function(){
 
             if (bruker.type = 1) {
                 listContainer.append(listContainer);
-                $('#cid'+concert.kid).append("<div>Teknikere: </dib>",listContainer);
+                $('#cid'+concert.kid).append("<div>Teknikere: </div>",listContainer);
             }
 
 

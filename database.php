@@ -43,7 +43,14 @@
 			break;
 
 		case 'getCompleteListOfConcerts':
-			$sql = "SELECT * FROM konsert";
+			#$sql = "SELECT * FROM konsert";
+			$uid = $_POST['uid'];
+
+			$sql = "SELECT *
+				FROM konsert
+				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
+				INNER JOIN band ON konsert_band.bid = band.bid
+				WHERE sid ='" . $sid . "'";
 			$konserter = $dbconn->query($sql);
 
 			$encode = array();
@@ -66,7 +73,12 @@
 
 			$sid = $_POST['sceneid'];
 
-			$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
+			#$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
+			$sql = "SELECT *
+				FROM konsert
+				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
+				INNER JOIN band ON konsert_band.bid = band.bid
+				WHERE sid ='" . $sid . "'";
 			$konsertListe = $dbconn->query($sql);
 
 			$konListeEncode = array();
