@@ -33,8 +33,6 @@ $(document).ready(function(){
             
             let container = $("<ul></ul>").addClass("scenelist");
             $('#listofscenes').append(container);
-            let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
-            container.append(backButton);
 
             for (i in l) {
                 console.log("New scene "+i);
@@ -69,10 +67,9 @@ $(document).ready(function(){
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l).hide();
             let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-            
-            let scenebutton =  $("<button></button>").text(scene.sid).addClass("scene_button");
-            buttonContainer.append(scenebutton);
-            scenePoint.append(buttonContainer,concerts);
+            let sceneHead = $("<h1></h1>").html("Scene "+scene.sid);
+
+            scenePoint.append(concerts);
             
             $('.scenelist').append(scenePoint);
         },
