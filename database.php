@@ -50,7 +50,7 @@
 				FROM konsert
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE sid ='" . $sid . "'";
+				WHERE uid ='" . $uid . "'";
 			$konserter = $dbconn->query($sql);
 
 			$encode = array();
