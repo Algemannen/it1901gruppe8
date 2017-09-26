@@ -61,7 +61,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
-            console.log(output)
+            console.log(output);
             l = jQuery.parseJSON(output);
             console.log(l);
 
