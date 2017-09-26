@@ -85,8 +85,8 @@
 
 			$sql = "SELECT *
 				FROM brukere
-				INNER JOIN teknikere ON brukere.uid=teknikere.uid
-				WHERE teknikere.konsertit = " . $konsertid ."";
+				INNER JOIN konsert_rigging ON brukere.uid = konsert_rigging.uid
+				WHERE konsert_rigging.kid = " . $konsertid ."";
 			$teknikere = $dbconn->query($sql);
 			$tekEncode = array();
 
