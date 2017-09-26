@@ -96,6 +96,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
+            console.log(l);
             
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l).hide();
