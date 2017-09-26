@@ -47,6 +47,7 @@ $(document).ready(function(){
         let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
         container.append(backButton);
 
+        console.log("--->"+l);
         for (i in l) {
             console.log("Sceneobjekt: "+l[i]);
             let scenePoint = $("<li></li>").addClass("scenePoint");
