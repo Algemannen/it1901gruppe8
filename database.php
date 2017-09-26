@@ -83,7 +83,7 @@
 
 			$konsertid = $_POST['konsertid'];
 
-			$sql = "SELECT * FROM bruker WHERE brukernavn.uid IN (SELECT uid FROM konsert_rigging WHERE konsert_rigging.uid IN (SELECT kid FROM konsert WHERE kid = 'konsertid'))";
+			$sql = "SELECT * FROM bruker WHERE bruker.uid IN (SELECT uid FROM konsert_rigging WHERE konsert_rigging.uid IN (SELECT kid FROM konsert WHERE kid = '" . $konsertid . "'))";
 			$teknikere = $dbconn->query($sql);
 			$tekEncode = array();
 
