@@ -118,9 +118,9 @@ $(document).ready(function(){
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
             let listPoint = $("<li></li>").text("Konsert "+list[i].kid);
-            let concertInfo = $("<span></span>").text(list[i].name);
+            let concertInfo = $("<span></span>").text(list[i].navn);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].id));
+            listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i].kid));
             listContainer.append(listPoint);
         }
         return listContainer;
@@ -130,7 +130,7 @@ $(document).ready(function(){
     function getConcertInfo(bruker, concertID) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo");
+        let container = $("<div></div>").text("informasjon om konsert med ID:"+concertID).addClass("concertInfo").attr('id', 'cid'+concertID);
         getListOfTechnicians(bruker, concertID);
         container.hide();
         return container;
@@ -154,7 +154,7 @@ $(document).ready(function(){
 
             if (bruker.type = 1) {
                 listContainer.append(listContainer);
-                $('.concertInfo').append("Teknikere <br>",listContainer);
+                $('#cid'+concertID).append("<div>Teknikere: </dib>",listContainer);
             }
 
             
