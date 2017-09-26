@@ -31,26 +31,17 @@ $(document).ready(function(){
         success: function(output) {
           console.log(output);
             l = jQuery.parseJSON(output);
-            console.log("+++++++>"+l);
             assertType(l[0].navn,"string");
             assertType(l[0].sid,"number");
 
             let container = $("<ul></ul>").addClass("scenelist");
             let backButton =  $("<button></button>").text("Tilbake").addClass("scene_button_back").hide();
             container.append(backButton);
-    
-            console.log("--->"+l);
+
             for (i in l) {
-                console.log("Sceneobjekt: "+l[i]);
-                let scenePoint = $("<li></li>").addClass("scenePoint");
-                let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
-                let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
-                let concerts = getListOfConcertesByScene(bruker,l[i]).hide()
-                buttonContainer.append(scene);
-                scenePoint.append(buttonContainer,concerts);
-                container.append(scenePoint);
+                getListOfConcertesByScene(bruker,l[i])
             }
-            $('#listofscenes').append(container);
+
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -73,7 +64,16 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            $('#listofconcerts').append(buildListOfConcerts(bruker,l));
+
+            let scenePoint = $("<li></li>").addClass("scenePoint");
+            let concerts = buildListOfConcerts(bruker,l).hide();
+            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
+            
+            let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
+            buttonContainer.append(scene);
+            scenePoint.append(buttonContainer,concerts);
+            
+            $('scenelist').append(scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -96,7 +96,16 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-            $('#listofconcerts').append(buildListOfConcerts(bruker,l));
+            
+            let scenePoint = $("<li></li>").addClass("scenePoint");
+            let concerts = buildListOfConcerts(bruker,l).hide();
+            let buttonContainer = $("<span></span>").addClass("sceneButtonContainer");
+            
+            let scene =  $("<button></button>").text(l[i].navn).addClass("scene_button");
+            buttonContainer.append(scene);
+            scenePoint.append(buttonContainer,concerts);
+            
+            $('scenelist').append(scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
