@@ -55,14 +55,28 @@
 			echo json_encode($encode);
 
 
+			break;
+
 			/*if ($konserter->num_rows > 0) {
 				while($row = $konserter->fetch_assoc()) {
 					echo json_encode($row);
 				}
 			}*/
+		case 'getListOfConcertesByScene':
 
+			$sid = $_POST['sceneid'];
 
-			break;
+			$sql = "SELECT * FROM konsert WHERE sid ="  . $sid;
+			$konsertListe = $dbconn->query($sql);
+
+			$konListeEncode = array();
+
+			while($row = $konsertListe->fetch_assoc()){
+				$konListeEncode[] = $row;
+			}
+
+			echo json_encode($konListeEncode);
+
 
 		default:
 			echo "Ingen metode spesifisert";
