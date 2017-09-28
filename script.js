@@ -251,7 +251,7 @@ $(document).ready(function(){
                 } else {
                     alert("Feil passord eller brukernavn.");
                 }
-                
+
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {

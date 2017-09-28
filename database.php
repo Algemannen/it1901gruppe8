@@ -28,24 +28,22 @@
 
 			break;
 
-		case 'getListOfScenes':
-			$sql = "SELECT * FROM scene";
+		case 'getListOfScenes': //Denne fungerer ikke. Brukes kun av arrangør. Henter ut informasjon om scener
+			$sql = "SELECT * FROM scene"; //Setning for å hente informasjon
 			$scener = $dbconn->query($sql);
 
-			$sceneEncode = array();
+			$sceneEncode = array(); //Oppretter et array
 
 			while($row = $scener->fetch_assoc()) {
-				$sceneEncode[] = $row;
+				$sceneEncode[] = $row; // Lagrer info fra rader inn i arrayet
 			}
 
-			echo json_encode($sceneEncode);
+			echo json_encode($sceneEncode); //Gjør det til et jsonobject.
 
 			break;
 
-		case 'getListOfConcertsForTechs':
+		case 'getCompleteListOfConcerts': //Laget en liste over alle konserter
 			#$sql = "SELECT * FROM konsert";
-
-			$brukerid = $_POST['userid'];
 
 			$sql = "SELECT *
 				FROM konsert
@@ -78,16 +76,16 @@
 					echo json_encode($row);
 				}
 			}*/
-		case 'getListOfConcertsByScene':
+		case 'getListOfConcertsByScene': //Lager en liste av konserter filtrer på scene
 
-			$sid = $_POST['sceneid'];
+			$sid = $_POST['sceneid']; //henter ut scene
 
 			#$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
 			$sql = "SELECT *
 				FROM konsert
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE sid ='" . $sid . "'";
+				WHERE sid ='" . $sid . "'"; //setning for å hente ut informasjon fra database
 			$konsertListe = $dbconn->query($sql);
 
 			if ($konsertListe->num_rows > 0) {
@@ -105,14 +103,14 @@
 
 			break;
 
-		case 'getListOfTechs':
+		case 'getListOfTechs': //Lager en liste over teknikere
 
 			$konsertid = $_POST['concertid'];
 
 			$sql = "SELECT *
 				FROM bruker
 				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-				WHERE kid = " . $konsertid ."";
+				WHERE kid = " . $konsertid .""; //henter ut teknikere baser på konsert
 			$teknikere = $dbconn->query($sql);
 
 			if ($teknikere->num_rows > 0) {
@@ -132,7 +130,7 @@
 			break;
 
 		default:
-			echo "Ingen metode spesifisert";
+			echo "Ingen metode spesifisert"; //Hvis det ikke er en metode sendes dette
 			break;
 	}
 
