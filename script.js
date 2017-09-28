@@ -91,7 +91,6 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
-
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
@@ -129,7 +128,7 @@ $(document).ready(function(){
 
         // Vi bygger et HTML-element
         let container = $("<div></div>").text("informasjon om konsert:"+concert.navn).addClass("concertInfo").attr('id', 'cid'+concert.kid);
-        
+
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
         } else if (bruker.type===2) {
