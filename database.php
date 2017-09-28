@@ -1,8 +1,11 @@
 <?php
-	$dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival"); //Oppkobling til database
+	$dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival"); //Oppkobling til database	
+	//mysql_query('SET CHARACTER SET utf8')
 	if ($dbconn->connect_error){
 		die("Connection Failed: " . $dbconn->connect_error);
 	} //Sjekke om oppkoblingen fungerer
+	//mysql_query("set names 'utf8'");
+	$dbconn->set_charset("utf8");
 
 	$method = $_GET['method']; // Henter ut hvilken funksjon som skal kalles.
 
@@ -87,7 +90,7 @@
 				FROM konsert
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE sid ='" . $sid . "'"; //setning for å hente ut informasjon fra database
+				WHERE konsert.sid ='" . $sid . "'"; //setning for å hente ut informasjon fra database
 			$konsertListe = $dbconn->query($sql);
 
 			if ($konsertListe->num_rows > 0) {
