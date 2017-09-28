@@ -42,7 +42,7 @@
 
 			break;
 
-		case 'getCompleteListOfConcerts': //Laget en liste over alle konserter
+		case 'getListOfConcertsForTechs': //Laget en liste over alle konserter
 			#$sql = "SELECT * FROM konsert";
 
 			$sql = "SELECT *
