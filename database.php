@@ -13,14 +13,14 @@
 			$username = $_POST['username']; //Henter ut brukernavn fra input-feltet på brukersiden
 			$password = $_POST['password']; //Henter ut passord fra input-feltet på brukersiden
 
-			$sql = "SELECT brukertype FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
+			$sql = "SELECT * FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
 
 			$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
 
 			if ($login_id->num_rows > 0) { //Sjekker om du får noe data returnert fra databasen
 					// output data of each row
 					while($row = $login_id->fetch_assoc()) { //Returnerer brukertype, som er et nummer. Hvis brukertype ikke fins, får man returnert 0.
-							echo json_encode($row["brukertype"]);
+							echo json_encode($row);
 					}
 			} else {
 					echo "0";
@@ -52,17 +52,23 @@
 				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
-				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-				WHERE bruker.id = " . $brukerid;
+				INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
+				WHERE konsert_rigging.uid = " . $brukerid;
 			$konserter = $dbconn->query($sql);
 
-			$encode = array();
+			
 
-			while($row = $konserter->fetch_assoc()) {
-			   $encode[] = $row;
+			if ($konserter->num_rows > 0) {
+				$encode = array();
+				while($row = $konserter->fetch_assoc()) {
+					$encode[] = $row;
+				 }
+	 
+				 echo json_encode($encode);
+			} else {
+				echo 0;
 			}
-
-			echo json_encode($encode);
+			
 
 
 			break;
@@ -84,13 +90,18 @@
 				WHERE sid ='" . $sid . "'";
 			$konsertListe = $dbconn->query($sql);
 
-			$konListeEncode = array();
-
-			while($row = $konsertListe->fetch_assoc()){
-				$konListeEncode[] = $row;
+			if ($konsertListe->num_rows > 0) {
+				$konListeEncode = array();
+				
+				while($row = $konsertListe->fetch_assoc()){
+					$konListeEncode[] = $row;
+				}
+	
+				echo json_encode($konListeEncode);
+			} else {
+				return 0;
 			}
-
-			echo json_encode($konListeEncode);
+			
 
 			break;
 
@@ -103,14 +114,20 @@
 				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
 				WHERE kid = " . $konsertid ."";
 			$teknikere = $dbconn->query($sql);
-			$tekEncode = array();
 
-
-			while($row = $teknikere->fetch_assoc()){
-				$tekEncode[] = $row;
-			}
-
-			echo json_encode($tekEncode);
+			if ($teknikere->num_rows > 0) {
+				$tekEncode = array();
+				
+				
+							while($row = $teknikere->fetch_assoc()){
+								$tekEncode[] = $row;
+							}
+				
+							echo json_encode($tekEncode);
+			 } else {
+				return 0;
+			 }
+			
 
 			break;
 

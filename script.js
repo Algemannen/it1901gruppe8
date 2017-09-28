@@ -1,3 +1,10 @@
+/*
+
+
+
+
+*/
+
 // Globale variables
 
 // Siden URL
@@ -29,13 +36,14 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
+            console.log(output);
             l = jQuery.parseJSON(output);
 
             let container = $("<ul></ul>").addClass("scenelist");
             $('#listofscenes').append(container);
 
             for (i in l) {
-                console.log("New scene "+i);
+                console.log("New scene "+i+", id:"+l[i].sid);
 
                 getListOfConcertesByScene(bruker,l[i])
             }
@@ -61,6 +69,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
+            console.log(output);
             l = jQuery.parseJSON(output);
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
@@ -90,6 +99,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, userid: user.id},
         type: 'post',
         success: function(output) {
+            console.log(output);
             l = jQuery.parseJSON(output);
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
@@ -232,6 +242,7 @@ $(document).ready(function(){
             data: {username: user.name, password: password},
             type: 'post',
             success: function(output) {
+                console.log(output);
                 if (output !== "0") {
                     let q = jQuery.parseJSON(output);
                     user.type = parseInt(q.brukertype);
