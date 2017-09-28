@@ -61,6 +61,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid},
         type: 'post',
         success: function(output) {
+            console.log(output);
             l = jQuery.parseJSON(output);
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
@@ -240,7 +241,7 @@ $(document).ready(function(){
                 } else {
                     alert("Feil passord eller brukernavn.");
                 }
-                
+
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
