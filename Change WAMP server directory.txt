@@ -1,0 +1,9 @@
+1. Gå inn på {WAMP DIRECTORY}\bin\apache\apache2.4.27\conf
+2. Åpne httpd.conf
+3. Endre 'DocumentRoot "{WAMP DIRECTORY}/www"' to 'DocumentRoot "c:/my/new/path"' ca linje 264
+4. Endre '<Directory "{WAMP DIRECTORY}/www">' to '<Directory "c:/my/new/path">' ca linge 265
+5. Pass på å skrive / og ikke \
+6. Gå inn på {WAMP DIRECTORY}\bin\apache\apache2.4.27\conf\extra
+7. Åpne httpd-vhost.conf
+8. Gjenta steg 3 og 4, linje 6 og 7
+9. Restart serveren
