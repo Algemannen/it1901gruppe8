@@ -86,8 +86,8 @@ $(document).ready(function(){
     function getListOfConcertes(bruker) {
         let l = [];
 
-        $.ajax({ url: '/database.php?method=getCompleteListOfConcerts',
-        data: {username: user.name, usertype: user.type},
+        $.ajax({ url: '/database.php?method=getListOfConcertsForTechs',
+        data: {username: user.name, usertype: user.type, userid: user.id},
         type: 'post',
         success: function(output) {
             l = jQuery.parseJSON(output);
@@ -233,13 +233,15 @@ $(document).ready(function(){
             data: {username: user.name, password: password},
             type: 'post',
             success: function(output) {
-
-                user.type = parseInt(output);
-
-                if (user.type === 0) {
+                if (output !== "0") {
+                    let q = jQuery.parseJSON(output);
+                    user.type = parseInt(q.brukertype);
+                    user.id = parseInt(q.uid);
+                    redraw();
+                } else {
                     alert("Feil passord eller brukernavn.");
                 }
-                redraw();
+                
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {

@@ -20,7 +20,7 @@
 			if ($login_id->num_rows > 0) { //Sjekker om du får noe data returnert fra databasen
 					// output data of each row
 					while($row = $login_id->fetch_assoc()) { //Returnerer brukertype, som er et nummer. Hvis brukertype ikke fins, får man returnert 0.
-							echo $row["brukertype"];
+							echo json_encode($row["brukertype"]);
 					}
 			} else {
 					echo "0";
@@ -42,14 +42,18 @@
 
 			break;
 
-		case 'getCompleteListOfConcerts':
+		case 'getListOfConcertsForTechs':
 			#$sql = "SELECT * FROM konsert";
+
+			$brukerid = $_POST['userid'];
 
 			$sql = "SELECT *
 				FROM konsert
 				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
-				INNER JOIN band ON konsert_band.bid = band.bid";
+				INNER JOIN band ON konsert_band.bid = band.bid
+				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
+				WHERE bruker.id = " . $brukerid;
 			$konserter = $dbconn->query($sql);
 
 			$encode = array();
