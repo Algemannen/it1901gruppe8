@@ -55,14 +55,13 @@
 
 			$brukerid = $_POST['userid'];
 
-			$sql = mysqli_escape_string("
-				SELECT *
+			$sql = "SELECT *
 				FROM konsert
 				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
 				INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
-				WHERE konsert_rigging.uid = '" . $brukerid ."'");
+				WHERE konsert_rigging.uid = '" . $brukerid ."'";
 			$konserter = $dbconn->query($sql);
 
 			
