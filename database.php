@@ -16,7 +16,10 @@
 			$username = $_POST['username']; //Henter ut brukernavn fra input-feltet på brukersiden
 			$password = $_POST['password']; //Henter ut passord fra input-feltet på brukersiden
 
-			$sql = "SELECT * FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
+			$sql = mysqli_escape_string("SELECT * 
+				FROM bruker 
+				WHERE brukernavn='" . $username . "' 
+				AND passord='" . $password . "'"); //Bruker variablene over for å lage sql-setningen
 
 			$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
 
@@ -32,7 +35,9 @@
 			break;
 
 		case 'getListOfScenes': //Denne fungerer ikke. Brukes kun av arrangør. Henter ut informasjon om scener
-			$sql = "SELECT * FROM scene"; //Setning for å hente informasjon
+			$sql = mysqli_escape_string("SELECT *
+					FROM scene"); //Setning for å hente informasjon
+					
 			$scener = $dbconn->query($sql);
 
 			$sceneEncode = array(); //Oppretter et array
@@ -50,13 +55,14 @@
 
 			$brukerid = $_POST['userid'];
 
-			$sql = "SELECT *
+			$sql = mysqli_escape_string("
+				SELECT *
 				FROM konsert
 				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
 				INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
-				WHERE konsert_rigging.uid = '" . $brukerid ."'";
+				WHERE konsert_rigging.uid = '" . $brukerid ."'");
 			$konserter = $dbconn->query($sql);
 
 			
@@ -86,11 +92,11 @@
 			$sid = $_POST['sceneid']; //henter ut scene
 
 			#$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
-			$sql = "SELECT *
+			$sql = mysqli_escape_string("SELECT *
 				FROM konsert
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE konsert.sid ='" . $sid . "'"; //setning for å hente ut informasjon fra database
+				WHERE konsert.sid ='" . $sid . "'"); //setning for å hente ut informasjon fra database
 			$konsertListe = $dbconn->query($sql);
 
 			if ($konsertListe->num_rows > 0) {
@@ -112,10 +118,10 @@
 
 			$konsertid = $_POST['concertid'];
 
-			$sql = "SELECT *
+			$sql = mysqli_escape_string("SELECT *
 				FROM bruker
 				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-				WHERE kid = " . $konsertid .""; //henter ut teknikere baser på konsert
+				WHERE kid = " . $konsertid .""); //henter ut teknikere baser på konsert
 			$teknikere = $dbconn->query($sql);
 
 			if ($teknikere->num_rows > 0) {
