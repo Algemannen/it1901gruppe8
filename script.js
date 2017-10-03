@@ -93,11 +93,12 @@ $(document).ready(function(){
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
-            let sceneHead = $("<li></li>").text("Scene: "+scene.navn);
+            let sceneHead = $("<li></li>").text(scene.navn);
+            let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
             scenePoint.append(concerts);
             let scenediv = $("<div></div>");
-            scenediv.append(sceneHead,scenePoint);
+            scenediv.append(sceneHead,sceneInfo,scenePoint);
             $('.scenelist').append(scenediv);
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -145,7 +146,7 @@ $(document).ready(function(){
     function buildListOfConcerts(bruker,list) {
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
-            let listPoint = $("<li></li>").text("Konsert: ");
+            let listPoint = $("<li></li>");
             let concertInfo = $("<span></span>").text(list[i].navn);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
