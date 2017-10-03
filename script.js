@@ -145,7 +145,7 @@ $(document).ready(function(){
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(list[i].navn);
+            let concertInfo = $("<span></span>").text('Dato: ' + list[i].dato + ' - Artist: ' + list[i].navn + ' - Starttid: ' + list[i].start_tid);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
             listContainer.append(listPoint);
