@@ -239,6 +239,53 @@
 			
 			break;
 
+		/// Returnerer en liste over alle teknikere på en gitt scene
+		case 'getListOfTechnicalNeeds':
+		
+			// Gjør klar sql-setning
+			$query = "SELECT * 
+				FROM tekniske_behov
+				WHERE kid = ?
+			";
+
+			// Gjør klar objekt for spørring
+			$stmt = $dbconn->stmt_init();
+
+			// Gjør klar spørringen for databsen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
+
+				// Bind konsertid som heltall
+				$stmt->bind_param('i', $kid);
+
+				// Leser inn konsertid
+				$kid = $_POST['concertid'];
+
+				// Utfør sql-setning
+				$stmt->execute();
+
+				// Henter resultat fra spørring
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
+				$encode = array();
+				while ($row = $result->fetch_assoc()) {
+					$encode[] = $row;
+				}
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
+			}
+			
+			break;
+
+
+		
+
 		/// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 		default:
 			header('HTTP/1.0 501 Not implemented method.');
