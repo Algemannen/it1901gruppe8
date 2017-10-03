@@ -6,13 +6,13 @@
 */
 
 // Globale variables
-
+var current_fid = 1;
 // Siden URL
 var options = "";
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
-var current_fid = 1;
+
 
 // Functions to run after DOM is ready
 $(document).ready(function(){
