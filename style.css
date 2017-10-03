@@ -174,7 +174,8 @@ ul.technicianlist li {
 
 button.concert_button {
     position: absolute;
-    right:10px;
+    right:2px;
+    top: 2px;
 }
 
 button.scene_button {
