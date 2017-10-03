@@ -1,144 +1,298 @@
 <?php
-	$dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival"); //Oppkobling til database	
-	//mysql_query('SET CHARACTER SET utf8')
+	// Header for php-enkoding
+	header('Content-type: text/plain; charset=utf-8');
+
+	// Koble til databasen og returner oppkoblingen som objekt
+	$dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress", "it1901group8_festival");
+
+	//Sjekke om oppkoblingen fungerer
 	if ($dbconn->connect_error){
-		die("Connection Failed: " . $dbconn->connect_error);
-	} //Sjekke om oppkoblingen fungerer
-	//mysql_query("set names 'utf8'");
+		header('HTTP/1.0 504 Connection Failed' . $mysqli->connect_errno . " " . $dbconn->connect_error);
+		die();
+	} 
+	
+	// Databasen bruker bokstaver fra utf8-standarden. Viktig for at f.eks ÆØÅ skal fungere.
 	$dbconn->set_charset("utf8");
 
-	$method = $_GET['method']; // Henter ut hvilken funksjon som skal kalles.
+	// Henter ut hvilken funksjon som skal kalles.
+	$method = $_GET['method']; 
 
 
 	switch ($method) {
+		/// Dette er en metode for å sjekke at oppkobling mot serveren fungerer
+		case 'ping':
+			echo 'hei';
+			break;
+
+		/// Metode for å logge på serveren, tar inn brukernavn og passord. Returnerer brukerobjekt.
 		case 'login':
 
-			$username = $_POST['username']; //Henter ut brukernavn fra input-feltet på brukersiden
-			$password = $_POST['password']; //Henter ut passord fra input-feltet på brukersiden
+			$query = "SELECT * 
+				FROM bruker 
+				WHERE brukernavn= ?
+				AND passord= ?";
 
-			$sql = "SELECT * FROM bruker WHERE brukernavn='" . $username . "' AND passord='" . $password . "'" ; //Bruker variablene over for å lage sql-setningen
+			// Gjør klar objekt for spørring
+			$stmt = $dbconn->stmt_init();
 
-			$login_id = $dbconn->query($sql); //Sender query for å hente passord og brukernavn-feltet
-
-			if ($login_id->num_rows > 0) { //Sjekker om du får noe data returnert fra databasen
-					// output data of each row
-					while($row = $login_id->fetch_assoc()) { //Returnerer brukertype, som er et nummer. Hvis brukertype ikke fins, får man returnert 0.
-							echo json_encode($row);
-					}
+			// Gjør klar spørring til databasen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
 			} else {
-					echo "0";
+				// Binder brukernavn og pasord som strenger
+				$stmt->bind_param('ss', $username, $password);
+
+				// Leser brukernavn og passord
+				$username = $_POST['username']; 
+				$password = $_POST['password']; 
+
+				// Utfør spørringen
+				$stmt->execute();
+
+				// Hent resultatet fra spørringen
+				$result = $stmt->get_result();
+
+				// Hent ut første rad fra en spørring
+				$encode = $result->fetch_assoc();
+
+				// Hvis brukeren ikke finnes i databasen, returner en feilmelding og avslutt.
+				if (empty($encode)) {
+					header('HTTP/1.0 401 Unauthorized user.');
+					die();
+				}
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
 			}
 
 			break;
 
-		case 'getListOfScenes': //Denne fungerer ikke. Brukes kun av arrangør. Henter ut informasjon om scener
-			$sql = "SELECT * FROM scene"; //Setning for å hente informasjon
-			$scener = $dbconn->query($sql);
+		/// Returnerer en komplett liste av alle scener.
+		case 'getListOfScenes':
+			$query = "SELECT *
+					FROM scene";
+					
+			// Gjør klar objekt for spørringen
+			$stmt = $dbconn->stmt_init();
+			
+			// Gjør klar spørring for databasen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
 
-			$sceneEncode = array(); //Oppretter et array
+				// Utfører spørring
+				$stmt->execute();
 
-			while($row = $scener->fetch_assoc()) {
-				$sceneEncode[] = $row; // Lagrer info fra rader inn i arrayet
+				// Får resultat fra spørring
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
+				$encode = array();
+				while ($row = $result->fetch_assoc()) {
+					$encode[] = $row;
+				}
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
 			}
-
-			echo json_encode($sceneEncode); //Gjør det til et jsonobject.
 
 			break;
 
-		case 'getListOfConcertsForTechs': //Laget en liste over alle konserter
-			#$sql = "SELECT * FROM konsert";
+		/// Returnerer en liste over konserter brukeren hjelper til med rigging på.
+		case 'getListOfConcertsForTechs': 
 
-			$brukerid = $_POST['userid'];
-
-			$sql = "SELECT *
+			$query = "SELECT *
 				FROM konsert
 				INNER JOIN scene ON konsert.sid = scene.sid
 				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
 				INNER JOIN band ON konsert_band.bid = band.bid
 				INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
-				WHERE konsert_rigging.uid = '" . $brukerid ."'";
-			$konserter = $dbconn->query($sql);
+				WHERE konsert_rigging.uid = ?";
 
+			// Gjør klar objekt for spørringen
+			$stmt = $dbconn->stmt_init();
 			
+			// Gjør klar spørringen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
 
-			if ($konserter->num_rows > 0) {
+				// Binder brukerid som et heltall
+				$stmt->bind_param('i', $brukerid);
+
+				// Leser brukerid fra metodekallet
+				$brukerid = $_POST['userid'];
+
+				// Utfører spørringen
+				$stmt->execute();
+
+				// Får resultatet fra spørring
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
 				$encode = array();
-				while($row = $konserter->fetch_assoc()) {
+				while ($row = $result->fetch_assoc()) {
 					$encode[] = $row;
-				 }
-	 
-				 echo json_encode($encode);
-			} else {
-				echo 0;
-			}
-			
+				}
 
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
+			}
 
 			break;
 
-			/*if ($konserter->num_rows > 0) {
-				while($row = $konserter->fetch_assoc()) {
-					echo json_encode($row);
-				}
-			}*/
-		case 'getListOfConcertsByScene': //Lager en liste av konserter filtrer på scene
+		/// Returnerer en liste over konserter som foregår på en gitt scene
+		case 'getListOfConcertsByScene':
 
-			$sid = $_POST['sceneid']; //henter ut scene
+			$query = "SELECT *
+			FROM konsert
+			INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
+			INNER JOIN band ON konsert_band.bid = band.bid
+			WHERE konsert.sid = ?";
 
-			#$sql = "SELECT * FROM konsert WHERE sid ='" . $sid . "'";
-			$sql = "SELECT *
-				FROM konsert
-				INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
-				INNER JOIN band ON konsert_band.bid = band.bid
-				WHERE konsert.sid ='" . $sid . "'"; //setning for å hente ut informasjon fra database
-			$konsertListe = $dbconn->query($sql);
+			// Gjør klar objekt for spørringen
+			$stmt = $dbconn->stmt_init();
 
-			if ($konsertListe->num_rows > 0) {
-				$konListeEncode = array();
+			// Gjør spørringen klar for databasen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
 				
-				while($row = $konsertListe->fetch_assoc()){
-					$konListeEncode[] = $row;
+				// Binder brukerid som heltall
+				$stmt->bind_param('i', $sid);
+
+				// Leser inn sceneid
+				$sid = $_POST['sceneid'];
+
+				// Utfører spørringen
+				$stmt->execute();
+
+				// Returnerer resultat fra spørringen
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
+				$encode = array();
+				while ($row = $result->fetch_assoc()) {
+					$encode[] = $row;
 				}
-	
-				echo json_encode($konListeEncode);
-			} else {
-				return 0;
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
 			}
-			
 
 			break;
 
-		case 'getListOfTechs': //Lager en liste over teknikere
+		/// Returnerer en liste over alle teknikere på en gitt scene
+		case 'getListOfTechs':
 
-			$konsertid = $_POST['concertid'];
-
-			$sql = "SELECT *
+			// Gjør klar sql-setning
+			$query = "SELECT * 
 				FROM bruker
 				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-				WHERE kid = " . $konsertid .""; //henter ut teknikere baser på konsert
-			$teknikere = $dbconn->query($sql);
+				WHERE kid = ?
+			";
 
-			if ($teknikere->num_rows > 0) {
-				$tekEncode = array();
-				
-				
-							while($row = $teknikere->fetch_assoc()){
-								$tekEncode[] = $row;
-							}
-				
-							echo json_encode($tekEncode);
-			 } else {
-				return 0;
-			 }
+			// Gjør klar objekt for spørring
+			$stmt = $dbconn->stmt_init();
+
+			// Gjør klar spørringen for databsen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
+
+				// Bind konsertid som heltall
+				$stmt->bind_param('i', $kid);
+
+				// Leser inn konsertid
+				$kid = $_POST['concertid'];
+
+				// Utfør sql-setning
+				$stmt->execute();
+
+				// Henter resultat fra spørring
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
+				$encode = array();
+				while ($row = $result->fetch_assoc()) {
+					$encode[] = $row;
+				}
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
+			}
 			
-
 			break;
 
+		/// Returnerer en liste over alle teknikere på en gitt scene
+		case 'getListOfTechnicalNeeds':
+		
+			// Gjør klar sql-setning
+			$query = "SELECT * 
+				FROM tekniske_behov
+				WHERE kid = ?
+			";
+
+			// Gjør klar objekt for spørring
+			$stmt = $dbconn->stmt_init();
+
+			// Gjør klar spørringen for databsen
+			if(!$stmt->prepare($query)) {
+				header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+			} else {
+
+				// Bind konsertid som heltall
+				$stmt->bind_param('i', $kid);
+
+				// Leser inn konsertid
+				$kid = $_POST['concertid'];
+
+				// Utfør sql-setning
+				$stmt->execute();
+
+				// Henter resultat fra spørring
+				$result = $stmt->get_result();
+
+				// Hent ut alle rader fra en spørring
+				$encode = array();
+				while ($row = $result->fetch_assoc()) {
+					$encode[] = $row;
+				}
+
+				// Returner json-string med data
+				echo json_encode($encode);
+
+				// Avslutt sql-setning
+				$stmt->close();
+			}
+			
+			break;
+
+
+		
+
+		/// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 		default:
-			echo "Ingen metode spesifisert"; //Hvis det ikke er en metode sendes dette
+			header('HTTP/1.0 501 Not implemented method.');
+			die();
 			break;
 	}
 
-
-	$dbconn->close(); //Lukker oppkoblingen til databasen
+	//Lukker oppkoblingen til databasen
+	$dbconn->close(); 
 ?>
