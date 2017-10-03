@@ -56,7 +56,6 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let container = $("<ul></ul>").addClass("scenelist");
@@ -89,7 +88,6 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
@@ -314,7 +312,6 @@ $(document).ready(function(){
             data: {username: user.name, password: password},
             type: 'post',
             success: function(output) {
-                console.log(output);
                 let q = jQuery.parseJSON(output);
                 user.type = parseInt(q.brukertype);
                 user.id = parseInt(q.uid);
