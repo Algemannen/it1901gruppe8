@@ -12,6 +12,7 @@ var options = "";
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
+var current_fid = 1;
 
 // Functions to run after DOM is ready
 $(document).ready(function(){
@@ -55,15 +56,12 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
-            l = jQuery.parseJSON(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let container = $("<ul></ul>").addClass("scenelist");
             $('#listofscenes').append(container);
 
             for (i in l) {
-                console.log("New scene "+i+", id:"+l[i].sid);
-
                 getListOfConcertesByScene(bruker,l[i])
             }
 
@@ -85,11 +83,10 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
         success: function(output) {
-            console.log(output);
-            l = jQuery.parseJSON(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
@@ -118,11 +115,10 @@ $(document).ready(function(){
         let l = [];
 
         $.ajax({ url: '/database.php?method=getListOfConcertsForTechs',
-        data: {username: user.name, usertype: user.type, userid: user.id},
+        data: {username: user.name, usertype: user.type, userid: user.id, fid:current_fid},
         type: 'post',
         success: function(output) {
-            console.log(output);
-            l = jQuery.parseJSON(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
@@ -157,12 +153,11 @@ $(document).ready(function(){
     function getConcertInfo(bruker, concert) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert:"+concert.navn).addClass("concertInfo").attr('id', 'cid'+concert.kid);
+        let container = $("<div></div>").text("Informasjon om konsert:").addClass("concertInfo").attr('id', 'cid'+concert.kid);
 
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
         } else if (bruker.type===2) {
-            console.log(concert);
             let concertDate = $("<span></span>").text(concert.dato);
             let concertScene = $("<span></span>").text(concert.navn);
             let start = $("<span></span>").text(concert.start_tid);
@@ -181,7 +176,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, concertid: concert.kid},
         type: 'post',
         success: function(output) {
-            l = jQuery.parseJSON(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             // Vi bygger et HTML-element
             let listContainer = $("<ul></ul>").addClass("technicianlist");
@@ -215,9 +210,7 @@ $(document).ready(function(){
         data: {username: user.name, usertype: user.type, userid: user.id},
         type: 'post',
         success: function(output) {
-            console.log(output);
-            l = jQuery.parseJSON(output);
-            console.log(l)
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
 
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -282,17 +275,14 @@ $(document).ready(function(){
                     getListOfTechnicalNeeds(user);
                 }});
                 break;
+            case 4: //Bruker er bookingansvarlig
+                $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
+                  $("#root").html(result);
+                  $('#username').html(user.name);
+                }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
-        console.log("Pagestate:"+user.type);
-    }
-
-    function assertType(object, type) {
-        if (jQuery.type(object) !== type) {
-            console.log("Fatal typefeil: "+object+" er "+jQuery.type(object)+",og ikke "+type);
-        }
-
     }
 
     // Finner sidens URL-addresse
@@ -306,13 +296,11 @@ $(document).ready(function(){
     function logon() {
         user.name = $("#username_field").val();
         password = $('#password_field').val();
-        console.log("Username "+user.name);
 
         $.ajax({ url: '/database.php?method=login',
             data: {username: user.name, password: password},
             type: 'post',
             success: function(output) {
-                console.log(output);
                 let q = jQuery.parseJSON(output);
                 user.type = parseInt(q.brukertype);
                 user.id = parseInt(q.uid);
@@ -403,3 +391,15 @@ $(document).ready(function(){
 
 
 });
+
+//Try catch funksjon for json-parse
+function safeJsonParse(output) {
+  try{
+    l = jQuery.parseJSON(output);
+  }
+  catch(err){
+    console.log(output);
+    $("#root").after(output);
+  }
+  return l;
+}
