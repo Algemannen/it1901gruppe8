@@ -19,14 +19,33 @@ $(document).ready(function(){
 
     // Vi lagrer url-en i options-stringen slik at du vi kan lese den senere
     options = parseUrl(window.location.href);
-        // Regex for å finne ut om ?debug-kommandoen er inkludert i URL
-        if (/debug/i.test(options)) {
-            $(".debug").show();
-        }
-    // Oppdater skjermen så vi får med alle ajax-kall
-    redraw();
+
+    // Regex for å finne ut om ?debug-kommandoen er inkludert i URL
+    if (/debug/i.test(options)) {
+        $(".debug").show();
+    }
+
+    // Sjekk om kobling mot databsen fungerer.
+    pingDatabase();
 
     // Database queries
+
+    function pingDatabase() {
+        $.ajax({ url: '/database.php?method=ping',
+        type: 'post',
+        success: function(output) {
+            console.log("Databasen sier "+output);
+            redraw();
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
+    }
 
     function getListOfScenes(bruker) {
 
