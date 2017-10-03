@@ -157,7 +157,7 @@ $(document).ready(function(){
     function getConcertInfo(bruker, concert) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("informasjon om konsert:").addClass("concertInfo").attr('id', 'cid'+concert.kid);
+        let container = $("<div></div>").text("Informasjon om konsert:").addClass("concertInfo").attr('id', 'cid'+concert.kid);
 
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
