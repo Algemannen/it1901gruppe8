@@ -385,6 +385,7 @@ case 'getBandInfoStreams':
     $query = "SELECT * 
         FROM band_strommelinker
         WHERE bid = ?
+		ORDER BY  visninger DESC
 ";
 
     // Gjør klar objekt for spørring
