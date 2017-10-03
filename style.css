@@ -168,6 +168,11 @@ ul.concertlist li {
     position: relative;
 }
 
+ul.concertlist li span{
+    width: calc(100% - 4.5em);
+    display: inline-block;
+}
+
 ul.technicianlist li {
     border: 0px transparent;
 }
