@@ -62,8 +62,6 @@ $(document).ready(function(){
             $('#listofscenes').append(container);
 
             for (i in l) {
-                console.log("New scene "+i+", id:"+l[i].sid);
-
                 getListOfConcertesByScene(bruker,l[i])
             }
 
@@ -285,14 +283,6 @@ $(document).ready(function(){
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
-        console.log("Pagestate:"+user.type);
-    }
-
-    function assertType(object, type) {
-        if (jQuery.type(object) !== type) {
-            console.log("Fatal typefeil: "+object+" er "+jQuery.type(object)+",og ikke "+type);
-        }
-
     }
 
     // Finner sidens URL-addresse
@@ -306,7 +296,6 @@ $(document).ready(function(){
     function logon() {
         user.name = $("#username_field").val();
         password = $('#password_field').val();
-        console.log("Username "+user.name);
 
         $.ajax({ url: '/database.php?method=login',
             data: {username: user.name, password: password},
