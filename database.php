@@ -105,7 +105,7 @@ case 'getListOfScenes':
 
     break;
 
-    /// Returnerer en liste over konserter brukeren hjelper til med rigging på.
+    /// Returnerer en liste over konserter brukeren hjelper til med rigging på en gitt festival
 case 'getListOfConcertsForTechs': 
 
     $query = "SELECT *
@@ -114,7 +114,8 @@ case 'getListOfConcertsForTechs':
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
         INNER JOIN band ON konsert_band.bid = band.bid
         INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
-        WHERE konsert_rigging.uid = ?";
+		WHERE konsert_rigging.uid = ?
+		AND fid = ?";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
@@ -125,10 +126,13 @@ case 'getListOfConcertsForTechs':
     } else {
 
         // Binder brukerid som et heltall
-        $stmt->bind_param('i', $brukerid);
+        $stmt->bind_param('ii', $brukerid, $fid);
 
         // Leser brukerid fra metodekallet
-        $brukerid = $_POST['userid'];
+		$brukerid = $_POST['userid'];
+
+		// Leser inn festival
+		$fid = $_POST['fid'];
 
         // Utfører spørringen
         $stmt->execute();
@@ -151,14 +155,15 @@ case 'getListOfConcertsForTechs':
 
     break;
 
-    /// Returnerer en liste over konserter som foregår på en gitt scene
+    /// Returnerer en liste over konserter som foregår på en gitt scene på en gitt festival
 case 'getListOfConcertsByScene':
 
     $query = "SELECT *
         FROM konsert
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
         INNER JOIN band ON konsert_band.bid = band.bid
-        WHERE konsert.sid = ?";
+		WHERE konsert.sid = ?
+		AND fid = ?";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
@@ -169,10 +174,13 @@ case 'getListOfConcertsByScene':
     } else {
 
         // Binder brukerid som heltall
-        $stmt->bind_param('i', $sid);
+        $stmt->bind_param('ii', $sid, $fid);
 
         // Leser inn sceneid
-        $sid = $_POST['sceneid'];
+		$sid = $_POST['sceneid'];
+
+		// Leser inn festival
+		$fid = $_POST['fid'];
 
         // Utfører spørringen
         $stmt->execute();
