@@ -91,7 +91,7 @@ $(document).ready(function(){
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
-            let sceneHead = $("<li></li>").text(scene.snavn);
+            let sceneHead = $("<li></li>").text(scene.navn);
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
             scenePoint.append(concerts);
@@ -155,7 +155,7 @@ $(document).ready(function(){
 
         // Vi bygger et HTML-element
         let container = $("<div></div>").text("Informasjon om konsert:").addClass("concertInfo").attr('id', 'cid'+concert.kid);
-
+        console.log(concert);
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
         } else if (bruker.type===2) {

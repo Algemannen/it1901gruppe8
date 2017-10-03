@@ -9,13 +9,13 @@ $dbconn = new mysqli("mysql.stud.ntnu.no", "it1901group8", "nullstressjoggedress
 if ($dbconn->connect_error){
     header('HTTP/1.0 504 Connection Failed' . $mysqli->connect_errno . " " . $dbconn->connect_error);
     die();
-} 
+}
 
 // Databasen bruker bokstaver fra utf8-standarden. Viktig for at f.eks ÆØÅ skal fungere.
 $dbconn->set_charset("utf8");
 
 // Henter ut hvilken funksjon som skal kalles.
-$method = $_GET['method']; 
+$method = $_GET['method'];
 
 
 switch ($method) {
@@ -27,8 +27,8 @@ case 'ping':
     /// Metode for å logge på serveren, tar inn brukernavn og passord. Returnerer brukerobjekt.
 case 'login':
 
-    $query = "SELECT * 
-        FROM bruker 
+    $query = "SELECT *
+        FROM bruker
         WHERE brukernavn= ?
         AND passord= ?";
 
@@ -43,8 +43,8 @@ case 'login':
         $stmt->bind_param('ss', $username, $password);
 
         // Leser brukernavn og passord
-        $username = $_POST['username']; 
-        $password = $_POST['password']; 
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
         // Utfør spørringen
         $stmt->execute();
@@ -106,9 +106,9 @@ case 'getListOfScenes':
     break;
 
     /// Returnerer en liste over konserter brukeren hjelper til med rigging på en gitt festival
-case 'getListOfConcertsForTechs': 
+case 'getListOfConcertsForTechs':
 
-    $query = "SELECT *
+    $query = "SELECT scene.navn AS snavn, band.navn, band.bid, konsert.kid, dato, start_tid, slutt_tid, scene.sid, fid, konsert_rigging.uid
         FROM konsert
         INNER JOIN scene ON konsert.sid = scene.sid
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
@@ -207,7 +207,7 @@ case 'getListOfConcertsByScene':
 case 'getListOfTechs':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM bruker
         INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
         WHERE kid = ?
@@ -252,7 +252,7 @@ case 'getListOfTechs':
 case 'getListOfTechnicalNeeds':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM tekniske_behov
         WHERE kid = ?
 ";
@@ -333,7 +333,7 @@ case 'insertTechnicalNeeds':
 case 'getListOfOlderConserts':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM konsert
         INNER JOIN scene on konsert.sid = scene.sid
         WHERE fid != ?
@@ -382,7 +382,7 @@ case 'getListOfOlderConserts':
 case 'getBandInfoStreams':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM band_strommelinker
         WHERE bid = ?
 		ORDER BY  visninger DESC
@@ -427,7 +427,7 @@ case 'getBandInfoStreams':
 case 'getBandInfoAlbum':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM album
         WHERE bid = ?
 ";
@@ -471,7 +471,7 @@ case 'getBandInfoAlbum':
 case 'getBandInfoOldConserts':
 
     // Gjør klar sql-setning
-    $query = "SELECT * 
+    $query = "SELECT *
         FROM band_tidligere_konserter
         WHERE bid = ?
 ";
@@ -519,5 +519,5 @@ default:
 }
 
 //Lukker oppkoblingen til databasen
-$dbconn->close(); 
+$dbconn->close();
 ?>
