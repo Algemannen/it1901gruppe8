@@ -12,6 +12,7 @@ var options = "";
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
+var current_fid = 1;
 
 // Functions to run after DOM is ready
 $(document).ready(function(){
@@ -85,7 +86,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:1},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
         success: function(output) {
             console.log(output);
@@ -118,7 +119,7 @@ $(document).ready(function(){
         let l = [];
 
         $.ajax({ url: '/database.php?method=getListOfConcertsForTechs',
-        data: {username: user.name, usertype: user.type, userid: user.id, fid:1},
+        data: {username: user.name, usertype: user.type, userid: user.id, fid:current_fid},
         type: 'post',
         success: function(output) {
             console.log(output);
