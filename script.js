@@ -85,7 +85,7 @@ $(document).ready(function(){
         let l = []
 
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
-        data: {username: user.name, usertype: user.type, sceneid: scene.sid},
+        data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:1},
         type: 'post',
         success: function(output) {
             console.log(output);
@@ -118,7 +118,7 @@ $(document).ready(function(){
         let l = [];
 
         $.ajax({ url: '/database.php?method=getListOfConcertsForTechs',
-        data: {username: user.name, usertype: user.type, userid: user.id},
+        data: {username: user.name, usertype: user.type, userid: user.id, fid:1},
         type: 'post',
         success: function(output) {
             console.log(output);
