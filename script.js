@@ -138,8 +138,6 @@ $(document).ready(function(){
             }
         }
         });
-
-
     }
 
     // Bygger en korrekt liste av scener
@@ -210,6 +208,48 @@ $(document).ready(function(){
 
     }
 
+    function getListOfTechnicalNeeds(bruker) {
+        let l = [];
+
+        $.ajax({ url: '/database.php?method=getListOfTechnicalNeeds',
+        data: {username: user.name, usertype: user.type, userid: user.id},
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+            l = jQuery.parseJSON(output);
+            console.log(l)
+
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
+    }
+    function addNeedsForTechs(bruker, concert, title, needs) {
+
+        $.ajax({ url: '/database.php?method=addNeedsForTechs',
+        data: {username:user.name, usertype:user.type, concertid:concert.kid, title:title, needs:needs},
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+
+
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
+    }
+
+
     // FUNCTIONS
 
     // Tegner siden på nytt etter brukertype
@@ -232,6 +272,14 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     getListOfConcertes(user);
+                }});
+                break;
+
+            case 3: //Bruker er manager
+                $.ajax({url: "manager.html",dataType: 'html', success: function(result){
+                    $("#root").html(result);
+                    $('#username').html(user.name);
+                    getListOfTechnicalNeeds(user);
                 }});
                 break;
             default:
