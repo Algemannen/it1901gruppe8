@@ -282,6 +282,11 @@ $(document).ready(function(){
                     getListOfTechnicalNeeds(user);
                 }});
                 break;
+            case 4: //Bruker er bookingansvarlig
+                $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
+                  $("#root").html(result);
+                  $('#username').html(user.name);
+                }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
