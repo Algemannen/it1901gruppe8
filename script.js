@@ -77,7 +77,9 @@ $(document).ready(function(){
             let sceneHead = $("<li></li>").text("Scene: "+scene.navn);
 
             scenePoint.append(concerts);
-            $('.scenelist').append(sceneHead,scenePoint);
+            let scenediv = $("<div></div>");
+            scenediv.append(sceneHead,scenePoint);
+            $('.scenelist').append(scenediv);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
