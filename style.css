@@ -19,7 +19,7 @@
     text-shadow: black 1px 1px 2px
 }
 
-.loginbox {
+.loginbox, .needs{
   position: relative;
   width: 400px;
   margin: 0 auto;
@@ -39,18 +39,18 @@
   color: #DDDCCA;
 }
 
-#password_field::placeholder, #username_field::placeholder {
+#password_field::placeholder, #username_field::placeholder,  #title_field::placeholder, #description_field::placeholder{
   color: white;
   opacity: 0.7;
 }
 
-#password_field, #username_field {
+#password_field, #username_field, #title_field, #description_field {
     width: 80%;
 }
 
 
 
-.loginbox input, .loginbox button {
+.loginbox input, .loginbox button, .needs input, .needs textarea, .needs button{
   border: 1px solid;
   border-bottom-color: rgba(255,255,255,.5);
   border-right-color: rgba(60,60,60,.35);
@@ -84,12 +84,12 @@ button:hover {
     color: #000;
 }
 
-.loginbox input {
+.loginbox input, .needs input, .needs textarea{
   margin-bottom: 19px;
   padding: 8px 24px 8px 10px;
 }
 
-.login_button {
+.login_button, .submit_button{
     width: 89%;
 }
 
@@ -98,7 +98,7 @@ button:hover {
     font-weight:bold;
     margin:5px auto;
     margin-top: 50px;
-    margin-bottom: 10px;
+    margin-bottom: 100px;
     padding: 12px;
     width: 80%;
     min-height: 180px;
@@ -193,7 +193,7 @@ ul.scenelist {
 }
 
 .scenelist div{
-  width: 100%
+  width: 50%
 }
 .sceneButtonContainer {
     width: 33.3%;
@@ -202,4 +202,10 @@ ul.scenelist {
 
 li.scenePoint {
     display: inline;
+}
+
+.needs > * {
+  max-width: 89%;
+  min-width: 89%;
+  min-height: 1.5em;
 }
