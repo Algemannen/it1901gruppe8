@@ -135,8 +135,6 @@ $(document).ready(function(){
             }
         }
         });
-
-
     }
 
     // Bygger en korrekt liste av scener
@@ -207,6 +205,34 @@ $(document).ready(function(){
 
     }
 
+
+    function addNeedsForTechs(bruker, concert, title, needs) {
+
+        $.ajax({ url: '/database.php?method=addNeedsForTechs',
+        data: {username:user.name, usertype:user.type, concertid:concert.kid, title:title, needs:needs},
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+            // l = jQuery.parseJSON(output);
+
+            // let scenePoint = $("<li></li>").addClass("scenePoint");
+            // let concerts = buildListOfConcerts(bruker,l);
+            // let sceneHead = $("<li></li>").text("Scene: "+scene.navn);
+
+            // scenePoint.append(concerts);
+            // $('.scenelist').append(sceneHead,scenePoint);
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
+    }
+
+
     // FUNCTIONS
 
     // Tegner siden på nytt etter brukertype
@@ -229,6 +255,14 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     getListOfConcertes(user);
+                }});
+                break;
+
+            case 3: //Bruker er manager
+                console.log("check")
+                $.ajax({url: "manager.html",dataType: 'html', success: function(result){
+                    $("#root").html(result);
+                    $('#username').html(user.name);
                 }});
                 break;
             default:

@@ -239,6 +239,9 @@
 			
 			break;
 
+
+		case 'addNeedsForTechs':
+			
 		/// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 		default:
 			header('HTTP/1.0 501 Not implemented method.');
