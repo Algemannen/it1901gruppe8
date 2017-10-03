@@ -208,16 +208,26 @@ $(document).ready(function(){
 
     }
 
-    function getListOfTechnicalNeeds(bruker) {
+    function getListOfTechnicalNeeds(kid) {
         let l = [];
 
         $.ajax({ url: '/database.php?method=getListOfTechnicalNeeds',
-        data: {username: user.name, usertype: user.type, userid: user.id},
+        data: {concertid: kid},
         type: 'post',
         success: function(output) {
             console.log(output);
             l = jQuery.parseJSON(output);
             console.log(l)
+
+            // Vi bygger et HTML-element
+            let kid = $("<h2></h2").text('Konsert :' + l[0].kid);
+            let listContainer = $("<ul></ul>").addClass("behov");
+            for (i in l) {
+                let tittel = $("<li></li>").text('Tittel :' + l[i].tittel);
+                let behov = $("<li></li>").text('Beskrivelse :' + l[i].behov);
+                listContainer.append(tittel,behov, '<hr>');
+            }
+            $('#tekniskebehov').append(kid,listContainer);
 
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -286,6 +296,7 @@ $(document).ready(function(){
                 $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
                   $("#root").html(result);
                   $('#username').html(user.name);
+                  getListOfTechnicalNeeds(1);
                 }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
