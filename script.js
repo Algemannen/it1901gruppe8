@@ -142,7 +142,7 @@ $(document).ready(function(){
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text('Dato: ' + list[i].dato + ' - Artist: ' + list[i].navn + ' - Starttid: ' + list[i].start_tid);
+            let concertInfo = $("<span></span>").text(' ' + list[i].navn +' | ' + list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
             listContainer.append(listPoint);
@@ -154,7 +154,7 @@ $(document).ready(function(){
     function getConcertInfo(bruker, concert) {
 
         // Vi bygger et HTML-element
-        let container = $("<div></div>").text("Informasjon om konsert:").addClass("concertInfo").attr('id', 'cid'+concert.kid);
+        let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid'+concert.kid);
         console.log(concert);
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
@@ -163,7 +163,7 @@ $(document).ready(function(){
             let concertScene = $("<span></span>").text(concert.snavn);
             let start = $("<span></span>").text(concert.start_tid);
             let slutt = $("<span></span>").text(concert.slutt_tid);
-            container.append("<br>Scene ",concertScene,"<br>Dato ",concertDate,"<br>Start ",start,"<br>Slutt ",slutt);
+            container.append("Scene ",concertScene,"<br>Dato ",concertDate,"<br>Start ",start,"<br>Slutt ",slutt);
         }
 
         container.hide();
