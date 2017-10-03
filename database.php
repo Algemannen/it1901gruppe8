@@ -73,7 +73,8 @@ case 'login':
     /// Returnerer en komplett liste av alle scener.
 case 'getListOfScenes':
     $query = "SELECT *
-        FROM scene";
+		FROM scene
+		ORDER BY  sid DESC";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
