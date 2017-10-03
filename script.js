@@ -262,14 +262,10 @@ $(document).ready(function(){
             type: 'post',
             success: function(output) {
                 console.log(output);
-                if (output !== "0") {
-                    let q = jQuery.parseJSON(output);
-                    user.type = parseInt(q.brukertype);
-                    user.id = parseInt(q.uid);
-                    redraw();
-                } else {
-                    alert("Feil passord eller brukernavn.");
-                }
+                let q = jQuery.parseJSON(output);
+                user.type = parseInt(q.brukertype);
+                user.id = parseInt(q.uid);
+                redraw();
 
             },
             error: function(xmlhttprequest, textstatus, message) {

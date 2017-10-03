@@ -52,14 +52,14 @@
 				// Hent resultatet fra spørringen
 				$result = $stmt->get_result();
 
+				// Hent ut første rad fra en spørring
+				$encode = $result->fetch_assoc();
+
 				// Hvis brukeren ikke finnes i databasen, returner en feilmelding og avslutt.
-				if (empty($result)) {
+				if (empty($encode)) {
 					header('HTTP/1.0 401 Unauthorized user.');
 					die();
-			    }
-
-				// Hent ut alle rader fra en spørring
-				$encode = $result->fetch_array(MYSQL_ASSOC);
+				}
 
 				// Returner json-string med data
 				echo json_encode($encode);
@@ -91,7 +91,7 @@
 
 				// Hent ut alle rader fra en spørring
 				$encode = array();
-				while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+				while ($row = $result->fetch_assoc()) {
 					$encode[] = $row;
 				}
 
@@ -137,7 +137,7 @@
 
 				// Hent ut alle rader fra en spørring
 				$encode = array();
-				while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+				while ($row = $result->fetch_assoc()) {
 					$encode[] = $row;
 				}
 
@@ -181,7 +181,7 @@
 
 				// Hent ut alle rader fra en spørring
 				$encode = array();
-				while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+				while ($row = $result->fetch_assoc()) {
 					$encode[] = $row;
 				}
 
@@ -201,7 +201,7 @@
 			$query = "SELECT * 
 				FROM bruker
 				INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-				WHERE bruker.kid = ?
+				WHERE kid = ?
 			";
 
 			// Gjør klar objekt for spørring
@@ -226,7 +226,7 @@
 
 				// Hent ut alle rader fra en spørring
 				$encode = array();
-				while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+				while ($row = $result->fetch_assoc()) {
 					$encode[] = $row;
 				}
 
