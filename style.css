@@ -99,7 +99,7 @@ button:hover {
     margin-top: 50px;
     margin-bottom: 50px;
     padding: 12px;
-    width: 600px;
+    width: 1200px;
     min-height: 180px;
     border-style: solid;
     border-width: 1px;
@@ -141,7 +141,7 @@ ul.concertlist li {
     border: 1px solid;
     margin: 4px;
     padding: 6px;
-
+    width: 300px;
     border-bottom-color: rgba(255,255,255,.8);
     border-right-color: rgba(255,255,255,.8);
     border-top-color: rgba(60,60,60,.8);
@@ -166,6 +166,9 @@ button.scene_button {
 ul.scenelist {
     margin:0px;
     padding:0px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
 }
 
 .sceneButtonContainer {
