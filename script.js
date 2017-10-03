@@ -145,7 +145,7 @@ $(document).ready(function(){
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(list[i].navn);
+            let concertInfo = $("<span></span>").text('Dato: ' + list[i].dato + ' - Artist: ' + list[i].navn + ' - Starttid: ' + list[i].start_tid);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
             listContainer.append(listPoint);
@@ -208,7 +208,27 @@ $(document).ready(function(){
 
     }
 
+    function getListOfTechnicalNeeds(bruker) {
+        let l = [];
 
+        $.ajax({ url: '/database.php?method=getListOfTechnicalNeeds',
+        data: {username: user.name, usertype: user.type, userid: user.id},
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+            l = jQuery.parseJSON(output);
+            console.log(l)
+
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+        });
+    }
     function addNeedsForTechs(bruker, concert, title, needs) {
 
         $.ajax({ url: '/database.php?method=addNeedsForTechs',
@@ -216,14 +236,8 @@ $(document).ready(function(){
         type: 'post',
         success: function(output) {
             console.log(output);
-            // l = jQuery.parseJSON(output);
 
-            // let scenePoint = $("<li></li>").addClass("scenePoint");
-            // let concerts = buildListOfConcerts(bruker,l);
-            // let sceneHead = $("<li></li>").text("Scene: "+scene.navn);
 
-            // scenePoint.append(concerts);
-            // $('.scenelist').append(sceneHead,scenePoint);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -262,10 +276,10 @@ $(document).ready(function(){
                 break;
 
             case 3: //Bruker er manager
-                console.log("check")
                 $.ajax({url: "manager.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
+                    getListOfTechnicalNeeds(user);
                 }});
                 break;
             default:
