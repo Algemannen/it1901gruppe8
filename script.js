@@ -159,11 +159,11 @@ $(document).ready(function(){
         if (bruker.type===1) {
             getListOfTechnicians(bruker, concert);
         } else if (bruker.type===2) {
-            let concertDate = $("<span></span>").text(concert.dato);
-            let concertScene = $("<span></span>").text(concert.snavn);
-            let start = $("<span></span>").text(concert.start_tid);
-            let slutt = $("<span></span>").text(concert.slutt_tid);
-            container.append("Scene ",concertScene,"<br>Dato ",concertDate,"<br>Start ",start,"<br>Slutt ",slutt);
+            let concertDate = $("<span></span>").text("Dato: " + concert.dato);
+            let concertScene = $("<span></span>").text("Scene: " +concert.snavn);
+            let start = $("<span></span>").text("Start: " + concert.start_tid);
+            let slutt = $("<span></span>").text("Slutt: " + concert.slutt_tid);
+            container.append("<br>",concertScene,concertDate,start,slutt);
         }
 
         container.hide();
@@ -188,7 +188,7 @@ $(document).ready(function(){
 
             if (bruker.type = 1) {
                 listContainer.append(listContainer);
-                $('#cid'+concert.kid).append("<div>Teknikere: </div>",listContainer);
+                $('#cid'+concert.kid).append("<div><br>Teknikere: </div>",listContainer);
             }
 
 

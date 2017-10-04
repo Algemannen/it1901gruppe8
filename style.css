@@ -171,8 +171,11 @@ ul.concertlist li span{
     display: inline-block;
 }
 
+
+
 ul.technicianlist li {
     border: 0px transparent;
+    text-align: left;
 }
 
 .concert_button {
@@ -193,7 +196,12 @@ button.scene_button {
 }
 
 .concertInfo {
-  text-align:left;
+  text-align: center;
+}
+
+.concertInfo > div{
+  text-align: left;
+  margin-left: 10px;
 }
 
 ul.singleScene {
