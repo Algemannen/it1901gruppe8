@@ -142,7 +142,7 @@ $(document).ready(function(){
         let listContainer = $("<ul></ul>").addClass("concertlist");
         for (i in list) {
             let listPoint = $("<li></li>");
-            let concertInfo = $("<span></span>").text(' ' + list[i].navn +' | ' + list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
+            let concertInfo = $("<div></div>").addClass("button_text").text(' ' + list[i].navn +' | ' + list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
             let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
             listPoint.append(concertInfo, concertButton, getConcertInfo(bruker, list[i]));
             listContainer.append(listPoint);

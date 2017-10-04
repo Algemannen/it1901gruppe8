@@ -149,18 +149,16 @@ button.logout_button {
     right:10px;
 }
 
-ul.concertlist {
+.concertlist {
     position: relative;
     margin:0px;
     padding:0px;
 }
 
-
-ul.concertlist li {
+.concertlist li {
     border: 1px solid;
-    margin: 4px;
-    padding: 6px;
-    width: 90%;
+    margin: 5px;
+    padding: 5px;
     border-bottom-color: rgba(255,255,255,.8);
     border-right-color: rgba(255,255,255,.8);
     border-top-color: rgba(60,60,60,.8);
@@ -172,12 +170,17 @@ ul.technicianlist li {
     border: 0px transparent;
 }
 
-button.concert_button {
-    position: absolute;
-    right:2px;
-    top: 2px;
+.concert_button {
+    display: block;
+    width: 30%; 
+    font-size: 10vm;
+    margin: auto;
 }
-
+.button_text{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
 button.scene_button {
     width:120px;
     height:80px;
@@ -190,11 +193,10 @@ ul.scenelist {
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between;
+    text-align: center;
 }
 
-.scenelist div{
-  width: 50%
-}
+
 .sceneButtonContainer {
     width: 33.3%;
 	float: left;
