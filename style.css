@@ -192,7 +192,16 @@ button.scene_button {
     margin-left: 16.666%;
 }
 
-ul.scenelist {
+.concertInfo {
+  text-align:left;
+}
+
+ul.singleScene {
+  padding-left: 15px;
+}
+
+
+.scenelist {
     margin:0px;
     padding:0px;
     display: flex !important;

@@ -59,7 +59,7 @@ $(document).ready(function(){
           console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
-            let container = $("<ul></ul>").addClass("scenelist");
+            let container = $("<div></div>").addClass("scenelist");
             $('#listofscenes').append(container);
 
             for (i in l) {
@@ -95,7 +95,7 @@ $(document).ready(function(){
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
             scenePoint.append(concerts);
-            let scenediv = $("<div></div>");
+            let scenediv = $("<ul></ul>").addClass("singleScene");
             scenediv.append(sceneHead,sceneInfo,scenePoint);
             $('.scenelist').append(scenediv);
         },
