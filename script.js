@@ -63,6 +63,8 @@ $(document).ready(function(){
             $('#listofscenes').append(container);
 
             for (i in l) {
+                let scenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
+                $('.scenelist').append(scenediv);
                 getListOfConcertesByScene(bruker,l[i])
             }
 
@@ -81,13 +83,12 @@ $(document).ready(function(){
 
     // Lager et html-element med konserter filtrert etter scene
     function getListOfConcertesByScene(bruker, scene) {
-        let l = []
-
         $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
         data: {username: user.name, usertype: user.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
         success: function(output) {
-            l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+            let l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l);
@@ -95,9 +96,9 @@ $(document).ready(function(){
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
             scenePoint.append(concerts);
-            let scenediv = $("<ul></ul>").addClass("singleScene");
-            scenediv.append(sceneHead,sceneInfo,scenePoint);
-            $('.scenelist').append(scenediv);
+            
+            $('.scene'+scene.sid).append(sceneHead,sceneInfo,scenePoint);
+            
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
