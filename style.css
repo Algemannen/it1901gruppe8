@@ -25,11 +25,7 @@
   margin: 0 auto;
   background: rgba(130,130,130,.6);
   padding: 20px 22px;
-  border: 1px solid;
-  border-top-color: rgba(255,255,255,.8);
-  border-left-color: rgba(255,255,255,.8);
-  border-bottom-color: rgba(60,60,60,.8);
-  border-right-color: rgba(60,60,60,.8);
+  border: 1px solid gray;
   bottom:0;
   display: flex;
   flex-direction: column;
@@ -51,11 +47,7 @@
 
 
 .loginbox input, .loginbox button, .needs input, .needs textarea, .needs button{
-  border: 1px solid;
-  border-bottom-color: rgba(255,255,255,.5);
-  border-right-color: rgba(60,60,60,.35);
-  border-top-color: rgba(60,60,60,.35);
-  border-left-color: rgba(80,80,80,.45);
+  border: 1px solid gray;
   background-color: rgba(0,0,0,.2);
   background-repeat: no-repeat;
   padding: 8px 24px 8px 10px;
@@ -66,11 +58,8 @@
 }
 
 button {
-    border: 1px solid;
-    border-bottom-color: rgba(255,255,255,.5);
-    border-right-color: rgba(60,60,60,.35);
-    border-top-color: rgba(60,60,60,.35);
-    border-left-color: rgba(80,80,80,.45);
+    border: none;
+    padding: 5px 10px 5px 10px;
     background-color: rgba(0,0,0,.4);
     background-repeat: no-repeat;
     font: bold .875em/1.25em "Candara", "Charcoal", sans-serif;
@@ -102,12 +91,7 @@ button:hover {
     padding: 12px;
     width: 80%;
     min-height: 180px;
-    border-style: solid;
-    border-width: 1px;
-    border-top-color: rgba(255,255,255,.8);
-    border-left-color: rgba(255,255,255,.8);
-    border-bottom-color: rgba(60,60,60,.8);
-    border-right-color: rgba(60,60,60,.8);
+    border: 1px solid gray;
     position: relative;
 }
 
@@ -120,12 +104,7 @@ button:hover {
     padding: 12px;
     width: 60%;
     min-height: 180px;
-    border-style: solid;
-    border-width: 1px;
-    border-top-color: rgba(255,255,255,.8);
-    border-left-color: rgba(255,255,255,.8);
-    border-bottom-color: rgba(60,60,60,.8);
-    border-right-color: rgba(60,60,60,.8);
+    border: 1px solid gray;
     position: relative;
 }
 
@@ -137,6 +116,7 @@ body {
     -o-background-size: cover;
     background-color: #454547;
     font-family: "Candara", "Charcoal", sans-serif;
+    color: #fcfdff;
 }
 
 ul {
@@ -156,13 +136,9 @@ button.logout_button {
 }
 
 .concertlist li {
-    border: 1px solid;
     margin: 5px;
     padding: 5px;
-    border-bottom-color: rgba(255,255,255,.8);
-    border-right-color: rgba(255,255,255,.8);
-    border-top-color: rgba(60,60,60,.8);
-    border-left-color: rgba(60,60,60,.8);
+    border: 1px solid white;
     position: relative;
 }
 

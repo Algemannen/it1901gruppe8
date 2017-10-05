@@ -2,13 +2,13 @@
 function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
-    let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid'+concert.kid);
+    let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid' + concert.kid);
     console.log(concert);
     if (bruker.type===1) {
         getListOfTechnicians(bruker, concert);
     } else if (bruker.type===2) {
         let concertDate = $("<span></span>").text("Dato: " + concert.dato);
-        let concertScene = $("<span></span>").text("Scene: " +concert.snavn);
+        let concertScene = $("<span></span>").text("Scene: " + concert.snavn);
         let start = $("<span></span>").text("Start: " + concert.start_tid);
         let slutt = $("<span></span>").text("Slutt: " + concert.slutt_tid);
         container.append("<br>",concertScene,concertDate,start,slutt);
