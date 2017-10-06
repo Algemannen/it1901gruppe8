@@ -73,8 +73,8 @@ case 'login':
     /// Returnerer en komplett liste av alle scener.
 case 'getListOfScenes':
     $query = "SELECT *
-		FROM scene
-		ORDER BY sid DESC";
+        FROM scene
+        ORDER BY sid DESC";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
@@ -114,8 +114,8 @@ case 'getListOfConcertsForTechs':
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
         INNER JOIN band ON konsert_band.bid = band.bid
         INNER JOIN konsert_rigging ON konsert_rigging.kid = konsert.kid
-		WHERE konsert_rigging.uid = ?
-		AND fid = ?";
+        WHERE konsert_rigging.uid = ?
+        AND fid = ?";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
@@ -129,10 +129,10 @@ case 'getListOfConcertsForTechs':
         $stmt->bind_param('ii', $brukerid, $fid);
 
         // Leser brukerid fra metodekallet
-		$brukerid = $_POST['userid'];
+        $brukerid = $_POST['userid'];
 
-		// Leser inn festival
-		$fid = $_POST['fid'];
+        // Leser inn festival
+        $fid = $_POST['fid'];
 
         // Utfører spørringen
         $stmt->execute();
@@ -162,8 +162,8 @@ case 'getListOfConcertsByScene':
         FROM konsert
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
         INNER JOIN band ON konsert_band.bid = band.bid
-		WHERE konsert.sid = ?
-		AND fid = ?";
+        WHERE konsert.sid = ?
+        AND fid = ?";
 
     // Gjør klar objekt for spørringen
     $stmt = $dbconn->stmt_init();
@@ -177,10 +177,10 @@ case 'getListOfConcertsByScene':
         $stmt->bind_param('ii', $sid, $fid);
 
         // Leser inn sceneid
-		$sid = $_POST['sceneid'];
+        $sid = $_POST['sceneid'];
 
-		// Leser inn festival
-		$fid = $_POST['fid'];
+        // Leser inn festival
+        $fid = $_POST['fid'];
 
         // Utfører spørringen
         $stmt->execute();
@@ -385,7 +385,7 @@ case 'getBandInfoStreams':
     $query = "SELECT *
         FROM band_strommelinker
         WHERE bid = ?
-		ORDER BY  visninger DESC
+        ORDER BY  visninger DESC
 ";
 
     // Gjør klar objekt for spørring

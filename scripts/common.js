@@ -18,7 +18,7 @@ function getConcertInfo(bruker, concert) {
     return container;
 }
 
-// Lager et html-element med teknikere som hører til en konsert
+// Lager et html-element med teknikere som hører til en konsert (ARRABGØR)
 function getListOfTechnicians(bruker, concert) {
 
     $.ajax({ url: '/database.php?method=getListOfTechs',
@@ -34,10 +34,8 @@ function getListOfTechnicians(bruker, concert) {
                 listContainer.append(listPoint);
             }
 
-            if (bruker.type = 1) {
-                listContainer.append(listContainer);
-                $('#cid'+concert.kid).append("<div><br>Teknikere: </div>",listContainer);
-            }
+            listContainer.append(listContainer);
+            $('#cid'+concert.kid).append("<div><br>Teknikere: </div>",listContainer);
 
 
         },
@@ -62,4 +60,23 @@ function safeJsonParse(output) {
         $("#root").after(output);
     }
     return l;
+}
+
+/*
+Hvordan bruke denne:
+
+html_id skal være en id eller klasse f.eks #root som listen settes inn i.
+list skal være en liste over objekter
+formatingunction skal være en funksjon som tar ett objekt fra list og gjør det til html
+
+*/
+function injectList(html_id, list, formatingfunction) {
+    let listContainer = $(<ul></ul>);
+    for (i in list) {
+        let listElement = $(<li></li>);
+        listElement.append(formatingfunction(list[i]));
+        listContainer.append(listElement);
+    }
+
+    $(html_id).append(listContainer);
 }

@@ -64,7 +64,7 @@ function getListOfConcertesByScene(bruker, scene) {
 
 }
 
-// Lager et html-element med konserter
+// Lager et html-element med konserter (FOR TEKNIKER)
 function getListOfConcertes(bruker) {
     let l = [];
 
@@ -90,7 +90,7 @@ function getListOfConcertes(bruker) {
     });
 }
 
-// Bygger en korrekt liste av scener
+// Bygger en korrekt liste av scener 
 function buildListOfConcerts(bruker,list) {
     let listContainer = $("<ul></ul>").addClass("concertlist");
     for (i in list) {
