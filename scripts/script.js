@@ -83,7 +83,7 @@ $(document).ready(function(){
                 $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfTechnicalNeeds(1);
+                    getListOfTechnicalNeeds();
                 }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
@@ -196,5 +196,3 @@ $(document).ready(function(){
 
 
 });
-
-
