@@ -418,8 +418,18 @@ case 'insertTechnicalNeeds':
         //Leser inn behov
         $behov = $_POST['behov'];
 
+        if (strlen($behov) == 0) {
+            header("HTTP/1.0 400 Bad Request: Zero-length string");
+            die();
+        }
+
         //Leser inn tittel
         $tittel = $_POST['tittel'];
+
+        if (strlen($tittel) == 0) {
+            header("HTTP/1.0 500 400 Bad Request: Zero-length string");
+            die();
+        }
 
         // Utfør sql-setning
         $stmt->execute();
