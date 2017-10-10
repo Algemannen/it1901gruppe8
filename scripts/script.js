@@ -76,7 +76,7 @@ $(document).ready(function(){
                 $.ajax({url: "manager.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfTechnicalNeeds(user);
+                    injectListOfAllNeeds();
                 }});
                 break;
             case 4: //Bruker er bookingansvarlig

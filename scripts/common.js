@@ -83,12 +83,16 @@ Denne funksjonen er async-sikker
 
 function injectList(html_id, list, formatingfunction) {
     let listContainer = $("<ul></ul>");
+    let child_id = [];
     for (i = 0; i<list.length; i++) {
-        let child_id = html_id+"_"+i+"_";
-        let listElement = $("<li></li>").attr("id",child_id);
+        child_id.push(html_id+"_"+i+"_");
+        let listElement = $("<li></li>").attr("id",child_id[i]);
         listContainer.append(listElement);
-        formatingfunction(child_id,list[i]);
     }
 
-    $(html_id).append(listContainer);
+    $("#"+html_id).append(listContainer);
+
+    for (i = 0; i<list.length; i++) {
+        formatingfunction(child_id[i],list[i]);
+    }
 }
