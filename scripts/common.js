@@ -73,7 +73,7 @@ formatingunction skal være en funksjon som tar ett objekt fra list og gjør det
 function injectList(html_id, list, formatingfunction) {
     let listContainer = $("<ul></ul>");
     for (i = 0; i<list.length; i++) {
-        let child_id = html_id+i;
+        let child_id = html_id+"_"+i+"_";
         let listElement = $("<li></li>").css("id",child_id);
         listContainer.append(listElement);
         formatingfunction(child_id,list[i]);
