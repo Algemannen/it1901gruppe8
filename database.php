@@ -359,7 +359,7 @@ case 'insertTechnicalNeeds':
     } else {
 
         // Bind konsertid som heltall
-        $stmt->bind_param('iss', $kid,$behov,$tittel);
+        $stmt->bind_param('iss', $kid,$tittel,$behov);
 
         // Leser inn konsertid
         $kid = $_POST['concertid'];
