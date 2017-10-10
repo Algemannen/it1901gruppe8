@@ -250,7 +250,58 @@ case 'getListOfConcertsByScene':
 		        $stmt->close();
 		    }
 
-		    break;
+            break;
+            
+            case 'getListOfConcertesByFestivalAndId':
+            
+                        // Gjør klar sql-setning
+                        $query = "SELECT k.kid, b.navn, k.dato, s.navn as snavn
+                            FROM konsert k
+                            INNER JOIN konsert_band kb ON kb.kid = k.kid
+                                    INNER JOIN band b ON b.bid = kb.kid
+                                    INNER JOIN scene s ON k.sid = s.sid
+                            WHERE fid = ?
+                            AND b.manager_uid = ?
+                                    ORDER BY k.kid ASC
+                    ";
+            
+                        // Gjør klar objekt for spørring
+                        $stmt = $dbconn->stmt_init();
+            
+                        // Gjør klar spørringen for databsen
+                        if(!$stmt->prepare($query)) {
+                            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+                        } else {
+            
+                            // Bind konsertid som heltall
+                            $stmt->bind_param('ii', $fid, $uid);
+            
+                            // Leser inn konsertid
+                            $fid = $_POST['fid'];
+
+                            // Leser inn konsertid
+                            $uid = $_POST['uid'];
+            
+                            // Utfør sql-setning
+                            $stmt->execute();
+            
+                            // Henter resultat fra spørring
+                            $result = $stmt->get_result();
+            
+                            // Hent ut alle rader fra en spørring
+                            $encode = array();
+                            while ($row = $result->fetch_assoc()) {
+                                $encode[] = $row;
+                            }
+            
+                            // Returner json-string med data
+                            echo json_encode($encode);
+            
+                            // Avslutt sql-setning
+                            $stmt->close();
+                        }
+            
+                        break;
 
 		    /// Returnerer en liste over alle teknikere på en gitt scene
 

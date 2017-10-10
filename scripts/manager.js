@@ -1,4 +1,5 @@
 var manager_kid;
+var manager_uid;
 
 function addNeedsForTechs(bruker, concert, title, needs) {
 
@@ -21,8 +22,8 @@ function addNeedsForTechs(bruker, concert, title, needs) {
 }
 
 function injectListOfAllNeeds() {
-    $.ajax({ url: '/database.php?method=getListOfConcertesByFestival',
-    data: {fid:1},
+    $.ajax({ url: '/database.php?method=getListOfConcertesByFestivalAndId',
+    data: {fid:1, uid:manager_uid},
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)

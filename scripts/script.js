@@ -76,6 +76,7 @@ $(document).ready(function(){
                 $.ajax({url: "manager.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
+                    manager_uid = user.id;
                     injectListOfAllNeeds();
                 }});
                 break;
