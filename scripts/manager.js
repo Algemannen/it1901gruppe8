@@ -1,3 +1,5 @@
+var manager_kid;
+
 function addNeedsForTechs(bruker, concert, title, needs) {
 
     $.ajax({ url: '/database.php?method=addNeedsForTechs',
@@ -25,8 +27,9 @@ function injectListOfAllNeeds() {
     success: function(output) {
         l = safeJsonParse(output)
         injectList("komplett_liste_over_tekniske_behov",l,function(html_id,element){
-            let container = $("<span></span>").text("Tekniske behov for: "+element.navn+" den "+element.dato + " på scene " + element.snavn);
-            $("#"+html_id).append(container);
+            let checkbox = $("<input />").attr("id","checkbox_"+html_id).attr("type","radio").attr("name","concert_check").attr("value",element.kid).addClass("manager_radio");
+            $("#"+html_id).append(checkbox);
+            getTechnicalNeedsByKid(element.kid, element.navn, element.dato, "#"+html_id);
         });
 
 
@@ -40,4 +43,24 @@ function injectListOfAllNeeds() {
     }
 });
     
+}
+
+function registerConcertNeed(kid,title,desc) {
+
+    $.ajax({ url: '/database.php?method=insertTechnicalNeeds',
+    data: {concertid:kid, behov:desc, tittel:title},
+    type: 'post',
+    success: function(output) {
+            console.log("Database insert: "+kid+", "+title+", "+desc);
+            $("#komplett_liste_over_tekniske_behov").empty();
+            injectListOfAllNeeds();
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+});
 }

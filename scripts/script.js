@@ -194,5 +194,23 @@ $(document).ready(function(){
 
     });
 
+    // Fang trykk på radio-knaper for manager
+    $('body').on('click', ".manager_radio", function () {
+        manager_kid = parseInt(this.value);
+        $('.needs_container').show();
+    });
+
+    
+    // Sende inn behov for manager
+    $('body').on('click', "#manager_submit", function () {
+        let kid = manager_kid;
+        let tittel = $("#title_field").val();
+        let desc = $("#description_field").val();
+        console.log("KID: "+kid);
+        console.log("Tittel: "+tittel);
+        console.log("Desc.: "+desc);
+
+        registerConcertNeed(kid,tittel,desc);
+    });
 
 });

@@ -346,7 +346,7 @@ case 'getListOfTechnicalNeeds':
 case 'insertTechnicalNeeds':
 
     // Gjør klar sql-setning
-    $query = "INSERT INTO tekniske_behov
+    $query = "INSERT INTO tekniske_behov (kid, tittel, behov)
         VALUES (?,?,?)
 ";
 
