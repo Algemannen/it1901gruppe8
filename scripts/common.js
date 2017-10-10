@@ -5,14 +5,19 @@ function getConcertInfo(bruker, concert) {
     let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid' + concert.kid);
     console.log(concert);
     if (bruker.type===1) {
+        let maindiv = $("<div></div>").addClass("behov");
+        let tb = $("<h3></h3>").text("Tekniske Behov:");
+        maindiv.append(tb);
+        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, maindiv);
         getListOfTechnicians(bruker, concert);
+        container.append(maindiv);
     } else if (bruker.type===2) {
         /*let concertDate = $("<span></span>").text("Dato: " + concert.dato);
         let concertScene = $("<span></span>").text("Scene: " + concert.snavn);
         let start = $("<span></span>").text("Start: " + concert.start_tid);
         let slutt = $("<span></span>").text("Slutt: " + concert.slutt_tid);
         container.append("<br>",concertScene,concertDate,start,slutt, '<br><br>');*/
-        let tb = $("<h3></h3>").text("Tekniske Behov: ");
+        let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
         getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
     }
@@ -31,14 +36,16 @@ function getListOfTechnicians(bruker, concert) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             // Vi bygger et HTML-element
-            let listContainer = $("<ul></ul>").addClass("technicianlist");
+            let listContainer = $("<div></div>").addClass("technicianlist");
+            listContainer.append("<h3>Teknikere: </h3>");
+
             for (i in l) {
-                let listPoint = $("<li></li>").text(l[i].fornavn +' '+ l[i].etternavn);
+                let listPoint = $("<span></span><br>").text(l[i].fornavn +' '+ l[i].etternavn);
                 listContainer.append(listPoint);
             }
 
             listContainer.append(listContainer);
-            $('#cid'+concert.kid).append("<div><br>Teknikere: </div>",listContainer);
+            $('#cid'+concert.kid).append(listContainer);
 
 
         },

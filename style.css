@@ -131,6 +131,8 @@ button.logout_button {
     position: relative;
     margin:0px;
     padding:0px;
+    display: flex;
+    flex-direction: column;
 }
 
 .concertlist li {
@@ -147,9 +149,11 @@ ul.concertlist li span{
 
 
 
-ul.technicianlist li {
+.technicianlist {
     border: 0px transparent;
-    text-align: left;
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 .concertInfo .tb_overskrift{
@@ -182,7 +186,6 @@ button.scene_button {
 }
 
 .concertInfo > div{
-  text-align: left;
   margin-left: 10px;
 }
 
