@@ -27,7 +27,11 @@ function injectListOfAllNeeds() {
     success: function(output) {
         l = safeJsonParse(output)
         injectList("komplett_liste_over_tekniske_behov",l,function(html_id,element){
-            let checkbox = $("<input />").attr("id","checkbox_"+html_id).attr("type","radio").attr("name","concert_check").attr("value",element.kid).addClass("manager_radio");
+            let is_checked_string = "";
+            if (element.kid === manager_kid) {
+                is_checked_string = "checked";
+            }
+            let checkbox = $("<input "+is_checked_string+"/>").attr("id","checkbox_"+html_id).attr("type","radio").attr("name","concert_check").attr("value",element.kid).addClass("manager_radio");
             $("#"+html_id).append(checkbox);
             getTechnicalNeedsByKid(element.kid, element.navn, element.dato, "#"+html_id);
         });
@@ -54,6 +58,7 @@ function registerConcertNeed(kid,title,desc) {
             console.log("Database insert: "+kid+", "+title+", "+desc);
             $("#komplett_liste_over_tekniske_behov").empty();
             injectListOfAllNeeds();
+
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {

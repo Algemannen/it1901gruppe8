@@ -209,6 +209,8 @@ $(document).ready(function(){
         console.log("KID: "+kid);
         console.log("Tittel: "+tittel);
         console.log("Desc.: "+desc);
+        $("#title_field").val('');
+        $("#description_field").val('');
 
         registerConcertNeed(kid,tittel,desc);
     });
