@@ -68,6 +68,17 @@ Hvordan bruke denne:
 html_id skal være en id eller klasse f.eks #root som listen settes inn i.
 list skal være en liste over objekter
 formatingunction skal være en funksjon som tar ett objekt fra list og gjør det til html
+det forventes at formateringsunfksjonen skal være på formen:
+
+    function(html_id, element) {
+        let container = $("<span></span>");
+
+        ...
+
+        $(html_id).append(container);
+    }
+
+Denne funksjonen er async-sikker
 */
 
 function injectList(html_id, list, formatingfunction) {
