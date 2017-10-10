@@ -11,10 +11,6 @@ function getListOfConcertes(bruker) {
             let concerts = buildListOfConcerts(bruker,l);
             scenePoint.append(concerts);
             $('#listofconcerts').append(scenePoint);
-            for (i in l){
-              getTechnicalNeedsByKid(l[i].kid, l[i].navn, l[i].dato, '#listofconcerts')
-            }
-
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {

@@ -7,11 +7,14 @@ function getConcertInfo(bruker, concert) {
     if (bruker.type===1) {
         getListOfTechnicians(bruker, concert);
     } else if (bruker.type===2) {
-        let concertDate = $("<span></span>").text("Dato: " + concert.dato);
+        /*let concertDate = $("<span></span>").text("Dato: " + concert.dato);
         let concertScene = $("<span></span>").text("Scene: " + concert.snavn);
         let start = $("<span></span>").text("Start: " + concert.start_tid);
         let slutt = $("<span></span>").text("Slutt: " + concert.slutt_tid);
-        container.append("<br>",concertScene,concertDate,start,slutt);
+        container.append("<br>",concertScene,concertDate,start,slutt, '<br><br>');*/
+        let tb = $("<h3></h3>").text("Tekniske Behov: ");
+        container.append(tb);
+        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
     }
 
     container.hide();
@@ -68,19 +71,20 @@ Hvordan bruke denne:
 html_id skal være en id eller klasse f.eks #root som listen settes inn i.
 list skal være en liste over objekter
 formatingunction skal være en funksjon som tar ett objekt fra list og gjør det til html
-
+*/
 
 function injectList(html_id, list, formatingfunction) {
-    let listContainer = $(<ul></ul>);
-    for (i in list) {
-        let listElement = $(<li></li>);
-        listElement.append(formatingfunction(list[i]));
+    let listContainer = $("<ul></ul>");
+    for (i = 0; i<list.length; i++) {
+        let child_id = html_id+"_"+i+"_";
+        let listElement = $("<li></li>").css("id",child_id);
         listContainer.append(listElement);
+        formatingfunction(child_id,list[i]);
     }
 
     $(html_id).append(listContainer);
 }
-*/
+
 
 
 // Bygger en korrekt liste av scener
@@ -107,17 +111,18 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             // Vi bygger et HTML-element
-            let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato);
-            let listContainer = $("<ul></ul>").addClass("behov");
+            let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
+            let listContainer = $("<div></div>").addClass("behov");
             if (l.length === 0) {
               listContainer.append('Ingen tekniske behov meldt enda.')
             }
+            listContainer.append('<br>');
             for (i in l) {
-                let tittel = $("<li></li>").text('Tittel :');
-                let tittel2 = $("<ul><li></li></ul>").text(l[i].tittel);
-                let behov2 = $("<ul><li></li></ul>").text(l[i].behov);
-                let behov = $("<li></li>").text('Beskrivelse :');
-                listContainer.append(tittel, tittel2, behov, behov2, '<hr>');
+                let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
+                let tittel2 = $("<span></span><br>").text(l[i].tittel);
+                let behov2 = $("<span></span><br>").text(l[i].behov);
+                let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
+                listContainer.append(tittel, tittel2, behov, behov2, '<br>');
             }
             $(container).append(kid,listContainer);
 

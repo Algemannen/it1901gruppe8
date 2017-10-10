@@ -297,7 +297,7 @@ case 'getListOfTechs':
 
     break;
 
-    /// Returnerer en liste over alle teknikere på en gitt scene
+    /// Returnerer en lste over tekniske behov for en gitt konsert.
 case 'getListOfTechnicalNeeds':
 
     // Gjør klar sql-setning
