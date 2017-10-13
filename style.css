@@ -1,71 +1,32 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
 
-.brukeroverskrift {
-  margin: auto;
-  text-align: center;
-  font-family: "Candara", "Charcoal", sans-serif;
-  margin-bottom: 15px;
-}
-
-#forsidetittel {
-    text-align: center;
-    color: #DDDCCA;
-    margin: auto;
+body {
+    background: url("img/bg_frost.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-color: #454547;
     font-family: "Candara", "Charcoal", sans-serif;
-    font-size: 500%;
-    padding-bottom: 25px;
-    margin-bottom: 25px;
-    margin-top: 50px;
-    text-shadow: black 1px 1px 2px
+    color: #F0F0F0;
 }
 
-.loginbox, .needs{
-  position: relative;
-  width: 400px;
-  margin: 0 auto;
-  background: rgba(130,130,130,.6);
-  padding: 20px 22px;
-  border: 1px solid gray;
-  bottom:0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  color: #DDDCCA;
-}
-
-#password_field::placeholder, #username_field::placeholder,  #title_field::placeholder, #description_field::placeholder{
-  color: white;
-  opacity: 0.7;
-}
-
-#password_field, #username_field, #title_field, #description_field {
-    width: 80%;
-}
-
-
-
-.loginbox input, .loginbox button, .needs input, .needs textarea, .needs button{
-  border: 1px solid gray;
-  background-color: rgba(0,0,0,.2);
-  background-repeat: no-repeat;
-  padding: 8px 24px 8px 10px;
-  font: bold .875em/1.25em "Candara", "Charcoal", sans-serif;
-  letter-spacing: .075em;
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+ul {
+    list-style-type: none;
 }
 
 button {
     border: none;
     padding: 5px 10px 5px 10px;
     background-color: rgba(0,0,0,.4);
-    background-repeat: no-repeat;
-    font: bold .875em/1.25em "Candara", "Charcoal", sans-serif;
+    font-weight: bold;
     letter-spacing: .075em;
     color: #fff;
     text-shadow: 0 1px 0 rgba(0,0,0,.1);
+}
+
+input{
+  color: #FFF;
 }
 
 button:hover {
@@ -75,7 +36,18 @@ button:hover {
 
 .loginbox input, .needs input, .needs textarea{
   margin-bottom: 19px;
+}
+
+.loginbox input, .loginbox button, .needs input, .needs textarea, .needs button{
+  border: 1px solid gray;
+  background-color: rgba(0,0,0,.2);
   padding: 8px 24px 8px 10px;
+}
+
+button.logout_button {
+    position: absolute;
+    top:10px;
+    right:10px;
 }
 
 .login_button, .submit_button{
@@ -94,37 +66,40 @@ button:hover {
     position: relative;
 }
 
-.tekcontent {
-    background-color:rgba(130,130,130,.6);
-    margin:5px auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    padding: 12px;
-    width: 60%;
-    min-height: 180px;
-    border: 1px solid gray;
-    position: relative;
+.brukeroverskrift {
+  margin: auto;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-body {
-    background: url("img/bg_frost.jpeg") no-repeat center center fixed;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-color: #454547;
-    font-family: "Candara", "Charcoal", sans-serif;
-    color: #F0F0F0;
+#forsidetittel {
+    text-align: center;
+    color: #DDDCCA;
+    font-size: 500%;
+    margin: 50px 0px;
+    text-shadow: black 1px 1px 2px
 }
 
-ul {
-    list-style-type: none;
+.loginbox, .needs{
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+  background: rgba(130,130,130,.6);
+  padding: 20px 22px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #DDDCCA;
 }
 
-button.logout_button {
-    position: absolute;
-    top:10px;
-    right:10px;
+#password_field::placeholder, #username_field::placeholder,  #title_field::placeholder, #description_field::placeholder{
+  color: white;
+  opacity: 0.7;
+}
+
+#password_field, #username_field, #title_field, #description_field {
+    width: 80%;
 }
 
 .concertlist {
@@ -147,8 +122,6 @@ ul.concertlist li span{
     display: inline-block;
 }
 
-
-
 .technicianlist {
     border: 0px transparent;
     text-align: center;
@@ -170,11 +143,13 @@ ul.concertlist li span{
     font-size: 10vm;
     margin: auto;
 }
+
 .button_text{
   width: 100%;
   text-align: center;
   margin-bottom: 10px;
 }
+
 button.scene_button {
     width:120px;
     height:80px;
@@ -193,7 +168,6 @@ ul.singleScene {
   padding-left: 15px;
 }
 
-
 .scenelist {
     margin:0px;
     padding:0px;
@@ -208,7 +182,6 @@ ul.singleScene {
   padding-right: 20px;
   padding-left: 20px;
 }
-
 
 .sceneButtonContainer {
     width: 33.3%;
@@ -228,7 +201,6 @@ li.scenePoint {
 .manager_radio {
     border: 0px;
     width: 100%;
-    /*width:2em;*/
     height:2em;
     position: absolute;
     left: 2em;
