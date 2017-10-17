@@ -207,12 +207,12 @@ li.scenePoint {
     transform: translate(-50%, -0.25em)
 }
 
-.søkeinput{
+.sokeinput{
   width: 30%;
   margin: auto;
 }
 
-.søkeinput input[type="text"] {
+.sokeinput input[type="text"] {
   width: 80%;
   padding: 8px 20px;
   margin: 8px 0;
@@ -223,8 +223,8 @@ li.scenePoint {
   color: black;
 }
 
-.søkeinput input[type="radio"] {
-  
+.sokeinput input[type="radio"] {
+
 }
 
 .resultlist{
