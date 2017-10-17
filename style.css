@@ -206,3 +206,48 @@ li.scenePoint {
     left: 2em;
     transform: translate(-50%, -0.25em)
 }
+
+.søkeinput{
+  width: 30%;
+  margin: auto;
+}
+
+.søkeinput input[type="text"] {
+  width: 80%;
+  padding: 8px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid gray;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+}
+
+.søkeinput input[type="radio"] {
+  
+}
+
+.resultlist{
+  border: 1px solid gray;
+  width: 25%;
+  min-height: 400px;
+  background-color: #F8F8F8;
+}
+
+.informationlist{
+  border: 1px solid gray;
+  width: 70%;
+  min-height: 400px;
+  background-color: #F8F8F8;
+}
+
+.results{
+  margin: auto;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+#sokeinput{
+  margin: auto;
+}

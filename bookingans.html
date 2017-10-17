@@ -1,5 +1,26 @@
 <div class=content>
     <button class = "logout_button">Logg ut</button>
     <p>Bookingansvarlig: <span id="username"></span></p>
+    <h2 class="brukeroverskrift">Søk</h2>
+    <div id="sokeside">
+      <div class="søkeinput">
+        <input type="text" name="tekstinput" placeholder="Søk etter..." id="textinput">
+        <button type="button" name="sokebutton" onclick="search()">Søk</button><br>
+        <input type="radio" name="type" value="konsert" id="radioKonsert"><label for="radioKonsert">Konsert</label>
+        <input type="radio" name="type" value="band" id="radioBand"><label for="radioBand">Band</label><br>
+      </div>
+      <br>
+      <div class="results">
+        <div class="resultlist">
+
+        </div>
+        <div class="informationlist">
+
+        </div>
+      </div>
+
+
+    </div>
+    <br>
     <h2 class="brukeroverskrift">Tekniske Behov</h2> <div id="tekniskebehov"></div>
 </div>
