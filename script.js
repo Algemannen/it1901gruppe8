@@ -7,6 +7,7 @@
 
 // Globale variables
 var current_fid = 1;
+var debugModus = false;
 // Siden URL
 var options = "";
 
@@ -23,6 +24,7 @@ $(document).ready(function(){
 
     // Regex for å finne ut om ?debug-kommandoen er inkludert i URL
     if (/debug/i.test(options)) {
+        debugModus = true;
         $(".debug").show();
     }
 
@@ -96,9 +98,9 @@ $(document).ready(function(){
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
             scenePoint.append(concerts);
-            
+
             $('.scene'+scene.sid).append(sceneHead,sceneInfo,scenePoint);
-            
+
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -407,12 +409,14 @@ $(document).ready(function(){
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-  try{
-    l = jQuery.parseJSON(output);
-  }
-  catch(err){
-    console.log(output);
-    $("#root").after(output);
+  if debugModus = true{
+    try{
+      l = jQuery.parseJSON(output);
+    }
+    catch(err){
+      console.log(output);
+      $("#root").after(output);
+    }
   }
   return l;
 }
