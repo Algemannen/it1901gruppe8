@@ -56,7 +56,7 @@ function search() { //search funksjon for bookingansvarlig
           l = safeJsonParse(output); //gjør en try-catch sjekk.
           for (i in l) {
             let konsertNavn = $("<span></span><br>").text(l[i].knavn);
-            $(konsertNavn).appendTo( "#resultlist");
+            $(konsertNavn).appendTo($("#resultlist"));
           }
         }
         if(searchType == 'band'){
