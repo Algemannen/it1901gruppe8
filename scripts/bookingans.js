@@ -67,8 +67,7 @@ function getOldBandByGenre() {
 
 function getBandInfoForBookingA() {
   let l = [];
-  //let BandNavn = $('#sokeside').val();
-  let BandNavn = "The Weeknd";
+  let BandNavn = $('#sokeside').val()
 
   $.ajax({url: '/database.php?method=getBandInfoForBookingA',
     data: {Band_Navn:BandNavn},
