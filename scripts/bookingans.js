@@ -55,7 +55,8 @@ function search() {
           console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
           for (i in l) {
-            let konsertNavn = $("<span></span><br>").text(l[i].dato);
+            let konsertNavn = $("<span></span><br>").text(l[i].knavn);
+            $(konsertNavn).appendTo( "#resultlist");
           }
         }
         if(searchType == 'band'){
@@ -102,27 +103,6 @@ function getOldBandByGenre() { //Ikke fullført
 function getBandInfoForBookingA() { //Ikke fullført
   let l = [];
   let BandNavn = $('#sokeside').val()
-
-  $.ajax({url: '/database.php?method=getBandInfoForBookingA',
-    data: {Band_Navn:BandNavn},
-    type: 'post',
-    success: function(output) {
-      console.log(output);
-      l = safeJsonParse(output);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
-        }
-    }
-  })
-}
-
-function getBandInfoForBookingA() { //Ikke fullført
-  let l = [];
-  let sok = $('#sokeside').val()
 
   $.ajax({url: '/database.php?method=getBandInfoForBookingA',
     data: {Band_Navn:BandNavn},
