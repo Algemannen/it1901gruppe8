@@ -296,11 +296,13 @@ $(document).ready(function(){
                   getListOfTechnicalNeeds(1);
                   tekniskebehov();
                 }});
+                break;
             case 5: //bruker er bookingsjef
                 $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
                   $("#root").html(result);
                   $('#username').html(user.name);
                 }});
+                break;
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
