@@ -42,7 +42,7 @@ function getListOfTechnicalNeeds() {
     })};
 
 
-function search() {
+function search() { //search funksjon for bookingansvarlig
   let l = [];
   let inputText = $("#textinput").val();
   let searchType = $('input[name=type]:checked').val();
@@ -76,47 +76,4 @@ function search() {
       }
   });
 
-}
-
-
-function getOldBandByGenre() { //Ikke fullført
-  let l = [];
-  genre = $('#sokeside').val();
-
-  $.ajax({url: '/database.php?method=getOldBandByGenre',
-    data: {fid: current_fid, sjanger:genre},
-    type: 'post',
-    success: function(output) {
-      l = safeJsonParse(output);
-      console.log(l);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
-        }
-    }
-  })
-}
-
-function getBandInfoForBookingA() { //Ikke fullført
-  let l = [];
-  let BandNavn = $('#sokeside').val()
-
-  $.ajax({url: '/database.php?method=getBandInfoForBookingA',
-    data: {Band_Navn:BandNavn},
-    type: 'post',
-    success: function(output) {
-      console.log(output);
-      l = safeJsonParse(output);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
-        }
-    }
-  })
 }
