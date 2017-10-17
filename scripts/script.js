@@ -86,6 +86,12 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds();
                 }});
+            case 5: //Bruker er bookingsjef
+                $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
+                    $("#root").html(result);
+                    $('#username').html(user.name);
+                    getListOfTechnicalNeeds();
+                }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
@@ -201,7 +207,7 @@ $(document).ready(function(){
         $('.needs_container').show();
     });
 
-    
+
     // Sende inn behov for manager
     $('body').on('click', "#manager_submit", function () {
         let kid = manager_kid;

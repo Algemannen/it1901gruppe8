@@ -44,7 +44,7 @@ function getListOfTechnicalNeeds() {
 }
 
 
-function getOldBandByGenre() {
+function getOldBandByGenre() { //Ikke fullført
   let l = [];
   genre = $('#sokeside').val();
 
@@ -65,7 +65,7 @@ function getOldBandByGenre() {
   })
 }
 
-function getBandInfoForBookingA() {
+function getBandInfoForBookingA() { //Ikke fullført
   let l = [];
   let BandNavn = $('#sokeside').val()
 
