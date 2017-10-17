@@ -678,7 +678,7 @@ case 'getOldBandByGenre':
         break;
 
       case 'konsert':
-        $query = "SELECT * FROM konsert WHERE NOT fid = ? AND sjanger LIKE '%?%'";
+        $query = "SELECT knavn AS navn FROM konsert WHERE NOT fid = ? AND sjanger LIKE '%?%'";
         $stmt = $dbconn->stmt_init();
         $stmt->bind_param('is', $fid, $text);
       default:
