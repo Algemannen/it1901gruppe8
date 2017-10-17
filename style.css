@@ -251,3 +251,10 @@ li.scenePoint {
 #sokeinput{
   margin: auto;
 }
+
+#sok {
+  display: none;
+}
+#sok_knapp {
+  background: rgba(255,255,255,0.4);
+}

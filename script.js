@@ -294,6 +294,7 @@ $(document).ready(function(){
                   $("#root").html(result);
                   $('#username').html(user.name);
                   getListOfTechnicalNeeds(1);
+                  tekniskebehov();
                 }});
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
