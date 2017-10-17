@@ -227,21 +227,49 @@ li.scenePoint {
 
 }
 
-.resultlist{
-  border: 1px solid gray;
+#resultlist{
   width: 25%;
-  min-height: 400px;
-  background-color: #F8F8F8;
+  height: 400px;
+  background-color: #E3E3E3;
+  color: black;
+  overflow-y: scroll;
 }
 
-.informationlist{
+#resultlist table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+  margin: auto;
+}
+
+#resultlist th, #resultlist td {
+  padding: 8px;
+}
+
+#resultlist th {
+  background-color: #3738AF;
+  color: #F4F4F4;
+}
+
+#resultlist tr:hover {
+  background-color: #D8D8D8;
+  cursor: pointer;
+}
+
+#resultlist .shortColumn {
+  width: 40px;
+}
+
+#informationlist{
   border: 1px solid gray;
   width: 70%;
   min-height: 400px;
   background-color: #F8F8F8;
+  color: black;
 }
 
-.results{
+#results{
   margin: auto;
   display: flex;
   width: 90%;

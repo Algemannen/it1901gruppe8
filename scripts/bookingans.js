@@ -51,18 +51,23 @@ function search() { //search funksjon for bookingansvarlig
       data: {text: inputText, type: searchType, fid: current_fid},
       type: 'post',
       success: function(output) {
-        if(searchType == 'konsert'){
           console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
-          for (i in l) {
-            let konsertNavn = $("<span></span><br>").text(l[i].knavn);
-            $(konsertNavn).appendTo( "#resultlist");
-          }
-        }
-        if(searchType == 'band'){
-          console.log(output);
-          l = safeJsonParse(output); //gjør en try-catch sjekk.  
-        }
+            $("#resultlist").empty();
+            let table = $("<table></table>");
+            let theader = $("<tr></tr>");
+            let thID = $("<th></th>").text("ID").addClass("shortColumn");
+            let thNavn = $("<th></th>").text("Navn");
+            theader.append(thID, thNavn);
+            table.append(theader);
+            for (i in l) {
+              let tableRow = $("<tr></tr>");
+              let tableElementID = $("<td></td>").text(l[i].id).addClass("shortColumn");
+              let tableElementNavn = $("<td></td>").text(l[i].navn);
+              tableRow.append(tableElementID, tableElementNavn);
+              table.append(tableRow);
+            }
+            $("#resultlist").append(table);
       },
       error: function(xmlhttprequest, textstatus, message) {
           if(textstatus==="timeout") {

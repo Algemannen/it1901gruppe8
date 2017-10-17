@@ -666,58 +666,79 @@ case 'getOldBandByGenre':
 	break;
 
   case 'search':
-  	$text = $_POST['text'];
+  	$text = "%{$_POST['text']}%";
     $type = $_POST['type'];
     $fid = $_POST['fid'];
 
     switch ($type) {
       case 'band':
-        $query = "SELECT navn FROM band WHERE navn LIKE '%?%'";
+
+        $query = "SELECT navn, bid AS id FROM band WHERE navn LIKE ?";
+
         $stmt = $dbconn->stmt_init();
-        $stmt->bind_param('s', $text);
+
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+
+            $stmt->bind_param("s", $text);
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+
+            // Returner json-string med data
+            echo json_encode($encode);
+
+            // Avslutt sql-setning
+            $stmt->close();
+        }
         break;
 
       case 'konsert':
-        $query = "SELECT knavn AS navn FROM konsert WHERE NOT fid = ? AND sjanger LIKE '%?%'";
+        $query = "SELECT knavn AS navn, kid AS id FROM konsert WHERE NOT fid = ? AND sjanger LIKE ?";
+
         $stmt = $dbconn->stmt_init();
-        $stmt->bind_param('is', $fid, $text);
+
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+
+            $stmt->bind_param("is", $fid, $text);
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+
+            // Returner json-string med data
+            echo json_encode($encode);
+
+            // Avslutt sql-setning
+            $stmt->close();
+        break;
+      }
       default:
         // Skriv en default her
         break;
     }
-
-  	/*$query = "SELECT navn
-  		FROM band
-      INNER JOIN album ON band.bid = album.bid
-      INNER JOIN band_strommelinker ON band.bid = band_strommelinker.bid
-      INNER JOIN band_tidligere_konserter ON band.bid = band_tidligere_konserter.bid
-  		WHERE band.navn like '%$Band_Navn%'";*/
-
-      // Gjør klar spørringen for databsen
-      if(!$stmt->prepare($query)) {
-          header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-      } else {
-
-
-          // Utfør sql-setning
-          $stmt->execute();
-
-          // Henter resultat fra spørring
-          $result = $stmt->get_result();
-
-          // Hent ut alle rader fra en spørring
-          $encode = array();
-          while ($row = $result->fetch_assoc()) {
-              $encode[] = $row;
-          }
-
-          // Returner json-string med data
-          echo json_encode($encode);
-
-          // Avslutt sql-setning
-          $stmt->close();
-      }
-
   	break;
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
