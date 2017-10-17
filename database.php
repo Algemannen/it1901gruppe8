@@ -674,13 +674,13 @@ case 'getOldBandByGenre':
       case 'band':
         $query = "SELECT navn FROM band WHERE navn LIKE '%?%'";
         $stmt = $dbconn->stmt_init();
-        $stmt->bind_param('s', $text);
+        $stmt->bind_param("s", $text);
         break;
 
       case 'konsert':
         $query = "SELECT * FROM konsert WHERE NOT fid = ? AND sjanger LIKE '%?%'";
         $stmt = $dbconn->stmt_init();
-        $stmt->bind_param('is', $fid, $text);
+        $stmt->bind_param("is", $fid, $text);
       default:
         // Skriv en default her
         break;
