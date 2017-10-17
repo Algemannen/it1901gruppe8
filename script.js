@@ -389,7 +389,7 @@ $(document).ready(function(){
         //$(".scenelist_c").addClass('.scenelist');
         //$(".scenelist_c").removeClass('.scenelist_c')
         $(this).parent().next('.concertlist').show();
-        $(".scene_button_back").show()
+        $(".scene_button_back").show();
         $(".scene_button").hide();
     });
 
