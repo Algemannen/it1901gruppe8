@@ -86,12 +86,14 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds();
                 }});
+                break;
             case 5: //Bruker er bookingsjef
                 $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfTechnicalNeeds();
+                    // getListOfTechnicalNeeds();
                 }});
+                break;
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
