@@ -1,3 +1,25 @@
+
+let defaultcolor = 'rgba(255,255,255,0.4)'
+let selectedcolor = 'rgba(0,0,0,0.4)'
+function tekniskebehov() {
+    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Tekniske behov";
+    document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
+    document.getElementById("sok_knapp").style.background=defaultcolor;
+
+    document.getElementById('tekniskebehov').style.visibility = 'visible';
+    document.getElementById('sok').style.visibility = 'hidden';
+}
+
+function sok() {
+    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Søk";
+    document.getElementById("tekniskebehov_knapp").style.background=defaultcolor;
+    document.getElementById("sok_knapp").style.background=selectedcolor;
+
+    document.getElementById('tekniskebehov').style.visibility = 'hidden';
+    document.getElementById('sok').style.visibility = 'visible';
+}
+
+
 function getListOfTechnicalNeeds() {
     let l = [];
 
