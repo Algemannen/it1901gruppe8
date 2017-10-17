@@ -6,8 +6,8 @@ function tekniskebehov() {
     document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
     document.getElementById("sok_knapp").style.background=defaultcolor;
 
-    document.getElementById('tekniskebehov').style.visibility = 'visible';
-    document.getElementById('sok').style.visibility = 'hidden';
+    document.getElementById('tekniskebehov').style.display  = 'initial';
+    document.getElementById('sok').style.display  = 'none';
 }
 
 function sok() {
@@ -15,10 +15,9 @@ function sok() {
     document.getElementById("tekniskebehov_knapp").style.background=defaultcolor;
     document.getElementById("sok_knapp").style.background=selectedcolor;
 
-    document.getElementById('tekniskebehov').style.visibility = 'hidden';
-    document.getElementById('sok').style.visibility = 'visible';
+    document.getElementById('tekniskebehov').style.display  = 'none';
+    document.getElementById('sok').style.display  = 'initial';
 }
-
 
 function getListOfTechnicalNeeds() {
     let l = [];
@@ -45,18 +44,27 @@ function getListOfTechnicalNeeds() {
 
 function search() {
   let l = [];
-  var inputText = $("#textinput").val();
-  var searchType = $('input[name=type]:checked').val();
+  let inputText = $("#textinput").val();
+  let searchType = $('input[name=type]:checked').val();
 
   $.ajax({ url: '/database.php?method=search',
-      data: {text: inputText, type: searchType},
+      data: {text: inputText, type: searchType, fid: current_fid},
       type: 'post',
       success: function(output) {
+        if(searchType == 'konsert'){
+          console.log(output);
+          l = safeJsonParse(output); //gjør en try-catch sjekk.
+          for (i in l) {
+            let konsertNavn = $("<span></span><br>").text(l[i].dato);
+          }
+        }
+        if(searchType == 'band'){
           console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
           for (i in l) {
             getTechnicalNeedsByKid(l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
           }
+        }
       },
       error: function(xmlhttprequest, textstatus, message) {
           if(textstatus==="timeout") {
@@ -94,6 +102,27 @@ function getOldBandByGenre() { //Ikke fullført
 function getBandInfoForBookingA() { //Ikke fullført
   let l = [];
   let BandNavn = $('#sokeside').val()
+
+  $.ajax({url: '/database.php?method=getBandInfoForBookingA',
+    data: {Band_Navn:BandNavn},
+    type: 'post',
+    success: function(output) {
+      console.log(output);
+      l = safeJsonParse(output);
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+  })
+}
+
+function getBandInfoForBookingA() { //Ikke fullført
+  let l = [];
+  let sok = $('#sokeside').val()
 
   $.ajax({url: '/database.php?method=getBandInfoForBookingA',
     data: {Band_Navn:BandNavn},
