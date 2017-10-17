@@ -49,11 +49,33 @@ function getOldBandByGenre() {
   genre = $('#sokeside').val();
 
   $.ajax({url: '/database.php?method=getOldBandByGenre',
-    data: {currentFid: current_fid, sjanger:genre},
+    data: {fid: current_fid, sjanger:genre},
     type: 'post',
     success: function(output) {
       l = safeJsonParse(output);
       console.log(l);
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+  })
+}
+
+function getBandInfoForBookingA() {
+  let l = [];
+  //let BandNavn = $('#sokeside').val();
+  let BandNavn = "The Weeknd";
+
+  $.ajax({url: '/database.php?method=getBandInfoForBookingA',
+    data: {Band_Navn:BandNavn},
+    type: 'post',
+    success: function(output) {
+      console.log(output);
+      l = safeJsonParse(output);
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
