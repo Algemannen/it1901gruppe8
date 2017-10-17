@@ -251,9 +251,9 @@ case 'getListOfConcertsByScene':
 		    }
 
             break;
-            
+
             case 'getListOfConcertesByFestivalAndId':
-            
+
                         // Gjør klar sql-setning
                         $query = "SELECT k.kid, b.navn, k.dato, s.navn as snavn
                             FROM konsert k
@@ -264,43 +264,43 @@ case 'getListOfConcertsByScene':
                             AND b.manager_uid = ?
                                     ORDER BY k.kid ASC
                     ";
-            
+
                         // Gjør klar objekt for spørring
                         $stmt = $dbconn->stmt_init();
-            
+
                         // Gjør klar spørringen for databsen
                         if(!$stmt->prepare($query)) {
                             header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
                         } else {
-            
+
                             // Bind konsertid som heltall
                             $stmt->bind_param('ii', $fid, $uid);
-            
+
                             // Leser inn konsertid
                             $fid = $_POST['fid'];
 
                             // Leser inn konsertid
                             $uid = $_POST['uid'];
-            
+
                             // Utfør sql-setning
                             $stmt->execute();
-            
+
                             // Henter resultat fra spørring
                             $result = $stmt->get_result();
-            
+
                             // Hent ut alle rader fra en spørring
                             $encode = array();
                             while ($row = $result->fetch_assoc()) {
                                 $encode[] = $row;
                             }
-            
+
                             // Returner json-string med data
                             echo json_encode($encode);
-            
+
                             // Avslutt sql-setning
                             $stmt->close();
                         }
-            
+
                         break;
 
 		    /// Returnerer en liste over alle teknikere på en gitt scene
@@ -621,6 +621,88 @@ case 'getBandInfoOldConserts':
     }
 
     break;
+
+case 'getOldBandByGenre':
+
+	$query = "SELECT *
+		FROM konsert
+		WHERE konsert.fid != ?
+		AND konsert.sjanger = ?";
+
+		// Gjør klar objekt for spørring
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør klar spørringen for databsen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+        // Bind konsertid som heltall
+        $stmt->bind_param('i', $currentFid);
+
+        // Leser inn festivalid
+		$currentFid = $_POST['currentFid'];
+		$sjanger = $_POST['sjanger'];
+
+        // Utfør sql-setning
+        $stmt->execute();
+
+        // Henter resultat fra spørring
+        $result = $stmt->get_result();
+
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
+            $encode[] = $row;
+        }
+
+        // Returner json-string med data
+        echo json_encode($encode);
+
+        // Avslutt sql-setning
+        $stmt->close();
+    }
+
+	break;
+
+  case 'getBandInfoForBookingA':
+  	$Band_Navn = $_POST['Band_Navn'];
+
+  	$query = "SELECT navn
+  		FROM band
+      INNER JOIN album ON band.bid = album.bid
+      INNER JOIN band_strommelinker ON band.bid = band_strommelinker.bid
+      INNER JOIN band_tidligere_konserter ON band.bid = band_tidligere_konserter.bid
+  		WHERE band.navn like '%$Band_Navn%'";
+
+  		// Gjør klar objekt for spørring
+      $stmt = $dbconn->stmt_init();
+
+      // Gjør klar spørringen for databsen
+      if(!$stmt->prepare($query)) {
+          header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+      } else {
+
+          // Utfør sql-setning
+          $stmt->execute();
+
+          // Henter resultat fra spørring
+          $result = $stmt->get_result();
+
+          // Hent ut alle rader fra en spørring
+          $encode = array();
+          while ($row = $result->fetch_assoc()) {
+              $encode[] = $row;
+          }
+
+          // Returner json-string med data
+          echo json_encode($encode);
+
+          // Avslutt sql-setning
+          $stmt->close();
+      }
+
+  	break;
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
