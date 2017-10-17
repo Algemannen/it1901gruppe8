@@ -6,8 +6,8 @@ function tekniskebehov() {
     document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
     document.getElementById("sok_knapp").style.background=defaultcolor;
 
-    document.getElementById('tekniskebehov').style.visibility = 'visible';
-    document.getElementById('sok').style.visibility = 'hidden';
+    document.getElementById('tekniskebehov').style.display  = 'initial';
+    document.getElementById('sok').style.display  = 'none';
 }
 
 function sok() {
@@ -15,8 +15,8 @@ function sok() {
     document.getElementById("tekniskebehov_knapp").style.background=defaultcolor;
     document.getElementById("sok_knapp").style.background=selectedcolor;
 
-    document.getElementById('tekniskebehov').style.visibility = 'hidden';
-    document.getElementById('sok').style.visibility = 'visible';
+    document.getElementById('tekniskebehov').style.display  = 'none';
+    document.getElementById('sok').style.display  = 'initial';
 }
 
 function getListOfTechnicalNeeds() {
