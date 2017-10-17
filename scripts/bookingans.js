@@ -42,3 +42,25 @@ function getListOfTechnicalNeeds() {
         }
     });
 }
+
+
+function getOldBandByGenre() {
+  let l = [];
+  genre = $('#sokeside').val();
+
+  $.ajax({url: '/database.php?method=getOldBandByGenre',
+    data: {currentFid: current_fid, sjanger:genre},
+    type: 'post',
+    success: function(output) {
+      l = safeJsonParse(output);
+      console.log(l);
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+  })
+}
