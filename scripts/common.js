@@ -12,14 +12,14 @@ function getConcertInfo(bruker, concert) {
         getListOfTechnicians(bruker, concert);
         container.append(maindiv);
     } else if (bruker.type===2) {
-        /*let concertDate = $("<span></span>").text("Dato: " + concert.dato);
-        let concertScene = $("<span></span>").text("Scene: " + concert.snavn);
-        let start = $("<span></span>").text("Start: " + concert.start_tid);
-        let slutt = $("<span></span>").text("Slutt: " + concert.slutt_tid);
-        container.append("<br>",concertScene,concertDate,start,slutt, '<br><br>');*/
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
         getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
+    } else if (bruker.type==5){
+        let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
+        container.append(cost_report);
+        
+
     }
 
     container.hide();
@@ -145,6 +145,7 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
                 let behov2 = $("<span></span><br>").text(l[i].behov);
                 let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
                 listContainer.append(tittel, tittel2, behov, behov2, '<br>');
+
             }
             $(container).append(kid,listContainer);
 
