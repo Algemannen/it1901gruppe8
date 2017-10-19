@@ -52,7 +52,6 @@ function search() { //search funksjon for bookingansvarlig
       data: {text: inputText, type: searchType, fid: current_fid},
       type: 'post',
       success: function(output) {
-          console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
             $("#resultlist").empty();
             let table = $("<table></table>");
