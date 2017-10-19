@@ -282,4 +282,22 @@ $(document).ready(function(){
 
     });
 
+    $('body').on('click', "#tekniskebehov_knapp", function () {
+        bookingfane(0);
+    });
+
+    $('body').on('click', "#sok_knapp", function () {
+        bookingfane(1);
+    });
+
+    $('body').on('click', "#sokebutton", function () {
+        search();
+    });
+
+
+
+
+
+
+
 });

@@ -1,23 +1,23 @@
 
-let defaultcolor = 'rgba(255,255,255,0.4)';
-let selectedcolor = 'rgba(0,0,0,0.4)';
+let defaultcolor = 'rgba(255,255,255,0.4)'
+let selectedcolor = 'rgba(0,0,0,0.4)'
 
-function tekniskebehov() {
-    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Tekniske behov";
-    document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
-    document.getElementById("sok_knapp").style.background=defaultcolor;
+function bookingfane(index) {
+    if (index=="0") {
+        $("#tekniskebehov").show();
+        $("#tekniskebehov_knapp").css("background",selectedcolor);
 
-    document.getElementById('tekniskebehov').style.display  = 'initial';
-    document.getElementById('sok').style.display  = 'none';
-}
+        $("#sok").hide();
+        $("#sok_knapp").css("background",defaultcolor);
+    }
+    else if (index == "1") {
+        $("#sok").show();
+        $("#sok_knapp").css("background",selectedcolor);
 
-function sok() {
-    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Søk";
-    document.getElementById("tekniskebehov_knapp").style.background=defaultcolor;
-    document.getElementById("sok_knapp").style.background=selectedcolor;
+        $("#tekniskebehov").hide();
+        $("#tekniskebehov_knapp").css("background",defaultcolor);
+    }
 
-    document.getElementById('tekniskebehov').style.display  = 'none';
-    document.getElementById('sok').style.display  = 'initial';
 }
 
 function getListOfTechnicalNeeds() {
