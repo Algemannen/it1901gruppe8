@@ -741,6 +741,43 @@ case 'getOldBandByGenre':
     }
   	break;
 
+    case 'getBandInfo':
+    	$text = "%{$_POST['text']}%";
+      $type = $_POST['type'];
+      $fid = $_POST['fid'];
+
+      $query = "SELECT navn, bid AS id FROM band WHERE navn LIKE ?";
+
+      $stmt = $dbconn->stmt_init();
+
+      if(!$stmt->prepare($query)) {
+          header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+      } else {
+
+
+          $stmt->bind_param("s", $text);
+
+          // Utfør sql-setning
+          $stmt->execute();
+
+          // Henter resultat fra spørring
+          $result = $stmt->get_result();
+
+          // Hent ut alle rader fra en spørring
+          $encode = array();
+          while ($row = $result->fetch_assoc()) {
+              $encode[] = $row;
+          }
+
+          // Returner json-string med data
+          echo json_encode($encode);
+
+          // Avslutt sql-setning
+          $stmt->close();
+
+      break;
+
+
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
     header('HTTP/1.0 501 Not implemented method.');

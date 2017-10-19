@@ -1,6 +1,7 @@
 
-let defaultcolor = 'rgba(255,255,255,0.4)'
-let selectedcolor = 'rgba(0,0,0,0.4)'
+let defaultcolor = 'rgba(255,255,255,0.4)';
+let selectedcolor = 'rgba(0,0,0,0.4)';
+
 function tekniskebehov() {
     document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Tekniske behov";
     document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
@@ -54,14 +55,14 @@ function search() { //search funksjon for bookingansvarlig
           console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
             $("#resultlist").empty();
-            let table = $("<table></table>");
+            let table = $("<table></table>").attr("id", "sokeTabell");
             let theader = $("<tr></tr>");
             let thID = $("<th></th>").text("ID").addClass("shortColumn");
             let thNavn = $("<th></th>").text("Navn");
             theader.append(thID, thNavn);
             table.append(theader);
             for (i in l) {
-              let tableRow = $("<tr></tr>");
+              let tableRow = $("<tr></tr>").click(getSearchInformation);
               let tableElementID = $("<td></td>").text(l[i].id).addClass("shortColumn");
               let tableElementNavn = $("<td></td>").text(l[i].navn);
               tableRow.append(tableElementID, tableElementNavn);
@@ -77,5 +78,12 @@ function search() { //search funksjon for bookingansvarlig
           }
       }
   });
+
+}
+
+
+
+function getSearchInformation() {
+   let id = $(this).find(".shortColumn").html();
 
 }
