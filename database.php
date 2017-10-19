@@ -744,16 +744,13 @@ case 'getOldBandByGenre':
     case 'getBandInfo':
       $bid = $_POST['bid'];
 
-      $query = "SELECT b.navn AS bnavn, a.navn AS anavn, bio, popularitet, sjanger, btk.navn AS btknavn,
-      lokasjon, tilskere, btk.dato, salgstall, utgitt_aar, fornavn, etternavn, email
+      $query = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
       FROM band b
-      INNER JOIN band_tidligere_konserter btk ON b.bid = btk.bid
-      INNER JOIN album a ON b.bid = a.bid
       INNER JOIN bruker br ON b.manager_uid = br.uid
       WHERE b.bid = ?";
 
       $stmt = $dbconn->stmt_init();
-      
+
       if(!$stmt->prepare($query)) {
           header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
       } else {

@@ -75,10 +75,3 @@ function search() { //search funksjon for bookingansvarlig
   });
 
 }
-
-
-
-function getSearchInformation() {
-   let id = $(this).find(".shortColumn").html();
-
-}
