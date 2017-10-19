@@ -744,7 +744,7 @@ case 'getOldBandByGenre':
     case 'getBandInfo':
       $bid = $_POST['bid'];
 
-      $query = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
+      $query = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email, bilde_url
       FROM band b
       INNER JOIN bruker br ON b.manager_uid = br.uid
       WHERE b.bid = ?";

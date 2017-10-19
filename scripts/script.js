@@ -227,15 +227,26 @@ $(document).ready(function(){
 
 
     $('body').on('click', ".bookingnavnsok", function () {
+      let bandInfo = $("<div></div>").addClass("bandInfo");
+      $("#informationlist").empty();
       $.ajax({ url: '/database.php?method=getBandInfo',
           data: {bid: this.value[1]},
           type: 'post',
           success: function(output) {
               console.log(output);
               l = safeJsonParse(output); //gjør en try-catch sjekk.
-              let bandInfo = $("<div></div>");
               let bandOverskrift = $("<h3></h3>").text(l[0].navn);
-              let bandBio = $("<p></p>").text(l[0].bio);
+              let bandInformation = $("<div></div>");
+              let bandImage = $('<img class="bandImage"/>').attr('src', l[0].bilde_url.replace("\/", "/"));
+              let bio = $("<span></span><br>").text("Bio: " + l[0].bio);
+              let popularitet = $("<span></span><br>").text("Popularitet: " +l[0].popularitet);
+              let sjanger = $("<span></span><br>").text("Sjanger: " + l[0].sjanger);
+              let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
+              let managerFornavn = $("<span></span><br>").text(l[0].fornavn + " " + l[0].etternavn);
+              let managerEmail = $("<span></span>").text(l[0].email);
+              bandInformation.append(bio, popularitet, sjanger, manager, managerFornavn, managerEmail)
+              bandInfo.append(bandImage, bandInformation);
+              $("#informationlist").append(bandOverskrift, bandInfo);
           },
           error: function(xmlhttprequest, textstatus, message) {
               if(textstatus==="timeout") {
@@ -278,6 +289,7 @@ $(document).ready(function(){
                   console.log("Error: "+message);
               }
           }
+
       });
 
     });
