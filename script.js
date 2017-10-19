@@ -301,6 +301,7 @@ $(document).ready(function(){
                 $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
                   $("#root").html(result);
                   $('#username').html(user.name);
+                  getConcertReport(user);
                 }});
                 break;
             default:

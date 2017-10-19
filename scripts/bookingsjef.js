@@ -7,14 +7,13 @@ function getConcertReport(bruker){
     type: 'post',
     success: function(output) {
       l = safeJsonParse(output);
-      let scenePoint = $("<li></li>").addClass("scenePoint");
+      let sceneList = $("<li></li>").addClass("sceneList");
       let concerts = buildListOfConcerts(bruker,l);
       let sceneHead = $("<li></li>").text(scene.navn);
-      let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
       scenePoint.append(concerts);
 
-      $('.scene'+scene.sid).append(sceneHead,sceneInfo,scenePoint);
+      $('booksjefDIV').append(sceneHead,sceneList);
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
@@ -23,5 +22,5 @@ function getConcertReport(bruker){
             console.log("Error: "+message);
         }
     }
-});
+  });
 }
