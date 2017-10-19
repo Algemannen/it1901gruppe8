@@ -58,7 +58,8 @@ function search() { //search funksjon for bookingansvarlig
             let table = $("<table></table>");
             for (i in l) {
               let tableRow = $("<tr></tr>");
-              let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(l[i].id);
+              let obj = [searchType, l[i].id];
+              let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(obj);
               tableRow.append(tableElementNavn);
               table.append(tableRow);
             }
