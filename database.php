@@ -674,17 +674,17 @@ case 'getBandInfo':
             // Leser inn konsertid
             $bid = $_POST['bid'];
 
-            // Utfør sql-setning
-            $stmt->execute();
+          // Henter resultat fra spørring
+          $result = $stmt->get_result();
 
-            // Henter resultat fra spørring
-            $result = $stmt->get_result();
+          // Hent ut alle rader fra en spørring
+          $encode = array();
+          while ($row = $result->fetch_assoc()) {
+              $encode[] = $row;
+          }
 
-            // Hent ut alle rader fra en spørring
-            $encode = array();
-            while ($row = $result->fetch_assoc()) {
-                $encode[] = $row;
-            }
+          // Returner json-string med data
+          echo json_encode($encode);
 
             $finalencode[] = $encode;
 
@@ -718,17 +718,17 @@ case 'getBandInfo':
             // Leser inn konsertid
             $bid = $_POST['bid'];
 
-            // Utfør sql-setning
-            $stmt->execute();
+        // Utfører spørringen
+        $stmt->execute();
 
-            // Henter resultat fra spørring
-            $result = $stmt->get_result();
+        // Får resultatet fra spørring
+        $result = $stmt->get_result();
 
-            // Hent ut alle rader fra en spørring
-            $encode = array();
-            while ($row = $result->fetch_assoc()) {
-                $encode[] = $row;
-            }
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
+            $encode[] = $row;
+        }
 
             $finalencode[] = $encode;
 
