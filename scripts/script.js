@@ -224,4 +224,11 @@ $(document).ready(function(){
         registerConcertNeed(kid,tittel,desc);
     });
 
+    
+
+    $('body').on('click', ".bookingnavnsok", function () {
+        console.log(this.value);
+        
+    });
+
 });

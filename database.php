@@ -742,20 +742,24 @@ case 'getOldBandByGenre':
   	break;
 
     case 'getBandInfo':
-    	$text = "%{$_POST['text']}%";
-      $type = $_POST['type'];
-      $fid = $_POST['fid'];
+      $bid = $_POST['bid'];
 
-      $query = "SELECT navn, bid AS id FROM band WHERE navn LIKE ?";
+      $query = "SELECT b.navn AS bnavn, a.navn AS anavn, bio, popularitet, sjanger, btk.navn AS btknavn,
+      lokasjon, tilskere, btk.dato, salgstall, utgitt_aar, fornavn, etternavn, email
+      FROM band b
+      INNER JOIN band_tidligere_konserter btk ON b.bid = btk.bid
+      INNER JOIN album a ON b.bid = a.bid
+      INNER JOIN bruker br ON b.manager_uid = br.uid
+      WHERE b.bid = ?";
 
       $stmt = $dbconn->stmt_init();
-
+      
       if(!$stmt->prepare($query)) {
           header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
       } else {
 
 
-          $stmt->bind_param("s", $text);
+          $stmt->bind_param("i", $bid);
 
           // Utfør sql-setning
           $stmt->execute();
@@ -774,7 +778,7 @@ case 'getOldBandByGenre':
 
           // Avslutt sql-setning
           $stmt->close();
-
+        }
       break;
 
 

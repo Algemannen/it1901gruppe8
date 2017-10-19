@@ -55,17 +55,11 @@ function search() { //search funksjon for bookingansvarlig
           console.log(output);
           l = safeJsonParse(output); //gjør en try-catch sjekk.
             $("#resultlist").empty();
-            let table = $("<table></table>").attr("id", "sokeTabell");
-            let theader = $("<tr></tr>");
-            let thID = $("<th></th>").text("ID").addClass("shortColumn");
-            let thNavn = $("<th></th>").text("Navn");
-            theader.append(thID, thNavn);
-            table.append(theader);
+            let table = $("<table></table>");
             for (i in l) {
-              let tableRow = $("<tr></tr>").click(getSearchInformation);
-              let tableElementID = $("<td></td>").text(l[i].id).addClass("shortColumn");
-              let tableElementNavn = $("<td></td>").text(l[i].navn);
-              tableRow.append(tableElementID, tableElementNavn);
+              let tableRow = $("<tr></tr>");
+              let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(l[i].id);
+              tableRow.append(tableElementNavn);
               table.append(tableRow);
             }
             $("#resultlist").append(table);
