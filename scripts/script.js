@@ -224,11 +224,80 @@ $(document).ready(function(){
         registerConcertNeed(kid,tittel,desc);
     });
 
-    
+
 
     $('body').on('click', ".bookingnavnsok", function () {
-        console.log(this.value);
-        
+      $.ajax({ url: '/database.php?method=getBandInfo',
+          data: {bid: this.value[1]},
+          type: 'post',
+          success: function(output) {
+              console.log(output);
+              l = safeJsonParse(output); //gjør en try-catch sjekk.
+              let bandInfo = $("<div></div>");
+              let bandOverskrift = $("<h3></h3>").text(l[0].navn);
+              let bandBio = $("<p></p>").text(l[0].bio);
+          },
+          error: function(xmlhttprequest, textstatus, message) {
+              if(textstatus==="timeout") {
+                  alert("Timeout feil, kan ikke koble til databasen");
+              } else {
+                  console.log("Error: "+message);
+              }
+          }
+      });
+
+      $.ajax({ url: '/database.php?method=getBandInfoAlbum',
+          data: {bid: this.value[1]},
+          type: 'post',
+          success: function(output) {
+              console.log(output);
+              l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+          },
+          error: function(xmlhttprequest, textstatus, message) {
+              if(textstatus==="timeout") {
+                  alert("Timeout feil, kan ikke koble til databasen");
+              } else {
+                  console.log("Error: "+message);
+              }
+          }
+      });
+
+      $.ajax({ url: '/database.php?method=getBandInfoOldConserts',
+          data: {bid: this.value[1]},
+          type: 'post',
+          success: function(output) {
+              console.log(output);
+              l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+          },
+          error: function(xmlhttprequest, textstatus, message) {
+              if(textstatus==="timeout") {
+                  alert("Timeout feil, kan ikke koble til databasen");
+              } else {
+                  console.log("Error: "+message);
+              }
+          }
+      });
+
     });
+
+    $('body').on('click', "#tekniskebehov_knapp", function () {
+        bookingfane(0);
+    });
+
+    $('body').on('click', "#sok_knapp", function () {
+        bookingfane(1);
+    });
+
+    $('body').on('click', "#sokebutton", function () {
+        search();
+    });
+
+
+
+
+
+
 
 });

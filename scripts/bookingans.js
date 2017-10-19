@@ -1,22 +1,23 @@
 
 let defaultcolor = 'rgba(255,255,255,0.4)'
 let selectedcolor = 'rgba(0,0,0,0.4)'
-function tekniskebehov() {
-    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Tekniske behov";
-    document.getElementById("tekniskebehov_knapp").style.background=selectedcolor;
-    document.getElementById("sok_knapp").style.background=defaultcolor;
 
-    document.getElementById('tekniskebehov').style.display  = 'initial';
-    document.getElementById('sok').style.display  = 'none';
-}
+function bookingfane(index) {
+    if (index=="0") {
+        $("#tekniskebehov").show();
+        $("#tekniskebehov_knapp").css("background",selectedcolor);
 
-function sok() {
-    document.getElementsByClassName('brukeroverskrift')[0].innerHTML = "Søk";
-    document.getElementById("tekniskebehov_knapp").style.background=defaultcolor;
-    document.getElementById("sok_knapp").style.background=selectedcolor;
+        $("#sok").hide();
+        $("#sok_knapp").css("background",defaultcolor);
+    }
+    else if (index == "1") {
+        $("#sok").show();
+        $("#sok_knapp").css("background",selectedcolor);
 
-    document.getElementById('tekniskebehov').style.display  = 'none';
-    document.getElementById('sok').style.display  = 'initial';
+        $("#tekniskebehov").hide();
+        $("#tekniskebehov_knapp").css("background",defaultcolor);
+    }
+
 }
 
 function getListOfTechnicalNeeds() {
@@ -57,7 +58,8 @@ function search() { //search funksjon for bookingansvarlig
             let table = $("<table></table>");
             for (i in l) {
               let tableRow = $("<tr></tr>");
-              let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(l[i].id);
+              let obj = [searchType, l[i].id];
+              let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(obj);
               tableRow.append(tableElementNavn);
               table.append(tableRow);
             }
