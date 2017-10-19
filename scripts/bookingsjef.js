@@ -2,7 +2,7 @@ function getConcertReport(bruker){
 
     let l = [];
 
-    $.ajax({ url: '/database.php?method=getConcertReport',
+    $.ajax({ url: '/database.php?method=getListOfScenes',
     data: {username:bruker.navn, usertype:bruker.type, sceneid: scene.sid, fid:current_fid},
     type: 'post',
     success: function(output) {
