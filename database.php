@@ -616,11 +616,9 @@ case 'search':
 
 case 'getBandInfo':
 
-
-    $finalencode = array();
-
-    
-
+/*
+[0] Generell informasjon om band
+*/
     
 
         $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
@@ -637,7 +635,7 @@ case 'getBandInfo':
 
             $stmt1->bind_param("i", $bid);
 
-// Leser inn konsertid
+// Leser inn band id
 $bid = $_POST['bid'];
 
             // Utfør sql-setning
@@ -652,14 +650,14 @@ $bid = $_POST['bid'];
                 $encode1[] = $row1;
             }
 
-            $finalencode[] = $encode1;
 
             // Avslutt sql-setning
             $stmt1->close();
         }
     
-
-    
+/*
+[1] Medialinker tilhørende band (youtube?)
+*/  
 
         // Gjør klar sql-setning
         $query2 = "SELECT *
@@ -679,7 +677,7 @@ $bid = $_POST['bid'];
             // Bind konsertid som heltall
             $stmt2->bind_param('i', $bid);
 
-// Leser inn konsertid
+// Leser inn band id
 $bid = $_POST['bid'];
 
 // Utfør sql-setning
@@ -694,18 +692,13 @@ $stmt2->execute();
               $encode2[] = $row2;
           }
 
-
-            $finalencode[] = $encode2;
-
             // Avslutt sql-setning
             $stmt2->close();
         }
 
-    
-
-
-
-    
+/*
+[2] Album spilt inn av band
+*/
 
         // Gjør klar sql-setning
         $query3 = "SELECT *
@@ -724,7 +717,7 @@ $stmt2->execute();
             // Bind konsertid som heltall
             $stmt3->bind_param('i', $bid);
 
-// Leser inn konsertid
+// Leser inn band id
 $bid = $_POST['bid'];
 
         // Utfører spørringen
@@ -739,15 +732,14 @@ $bid = $_POST['bid'];
             $encode3[] = $row3;
         }
 
-            $finalencode[] = $encode3;
 
             // Avslutt sql-setning
             $stmt3->close();
         }
 
-    
-
-    
+/*
+[3] Tidligere konserter band har spilt på
+*/
 
         // Gjør klar sql-setning
         $query4 = "SELECT *
@@ -766,7 +758,7 @@ $bid = $_POST['bid'];
             // Bind konsertid som heltall
             $stmt4->bind_param('i', $bid);
 
-            // Leser inn konsertid
+            // Leser inn band id
     $bid = $_POST['bid'];
 
             // Utfør sql-setning
@@ -781,15 +773,14 @@ $bid = $_POST['bid'];
                 $encode4[] = $row4;
             }
 
-            $finalencode = $encode4;
 
             // Avslutt sql-setning
             $stmt4->close();
         }
 
     
-
-    echo json_encode($finalencode);
+    // Koder bandinformasjon til liste over javascriptobjekter
+    echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "," .json_encode($encode3) . "," . json_encode($encode4) . "]");
 
     break;
 
