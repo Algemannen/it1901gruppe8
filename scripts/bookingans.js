@@ -36,6 +36,29 @@ function bookingfane(index) {
     }
 }
 
+function getListOfBands() {
+    let l = [];
+
+    $.ajax({ url: '/database.php?method=getListOfBands',
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
+            for (i in l) {
+                console.log(i)
+            }
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    })
+}
+
+
 function getListOfTechnicalNeeds(bruker) {
     let l = [];
 
@@ -56,7 +79,8 @@ function getListOfTechnicalNeeds(bruker) {
                 console.log("Error: "+message);
             }
         }
-    })};
+    })
+};
 
 
 function search() { //search funksjon for bookingansvarlig
