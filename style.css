@@ -135,6 +135,13 @@ ul.concertlist li span{
 
 .concertInfo .behov{
   text-align: center;
+  border: none;
+}
+
+.behov {
+  border: 1px solid #565656;
+  margin: 10px;
+  padding: 10px;
 }
 
 .concert_button {
