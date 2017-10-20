@@ -51,7 +51,11 @@ function injectListOfAllNeeds() {
 }
 
 function registerConcertNeed(kid,title,desc) {
-
+    if(title.length == 0 || desc.length ==0 ) {
+        alert("Både tittel of beskrivelse må fylles inn");
+        return;
+    }
+    
     $.ajax({ url: '/database.php?method=insertTechnicalNeeds',
     data: {concertid:kid, behov:desc, tittel:title},
     type: 'post',
