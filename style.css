@@ -235,7 +235,7 @@ li.scenePoint {
   overflow-y: scroll;
 }
 
-#resultlist table {
+#resultlist table, .albumsalg table, .tidligereKonserter table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -243,16 +243,16 @@ li.scenePoint {
   margin: auto;
 }
 
-#resultlist th, #resultlist td {
+#resultlist th, #resultlist td , .albumsalg th, .tidligereKonserter th, .albumsalg td, .tidligereKonserter td{
   padding: 8px;
 }
 
-#resultlist th {
+#resultlist th, .albumsalg th, .tidligereKonserter th {
   background-color: #3738AF;
   color: #F4F4F4;
 }
 
-#resultlist tr:hover {
+#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover {
   background-color: #D8D8D8;
   cursor: pointer;
 }
@@ -305,10 +305,12 @@ li.scenePoint {
   width: 90%;
   margin: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nokkelinfo{
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  justify-content: center;
+  align-content: center;
 }
