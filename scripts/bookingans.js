@@ -20,7 +20,7 @@ function bookingfane(index) {
 
 }
 
-function getListOfTechnicalNeeds() {
+function getListOfTechnicalNeeds(bruker) {
     let l = [];
 
     $.ajax({ url: '/database.php?method=getListOfConcertesByFestival',
@@ -30,7 +30,7 @@ function getListOfTechnicalNeeds() {
             console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             for (i in l) {
-              getTechnicalNeedsByKid(l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
+              getTechnicalNeedsByKid(bruker.id,l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
             }
         },
         error: function(xmlhttprequest, textstatus, message) {

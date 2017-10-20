@@ -444,6 +444,34 @@ case 'insertTechnicalNeeds':
 
     break;
 
+case 'deleteTechnicalNeed' :
+
+$query = "DELETE FROM tekniske_behov
+            WHERE tbid = ?";
+
+            // Gjør klar objekt for spørring
+    $stmt = $dbconn->stmt_init();
+    
+        // Gjør klar spørringen for databsen
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+            // Bind konsertid som heltall
+        $stmt->bind_param('i', $tbid);
+        
+                // Leser inn konsertid
+                $tbid = $_POST['tbid'];
+    
+            // Utfør sql-setning
+            $stmt->execute();
+    
+            // Avslutt sql-setning
+            $stmt->close();
+        }
+
+break;
+
     /// Returnerer en liste over alle teknikere på en gitt scene
 case 'getListOfOlderConserts':
 
