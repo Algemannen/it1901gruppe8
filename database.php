@@ -444,6 +444,34 @@ case 'insertTechnicalNeeds':
 
     break;
 
+case 'deleteTechnicalNeed' :
+
+$query = "DELETE FROM tekniske_behov
+            WHERE tbid = ?";
+
+            // Gjør klar objekt for spørring
+    $stmt = $dbconn->stmt_init();
+
+        // Gjør klar spørringen for databsen
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+            // Bind konsertid som heltall
+        $stmt->bind_param('i', $tbid);
+
+                // Leser inn konsertid
+                $tbid = $_POST['tbid'];
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Avslutt sql-setning
+            $stmt->close();
+        }
+
+break;
+
     /// Returnerer en liste over alle teknikere på en gitt scene
 case 'getListOfOlderConserts':
 
@@ -608,6 +636,44 @@ case 'search':
             $stmt->close();
             break;
         }
+
+    case 'scene':
+        $query = "SELECT DISTINCT b.navn, b.bid AS id
+        FROM band b
+        INNER JOIN konsert_band kb ON kb.bid = b.bid
+        INNER JOIN konsert k ON k.kid = kb.kid
+        INNER JOIN scene s ON k.sid = s.sid
+        WHERE s.navn LIKE ?";
+
+        $stmt = $dbconn->stmt_init();
+
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+
+            $stmt->bind_param("s", $text);
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+
+            // Returner json-string med data
+            echo json_encode($encode);
+
+            // Avslutt sql-setning
+            $stmt->close();
+            break;
+        }
+
     default:
         // Skriv en default her
         break;
