@@ -125,6 +125,9 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
+                    if(message=="Unauthorized user.") {
+                      alert("Invalid username or password")
+                    }
                     console.log("Error: "+message);
                 }
             }
