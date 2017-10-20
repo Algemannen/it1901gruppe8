@@ -270,6 +270,10 @@ $(document).ready(function(){
         bookingfane(1);
     });
 
+    $('body').on('click', "#bookingtilbud_knapp", function () {
+        bookingfane(2);
+    });
+
     $('body').on('click', "#sokebutton", function () {
         search();
     });
