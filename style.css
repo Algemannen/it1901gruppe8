@@ -228,7 +228,7 @@ li.scenePoint {
 }
 
 .sokeinput input[type="text"] {
-  width: 80%;
+  width: calc(100% - 60px);
   padding: 8px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -295,12 +295,20 @@ li.scenePoint {
   margin: auto;
 }
 
-#sok {
+.fane {
   display: none;
 }
 
-#sok_knapp {
+#tekniskebehov {
+  display: initial;
+}
+
+.faneknapp {
   background: rgba(255,255,255,0.4);
+}
+
+#tekniskebehov_knapp {
+  background: rgba(0,0,0,0.4);
 }
 
 .bandImage {

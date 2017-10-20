@@ -9,6 +9,9 @@ function bookingfane(index) {
 
         $("#sok").hide();
         $("#sok_knapp").css("background",defaultcolor);
+
+        $("#bookingtilbud").hide();
+        $("#bookingtilbud").css("background",defaultcolor);
     }
     else if (index == "1") {
         $("#sok").show();
@@ -16,9 +19,45 @@ function bookingfane(index) {
 
         $("#tekniskebehov").hide();
         $("#tekniskebehov_knapp").css("background",defaultcolor);
-    }
 
+        $("#bookingtilbud").hide();
+        $("#bookingtilbud").css("background",defaultcolor);
+    }
+    else if (index == "2") {
+        $("#bookingtilbud").show();
+        $("#bookingtilbud").css("background",selectedcolor);
+
+        $("#tekniskebehov").hide();
+        $("#tekniskebehov_knapp").css("background",defaultcolor);
+
+        $("#sok").hide();
+        $("#sok_knapp").css("background",defaultcolor);
+
+    }
 }
+
+function getListOfBands() {
+    let l = [];
+
+    $.ajax({ url: '/database.php?method=getListOfBands',
+        type: 'post',
+        success: function(output) {
+            console.log(output);
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
+            for (i in l) {
+                console.log(i)
+            }
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    })
+}
+
 
 function getListOfTechnicalNeeds(bruker) {
     let l = [];
@@ -40,7 +79,8 @@ function getListOfTechnicalNeeds(bruker) {
                 console.log("Error: "+message);
             }
         }
-    })};
+    })
+};
 
 
 function search() { //search funksjon for bookingansvarlig

@@ -86,6 +86,7 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds(user);
+                    getListOfBands();
                 }});
                 break;
             case 5: //Bruker er bookingsjef
@@ -323,6 +324,10 @@ $(document).ready(function(){
 
     $('body').on('click', "#sok_knapp", function () {
         bookingfane(1);
+    });
+
+    $('body').on('click', "#bookingtilbud_knapp", function () {
+        bookingfane(2);
     });
 
     $('body').on('click', "#sokebutton", function () {
