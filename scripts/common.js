@@ -146,7 +146,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
                 let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
                 listContainer.append(tittel, tittel2, behov, behov2)
                 if (bruker_id === 3) {
-                    let delete_button = $("<button>Slett</button>").addClass("delete_technical_need").val(l[i].tbid);
+                    let delete_button = $("<button>Slett</button>").addClass("delete_technical_need").addClass("delete_button").val(l[i].tbid);
                     listContainer.append(delete_button);
                 }
                 listContainer.append('<br>');

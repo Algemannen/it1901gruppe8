@@ -34,6 +34,21 @@ button:hover {
     color: #000;
 }
 
+button.delete_button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #F00;
+  text-decoration: underline;
+  padding-bottom: 1em;
+}
+
+button.delete_button:hover {
+  color: #FFF;
+}
+
+button.delete_button:active, button.delete_button:focus {
+  outline: 0px;
+}
+
 .loginbox input, .needs input, .needs textarea{
   margin-bottom: 19px;
 }

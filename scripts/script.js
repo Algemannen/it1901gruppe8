@@ -78,6 +78,7 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     manager_uid = user.id;
                     injectListOfAllNeeds();
+                    injectOffers(user);
                 }});
                 break;
             case 4: //Bruker er bookingansvarlig

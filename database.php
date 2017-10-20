@@ -859,6 +859,52 @@ case 'getConcertReport':
 
   break;
 
+  case 'getOffers':
+
+  $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status,
+  scene.navn AS scene_navn, band.navn AS band_navn, bruker.fornavn AS sender_fornavn, bruker.etternavn AS sender_etternavn
+  FROM tilbud
+  INNER JOIN scene ON scene.sid = tilbud.sid
+  INNER JOIN band ON band.bid = tilbud.bid
+  INNER JOIN bruker ON bruker.uid = tilbud.sender_uid
+  WHERE band.manager_uid = ?";
+
+// Gjør klar objekt for spørringen
+$stmt = $dbconn->stmt_init();
+
+// Gjør spørringen klar for databasen
+if(!$stmt->prepare($query)) {
+  header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+} else {
+
+  // Binder brukerid som heltall
+  $stmt->bind_param('i', $uid);
+
+  // Leser inn sceneid
+  $uid = $_POST['uid'];
+
+
+  // Utfører spørringen
+  $stmt->execute();
+
+  // Returnerer resultat fra spørringen
+  $result = $stmt->get_result();
+
+  // Hent ut alle rader fra en spørring
+  $encode = array();
+  while ($row = $result->fetch_assoc()) {
+      $encode[] = $row;
+  }
+
+  // Returner json-string med data
+  echo json_encode($encode);
+
+  // Avslutt sql-setning
+  $stmt->close();
+}
+
+  break;
+
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
