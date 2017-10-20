@@ -8,13 +8,13 @@ function getConcertInfo(bruker, concert) {
         let maindiv = $("<div></div>").addClass("behov");
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         maindiv.append(tb);
-        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, maindiv);
+        getTechnicalNeedsByKid(bruker.id,concert.kid, concert.navn, concert.dato, maindiv);
         getListOfTechnicians(bruker, concert);
         container.append(maindiv);
     } else if (bruker.type===2) {
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
-        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
+        getTechnicalNeedsByKid(bruker.id,concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
     } else if (bruker.type==5){
         let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
         container.append(cost_report);
@@ -123,7 +123,7 @@ function buildListOfConcerts(bruker,list) {
 }
 
 // Bygger HTML for tekniske behov
-function getTechnicalNeedsByKid(kid, kname, dato, container) {
+function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
     let l = [];
 
     $.ajax({ url: '/database.php?method=getListOfTechnicalNeeds',
@@ -144,7 +144,12 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
                 let tittel2 = $("<span></span><br>").text(l[i].tittel);
                 let behov2 = $("<span></span><br>").text(l[i].behov);
                 let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
-                listContainer.append(tittel, tittel2, behov, behov2, '<br>');
+                listContainer.append(tittel, tittel2, behov, behov2)
+                if (bruker_id === 3) {
+                    let delete_button = $("<button>Slett</button>").addClass("delete_technical_need").val(l[i].tbid);
+                    listContainer.append(delete_button);
+                }
+                listContainer.append('<br>');
 
             }
             $(container).append(kid,listContainer);

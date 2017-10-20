@@ -34,7 +34,7 @@ function injectListOfAllNeeds() {
             }
             let checkbox = $("<input "+is_checked_string+"/>").attr("id","checkbox_"+html_id).attr("type","radio").attr("name","concert_check").attr("value",element.kid).addClass("manager_radio");
             $("#"+html_id).append(checkbox);
-            getTechnicalNeedsByKid(element.kid, element.navn, element.dato, "#"+html_id);
+            getTechnicalNeedsByKid(manager_uid,element.kid, element.navn, element.dato, "#"+html_id);
         });
 
 
@@ -50,8 +50,32 @@ function injectListOfAllNeeds() {
     
 }
 
-function registerConcertNeed(kid,title,desc) {
+function deleteTechinalNeed(tbid) {
+    $.ajax({ url: '/database.php?method=deleteTechnicalNeed',
+    data: {tbid:tbid},
+    type: 'post',
+    success: function(output) {
+            console.log("Database delete entry: "+tbid);
+            $("#komplett_liste_over_tekniske_behov").empty();
+            injectListOfAllNeeds();
 
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+});
+}
+
+function registerConcertNeed(kid,title,desc) {
+    if(title.length == 0 || desc.length ==0 ) {
+        alert("Både tittel of beskrivelse må fylles inn");
+        return;
+    }
+    
     $.ajax({ url: '/database.php?method=insertTechnicalNeeds',
     data: {concertid:kid, behov:desc, tittel:title},
     type: 'post',

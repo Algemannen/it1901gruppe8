@@ -84,14 +84,14 @@ $(document).ready(function(){
                 $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfTechnicalNeeds();
+                    getListOfTechnicalNeeds(user);
                 }});
                 break;
             case 5: //Bruker er bookingsjef
                 $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    // getListOfTechnicalNeeds();
+                    // getListOfTechnicalNeeds(user);
                 }});
                 break;
             default:
@@ -125,6 +125,9 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
+                    if(message=="Unauthorized user.") {
+                      alert("Invalid username or password")
+                    }
                     console.log("Error: "+message);
                 }
             }
@@ -323,6 +326,10 @@ $(document).ready(function(){
 
     $('body').on('click', "#sokebutton", function () {
         search();
+    });
+
+    $('body').on('click', ".delete_technical_need", function () {
+        deleteTechinalNeed(this.value);
     });
 
 
