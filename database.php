@@ -619,9 +619,9 @@ case 'getBandInfo':
 /*
 [0] Generell informasjon om band
 */
-    
 
-        $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
+
+        $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email, bilde_url
             FROM band b
             INNER JOIN bruker br ON b.manager_uid = br.uid
             WHERE b.bid = ?";
@@ -654,10 +654,10 @@ $bid = $_POST['bid'];
             // Avslutt sql-setning
             $stmt1->close();
         }
-    
+
 /*
 [1] Medialinker tilhørende band (youtube?)
-*/  
+*/
 
         // Gjør klar sql-setning
         $query2 = "SELECT *
@@ -778,7 +778,7 @@ $bid = $_POST['bid'];
             $stmt4->close();
         }
 
-    
+
     // Koder bandinformasjon til liste over javascriptobjekter
     echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "," .json_encode($encode3) . "," . json_encode($encode4) . "]");
 

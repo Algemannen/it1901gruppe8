@@ -236,7 +236,7 @@ $(document).ready(function(){
               console.log(output);
               l = safeJsonParse(output); //gjør en try-catch sjekk.
               let bandOverskrift = $("<h3></h3>").text(l[0][0].navn);
-              let bandInformation = $("<div></div>");
+              let bandInformation = $("<div></div>").addClass("nokkelinfo");
               let bandImage = $('<img class="bandImage"/>').attr('src', l[0][0].bilde_url.replace("\/", "/"));
               let bio = $("<span></span><br>").text("Bio: " + l[0][0].bio);
               let popularitet = $("<span></span><br>").text("Popularitet: " +l[0][0].popularitet);

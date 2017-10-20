@@ -306,3 +306,9 @@ li.scenePoint {
   margin: auto;
   display: flex;
 }
+
+.nokkelinfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
