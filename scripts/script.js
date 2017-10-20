@@ -332,6 +332,16 @@ $(document).ready(function(){
         deleteTechinalNeed(this.value);
     });
 
+    
+
+    $('body').on('click', "#booking_behov_knapp", function () {
+        managerfane(0);
+    });
+
+    $('body').on('click', "#booking_tilbud_knapp", function () {
+        managerfane(1);
+    });
+
 
 
 

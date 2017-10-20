@@ -1,6 +1,24 @@
 var manager_kid;
 var manager_uid;
 
+function managerfane(index) {
+    if (index=="0") {
+        $("#booking_behov_fane").show();
+        $("#booking_behov_knapp").css("background",selectedcolor);
+
+        $("#booking_tilbud_fane").hide();
+        $("#booking_tilbud_knapp").css("background",defaultcolor);
+    }
+    else if (index == "1") {
+        $("#booking_tilbud_fane").show();
+        $("#booking_tilbud_knapp").css("background",selectedcolor);
+
+        $("#booking_behov_fane").hide();
+        $("#booking_behov_knapp").css("background",defaultcolor);
+    }
+
+}
+
 function addNeedsForTechs(bruker, concert, title, needs) {
 
     $.ajax({ url: '/database.php?method=addNeedsForTechs',
