@@ -213,7 +213,7 @@ li.scenePoint {
 }
 
 .sokeinput input[type="text"] {
-  width: 80%;
+  width: calc(100% - 60px);
   padding: 8px 20px;
   margin: 8px 0;
   display: inline-block;
