@@ -1,18 +1,31 @@
 <div class=content>
-    <button class = "logout_button">Logg ut</button>
-	<p>Manager: <span id="username"></span></p>
-	<div id="komplett_liste_over_tekniske_behov">
-		<h2>Liste over tekniske behov</h2>
-		
-	</div>
-	<span class="needs_container" style="display:none">
-			<h2 class="leggTilTekniskeBehov">Legg til tekniske behov</h2> 
-			<div class="needs" style="width: 95%;">
-				<input id="title_field" placeholder="Tittel"/ autofocus tabindex="1">
-				<textarea rows="4" cols="50" id="description_field" placeholder="Beskrivelse" tabindex="2"></textarea>
-				<button class = "submit_button" id="manager_submit">Send inn</button>
+	<button class = "logout_button">Logg ut</button>
+
+	<button class="faneknapp" id="booking_behov_knapp">Tekniske behov</button>
+	<button class="faneknapp" id="booking_tilbud_knapp">Tilbud</button>
+
+	<span id="booking_behov_fane">
+			<p>Manager: <span id="username"></span></p>
+			<div id="komplett_liste_over_tekniske_behov">
+				<h2>Liste over tekniske behov</h2>
+				
 			</div>
+			<span class="needs_container" style="display:none">
+					<h2 class="leggTilTekniskeBehov">Legg til tekniske behov</h2> 
+					<div class="needs" style="width: 95%;">
+						<input id="title_field" placeholder="Tittel"/ autofocus tabindex="1">
+						<textarea rows="4" cols="50" id="description_field" placeholder="Beskrivelse" tabindex="2"></textarea>
+						<button class = "submit_button" id="manager_submit">Send inn</button>
+					</div>
+			</span>
 	</span>
+
+	<span id="booking_tilbud" style="display:none">
+
+
+	</span>
+	
+
     
     
 </div>
