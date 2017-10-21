@@ -308,6 +308,7 @@ $(document).ready(function(){
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
+
                 } else {
                     console.log("Error: "+message);
                 }
@@ -321,7 +322,26 @@ $(document).ready(function(){
               success: function(output) {
                 console.log(output);
                   l = safeJsonParse(output); //gjør en try-catch sjekk.
-                  
+                  let konsertOverskrift = $("<h3></h3>").text(l[0].knavn);
+                  let konsertInfo = $("<div></div>").addClass("keyConcertInfo");
+                  let konsertDato = $("<span></span><br>").text("Gjennomført dato: " + l[0].dato);
+                  let konsertStartTid = $("<span></span><br>").text("Konserten Startet: " + l[0].start_tid);
+                  let konsertSluttTid = $("<span></span><br>").text("Konserten avsluttet: " + l[0].slutt_tid);
+                  let konsertBand = $("<span></span><br>").text("Spilt av: " + l[0].bnavn);
+                  let konsertSjanger = $("<span></span><br>").text("Sjanger: " + l[0].sjanger);
+                  let konsertScene = $("<span></span><br>").text("Spilt på scene: " + l[0].navn);
+                  let konsertDetaljerOverskrift = $("<h4></h4>").text("Detaljer");
+                  let konsertDetaljer = $("<div></div>").addClass("concertDetails");
+                  let konsertTilskuere = $("<span></span><br>").text("Antall tilskuere: " + l[0].tilskuere);
+                  let konsertMaks = $("<span></span><br>").text("Maksimalt antall plasser på scene: " + l[0].maks_plasser);
+                  let konsertLedigePlasser = $("<span></span><br>").text("Antall ledige plasser under konsert: " + (l[0].maks_plasser - l[0].tilskuere));
+                  let konsertInntekt = $("<span></span><br>").text("Inntekter fra billettsalg: " + (l[0].billettpris * l[0].tilskuere));
+                  let konsertOverskudd = $("<span></span><br>").text("Økonomisk gevinst: " + ((l[0].billettpris * l[0].tilskuere) - l[0].kostnad));
+                  let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[0].kostnad);
+                  let konsertPris = $("<span></span><br>").text("Billettpris: " + l[0].billettpris);
+                  konsertDetaljer.append(konsertDetaljerOverskrift, konsertMaks, konsertTilskuere, konsertLedigePlasser, konsertKostnad, konsertPris, konsertInntekt, konsertOverskudd);
+                  konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
+                  $("#informationlist").append(konsertOverskrift, konsertInfo, konsertDetaljer);
               },
               error: function(xmlhttprequest, textstatus, message) {
                   if(textstatus==="timeout") {

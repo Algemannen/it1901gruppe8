@@ -921,7 +921,7 @@ case 'getConcertReport':
 
 case 'getOldConcertInfo' :
 
-$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser
+$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, b.kostnad, k.start_tid, k.slutt_tid, k.sjanger
           FROM konsert k
           INNER JOIN konsert_band kb ON k.kid =kb.kid
           INNER JOIN band b ON b.bid = kb.bid
