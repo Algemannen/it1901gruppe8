@@ -34,6 +34,21 @@ button:hover {
     color: #000;
 }
 
+button.delete_button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #F00;
+  text-decoration: underline;
+  padding-bottom: 1em;
+}
+
+button.delete_button:hover {
+  color: #FFF;
+}
+
+button.delete_button:active, button.delete_button:focus {
+  outline: 0px;
+}
+
 .loginbox input, .needs input, .needs textarea{
   margin-bottom: 19px;
 }
@@ -135,6 +150,13 @@ ul.concertlist li span{
 
 .concertInfo .behov{
   text-align: center;
+  border: none;
+}
+
+.behov {
+  border: 1px solid #565656;
+  margin: 10px;
+  padding: 10px;
 }
 
 .concert_button {
@@ -280,12 +302,20 @@ li.scenePoint {
   margin: auto;
 }
 
-#sok {
+.fane {
   display: none;
 }
 
-#sok_knapp {
+#tekniskebehov {
+  display: initial;
+}
+
+.faneknapp {
   background: rgba(255,255,255,0.4);
+}
+
+#tekniskebehov_knapp {
+  background: rgba(0,0,0,0.4);
 }
 
 .bandImage {
