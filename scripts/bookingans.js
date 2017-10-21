@@ -9,6 +9,9 @@ function bookingfane(index) {
 
         $("#sok").hide();
         $("#sok_knapp").css("background",defaultcolor);
+
+        $("#bookingtilbud").hide();
+        $("#bookingtilbud").css("background",defaultcolor);
     }
     else if (index == "1") {
         $("#sok").show();
@@ -16,11 +19,24 @@ function bookingfane(index) {
 
         $("#tekniskebehov").hide();
         $("#tekniskebehov_knapp").css("background",defaultcolor);
-    }
 
+        $("#bookingtilbud").hide();
+        $("#bookingtilbud").css("background",defaultcolor);
+    }
+    else if (index == "2") {
+        $("#bookingtilbud").show();
+        $("#bookingtilbud").css("background",selectedcolor);
+
+        $("#tekniskebehov").hide();
+        $("#tekniskebehov_knapp").css("background",defaultcolor);
+
+        $("#sok").hide();
+        $("#sok_knapp").css("background",defaultcolor);
+
+    }
 }
 
-function getListOfTechnicalNeeds() {
+function getListOfTechnicalNeeds(bruker) {
     let l = [];
 
     $.ajax({ url: '/database.php?method=getListOfConcertesByFestival',
@@ -30,7 +46,7 @@ function getListOfTechnicalNeeds() {
             console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             for (i in l) {
-              getTechnicalNeedsByKid(l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
+              getTechnicalNeedsByKid(bruker.id,l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
             }
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -40,7 +56,8 @@ function getListOfTechnicalNeeds() {
                 console.log("Error: "+message);
             }
         }
-    })};
+    })
+};
 
 
 function search() { //search funksjon for bookingansvarlig

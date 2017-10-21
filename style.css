@@ -34,6 +34,21 @@ button:hover {
     color: #000;
 }
 
+button.delete_button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #F00;
+  text-decoration: underline;
+  padding-bottom: 1em;
+}
+
+button.delete_button:hover {
+  color: #FFF;
+}
+
+button.delete_button:active, button.delete_button:focus {
+  outline: 0px;
+}
+
 .loginbox input, .needs input, .needs textarea{
   margin-bottom: 19px;
 }
@@ -220,7 +235,7 @@ li.scenePoint {
 }
 
 .sokeinput input[type="text"] {
-  width: 80%;
+  width: calc(100% - 60px);
   padding: 8px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -242,7 +257,7 @@ li.scenePoint {
   overflow-y: scroll;
 }
 
-#resultlist table {
+#resultlist table, .albumsalg table, .tidligereKonserter table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -250,16 +265,16 @@ li.scenePoint {
   margin: auto;
 }
 
-#resultlist th, #resultlist td {
+#resultlist th, #resultlist td , .albumsalg th, .tidligereKonserter th, .albumsalg td, .tidligereKonserter td{
   padding: 8px;
 }
 
-#resultlist th {
+#resultlist th, .albumsalg th, .tidligereKonserter th {
   background-color: #3738AF;
   color: #F4F4F4;
 }
 
-#resultlist tr:hover {
+#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover {
   background-color: #D8D8D8;
   cursor: pointer;
 }
@@ -287,12 +302,20 @@ li.scenePoint {
   margin: auto;
 }
 
-#sok {
+.fane {
   display: none;
 }
 
-#sok_knapp {
+#tekniskebehov {
+  display: initial;
+}
+
+.faneknapp {
   background: rgba(255,255,255,0.4);
+}
+
+#tekniskebehov_knapp {
+  background: rgba(0,0,0,0.4);
 }
 
 .bandImage {
@@ -312,10 +335,12 @@ li.scenePoint {
   width: 90%;
   margin: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nokkelinfo{
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  justify-content: center;
+  align-content: center;
 }
