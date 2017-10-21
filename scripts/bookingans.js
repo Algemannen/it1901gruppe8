@@ -47,13 +47,14 @@ function search() { //search funksjon for bookingansvarlig
   let l = [];
   let inputText = $("#textinput").val();
   let searchType = $('input[name=type]:checked').val();
+  $("#resultlist").empty();
 
   $.ajax({ url: '/database.php?method=search',
       data: {text: inputText, type: searchType, fid: current_fid},
       type: 'post',
       success: function(output) {
           l = safeJsonParse(output); //gjør en try-catch sjekk.
-            $("#resultlist").empty();
+          if (l.length > 0) {
             let table = $("<table></table>");
             for (i in l) {
               let tableRow = $("<tr></tr>");
@@ -61,8 +62,10 @@ function search() { //search funksjon for bookingansvarlig
               let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(obj);
               tableRow.append(tableElementNavn);
               table.append(tableRow);
+              $("#resultlist").append(table);
+            }} else {
+              $("#resultlist").append("Ingen resultater.");
             }
-            $("#resultlist").append(table);
       },
       error: function(xmlhttprequest, textstatus, message) {
           if(textstatus==="timeout") {
