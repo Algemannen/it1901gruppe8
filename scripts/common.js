@@ -184,7 +184,9 @@ function injectOffers(bruker) {
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)
-        console.log(output);
+        let yoffset = window.pageYOffset;
+        $("#manager_tilbud").empty();
+
         injectList("manager_tilbud",l,function(html_id,element){
 
             // Overskrift
@@ -234,6 +236,7 @@ function injectOffers(bruker) {
                 $("#"+html_id).append(status);
             }
         });
+        window.scrollTo(0,yoffset);
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
@@ -297,7 +300,6 @@ function updateOfferStatus(obj) {
     data: {tid:obj.tid, status:obj.statusflags},
     type: 'post',
     success: function(output) {
-        $("#manager_tilbud").empty();
         injectOffers(user);
     },
     error: function(xmlhttprequest, textstatus, message) {

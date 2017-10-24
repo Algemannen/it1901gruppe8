@@ -546,7 +546,7 @@ case 'insertTechnicalNeeds':
         $tittel = $_POST['tittel'];
 
         if (strlen($tittel) == 0) {
-            header("HTTP/1.0 500 400 Bad Request: Zero-length string");
+            header("HTTP/1.0 400 Bad Request: Zero-length string");
             die();
         }
 
@@ -1233,7 +1233,8 @@ if ($brukertype === 3) {
     INNER JOIN band ON band.bid = tilbud.bid
     INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
     INNER JOIN bruker b ON b.uid = band.manager_uid
-    WHERE band.manager_uid = ?";
+    WHERE band.manager_uid = ?
+    ORDER BY tilbud.status ASC";
 }
 else if ($brukertype === 4) {
     $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
@@ -1243,7 +1244,8 @@ else if ($brukertype === 4) {
     INNER JOIN band ON band.bid = tilbud.bid
     INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
     INNER JOIN bruker b ON b.uid = band.manager_uid
-    WHERE tilbud.sender_uid = ?";
+    WHERE tilbud.sender_uid = ?
+    ORDER BY tilbud.status ASC";
 }
 else if ($brukertype === 5) {
     $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
@@ -1252,7 +1254,8 @@ else if ($brukertype === 5) {
     INNER JOIN scene ON scene.sid = tilbud.sid
     INNER JOIN band ON band.bid = tilbud.bid
     INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
-    INNER JOIN bruker b ON b.uid = band.manager_uid";
+    INNER JOIN bruker b ON b.uid = band.manager_uid
+    ORDER BY tilbud.status ASC";
 }
 
 
