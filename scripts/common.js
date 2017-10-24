@@ -186,8 +186,8 @@ function injectOffers(bruker) {
 
             
 
-            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val({tid:element.tid, status:element.status});
-            let reject_button = $("<button>Avslå</button>").addCLass("offer_button_reject").val({tid:element.tid, status:element.status});
+            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val({tid:element.tid, type:element.type, status:element.status});
+            let reject_button = $("<button>Avslå</button>").addCLass("offer_button_reject").val({tid:element.tid, type:element.type, status:element.status});
 
             $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button, reject_button);
         });
@@ -210,5 +210,5 @@ function injectOffers(bruker) {
     8 : Tilbud avslått av manager
 */
 function updateOfferStatus(tid_status_obj) {
-    console.log(status);
+    console.log(tid_status_obj);
 }
