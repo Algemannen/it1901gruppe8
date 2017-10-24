@@ -1,4 +1,7 @@
 // Lager et html-element med informasjon om en konsert
+
+let debugMode = false;
+
 function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
@@ -62,13 +65,15 @@ function getListOfTechnicians(bruker, concert) {
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-    try{
-        l = jQuery.parseJSON(output);
-    }
-    catch(err){
-        console.log(err);
-        console.log(output);
-        $("#root").after(output);
+    if(debugMode = true){
+      try{
+          l = jQuery.parseJSON(output);
+      }
+      catch(err){
+          console.log(err);
+          console.log(output);
+          $("#root").after(output);
+      }
     }
     return l;
 }
@@ -184,7 +189,7 @@ function injectOffers(bruker) {
             let band_navn = $("<span></span>").text("Band: "+element.band_navn);
             let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
 
-            
+
 
             let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val({tid:element.tid, type:element.type, status:element.status});
             let reject_button = $("<button>Avslå</button>").addCLass("offer_button_reject").val({tid:element.tid, type:element.type, status:element.status});
