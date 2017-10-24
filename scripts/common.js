@@ -196,10 +196,20 @@ function injectOffers(bruker) {
 
             let obj = JSON.stringify({tid:element.tid, usertype:parseInt(element.usertype), statusflags:parseInt(element.statusflags)});
 
-            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
-            let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
+            let buttons = $("<span></span>");
+            // Bookingsjef
+            if (bruker.id === 5) {
+                let delete_button = $("<button>Slett</button>")
+                buttons.append(delete_button);
+            }
+            else if (bruker.id === 3 || bruker.id == 4) {
+                let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
+                let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
+                buttons.append(accept_button, reject_button);
+            }
+            
 
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button,reject_button,element.usertype,element.statusflags);
+            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, buttons, element.statusflags);
             $("#"+html_id).addClass(getStatusColor(element.statusflags));
         });
     },
