@@ -93,7 +93,7 @@ $(document).ready(function(){
                 $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    // getListOfTechnicalNeeds(user);
+                    concertPricing();
                 }});
                 break;
             default:

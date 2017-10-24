@@ -24,3 +24,31 @@ function getConcertReport(bruker){
     }
   });
 }
+
+
+function concertPricing(){
+  let l = [];
+
+  $.ajax({ url: '/database.php?method=getConcertPricingInfo',
+  data: {},
+  type: 'post',
+  success: function(output) {
+    l = safeJsonParse(output);
+    console.log(output);
+    let container = $("<div></div>");
+    let overskrift = $("<h3></h3>").text("Prisgenerering");
+    for (i in l){
+      let konsertDiv = $("<div></div>");
+      let konsertHeader = $("<h4></h4>").text(l[0].knavn);
+      let konsertBand = $("<span></span><br>").text("Band: " + l[0].bnavn);
+    }
+  },
+  error: function(xmlhttprequest, textstatus, message) {
+      if(textstatus==="timeout") {
+          alert("Timeout feil, kan ikke koble til databasen");
+      } else {
+          console.log("Error: "+message);
+      }
+  }
+});
+}
