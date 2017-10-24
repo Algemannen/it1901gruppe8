@@ -94,7 +94,9 @@ $(document).ready(function(){
                 $('#username').html(user.name);
                 getListOfScenesForBookingSjef(user);
                 concertPricing();
+                injectOffers(user);
                 bookingsjeffane(0);
+
               }});
               break;
             default:
@@ -150,6 +152,7 @@ $(document).ready(function(){
     $(".debug_button").click(function() {
         user.type = parseInt(this.id);
         redraw();
+        debug_mode = true;
     });
 
     // Fang 'enter'-trykk fra brukernavn-feltet
@@ -276,15 +279,15 @@ $(document).ready(function(){
 
     $('body').on('click', ".offer_button_accept", function () {
         let obj = jQuery.parseJSON(this.value);
-        obj.statusflags = obj.statusflags | getAcceptStatusFlag(obj.usertype);
-        obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags | getAcceptStatusFlag(user.type);
+        obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
     $('body').on('click', ".offer_button_reject", function () {
         let obj = jQuery.parseJSON(this.value);
-        obj.statusflags = obj.statusflags | getRejectStatusFlag(obj.usertype);
-        obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags | getRejectStatusFlag(user.type);
+        obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
@@ -296,6 +299,9 @@ $(document).ready(function(){
 
     $('body').on('click', "#prisgen_knapp", function () {
         bookingsjeffane(1);
+    });
+    $('body').on('click', "#tilbud_knapp", function () {
+        bookingsjeffane(2);
     });
 
 

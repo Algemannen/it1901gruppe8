@@ -4,14 +4,27 @@ function bookingsjeffane(index) {
         $("#ecorapport_knapp").css("background",selectedcolor);
 
         $("#prisgenerering").hide();
+        $("#manager_tilbud").hide();
         $("#prisgen_knapp").css("background",defaultcolor);
+        $("#tilbud_knapp").css("background",defaultcolor);
     }
     else if (index == "1") {
         $("#prisgenerering").show();
         $("#prisgen_knapp").css("background",selectedcolor);
 
         $("#listofscenes").hide();
+        $("#manager_tilbud").hide();
         $("#ecorapport_knapp").css("background",defaultcolor);
+        $("#tilbud_knapp").css("background",defaultcolor);
+    }
+    else if (index == "2") {
+        $("#manager_tilbud").show();
+        $("#tilbud_knapp").css("background",selectedcolor);
+
+        $("#listofscenes").hide();
+        $("#prisgenerering").hide();
+        $("#ecorapport_knapp").css("background",defaultcolor);
+        $("#prisgen_knapp").css("background",defaultcolor);
     }
 }
 
@@ -91,6 +104,7 @@ function BSbuildConcertReport(kid, sname, container){
           let listContainer = $("<div></div>").addClass("concertReportContainer");
           listContainer.append('<br>');
           for (i in l) {
+
               let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
               let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
               let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));

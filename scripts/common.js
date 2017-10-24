@@ -1,9 +1,10 @@
 // Lager et html-element med informasjon om en konsert
 
-var debugMode = false;
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
+
+var debug_mode = false;
 
 function getConcertInfo(bruker, concert) {
 
@@ -68,7 +69,6 @@ function getListOfTechnicians(bruker, concert) {
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-    if(debugMode = true){
       try{
           l = jQuery.parseJSON(output);
       }
@@ -77,7 +77,6 @@ function safeJsonParse(output) {
           console.log(output);
           $("#root").after(output);
       }
-    }
     return l;
 }
 
@@ -179,38 +178,59 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
 
 function injectOffers(bruker) {
     $.ajax({ url: '/database.php?method=getOffers',
-    data: {uid:bruker.id},
+    data: {uid:bruker.id, brukertype:bruker.type},
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)
+        console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
+            
+            // Overskrift
+            let overskrift = $("<h2></h2>");
+            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
+            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
+            overskrift.append(band_navn," på ", scene_navn);
+
+            // Sender
+            let sender = $("<p></p>");
+            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+            sender.append(sender_navn);
+
+
+            // Tidspunkt
+            let tidsinfo = $("<p></p>");
             let dato = $("<span></span>").text("Dato: "+element.dato);
             let start_tid = $("<span></span>").text("Start: "+element.start_tid);
             let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
+            tidsinfo.append(dato, start_tid, slutt_tid);
+
+
+            // Pris
+            let prisinfo = $("<p></p>")
             let pris = $("<span></span>").text("Pris: "+element.pris);
-            let status = $("<span></span>").text("Status: "+element.statusflags);
-            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
-            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
-            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+            prisinfo.append(pris);
 
-
-            let obj = JSON.stringify({tid:element.tid, usertype:parseInt(element.usertype), statusflags:parseInt(element.statusflags)});
+            let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
             let buttons = $("<span></span>");
             // Bookingsjef
-            if (bruker.id === 5) {
+            if (bruker.type === 4) {
                 let delete_button = $("<button>Slett</button>")
                 buttons.append(delete_button);
             }
-            else if (bruker.id === 3 || bruker.id == 4) {
+            else if (bruker.type === 3 || bruker.type == 5) {
                 let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
                 let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
                 buttons.append(accept_button, reject_button);
             }
-            
 
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, buttons, element.statusflags);
-            $("#"+html_id).addClass(getStatusColor(element.statusflags));
+
+            $("#"+html_id).append(overskrift, tidsinfo, prisinfo,sender, buttons);
+            $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
+            if (debug_mode) {
+                let status = $("<span></span>").text("Status: "+element.statusflags);
+                $("#"+html_id).append(status);
+            }
         });
     },
     error: function(xmlhttprequest, textstatus, message) {
@@ -232,11 +252,14 @@ function injectOffers(bruker) {
 */
 
 function getStatusColor(statusflags) {
-    if (statusflags & 1 == 1 && statusflags & 4 == 4) {
+    if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
+        return "reject"
+    }
+    else if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
         return  "accept";
     }
-    else if (statusflags & 2 == 2 || statusflags & 8 == 8) {
-        return "reject"
+    else if ((statusflags &  1) == 1 && (statusflags & 4 ) == 0) {
+        return "partial-accept";
     }
     else {
         return "#unknown"
@@ -247,7 +270,7 @@ function getAcceptStatusFlag(usertype) {
     if (usertype == 3) {
         return 4;
     }
-    else if (usertype == 4) {
+    else if (usertype == 5) {
         return 1;
     }
     else {
@@ -259,7 +282,7 @@ function getRejectStatusFlag(usertype) {
     if (usertype == 3) {
         return 8;
     }
-    else if (usertype == 4) {
+    else if (usertype == 5) {
         return 2;
     }
     else {
