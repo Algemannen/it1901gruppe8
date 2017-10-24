@@ -1,6 +1,5 @@
 // Lager et html-element med informasjon om en konsert
 
-var debugMode = false;
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
@@ -68,7 +67,6 @@ function getListOfTechnicians(bruker, concert) {
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-    if(debugMode = true){
       try{
           l = jQuery.parseJSON(output);
       }
@@ -77,7 +75,6 @@ function safeJsonParse(output) {
           console.log(output);
           $("#root").after(output);
       }
-    }
     return l;
 }
 
@@ -208,7 +205,7 @@ function injectOffers(bruker) {
                 let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
                 buttons.append(accept_button, reject_button);
             }
-            
+
 
             $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, buttons, element.statusflags);
             $("#"+html_id).addClass(getStatusColor(element.statusflags));
