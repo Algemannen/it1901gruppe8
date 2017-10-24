@@ -186,8 +186,8 @@ function injectOffers(bruker) {
 
             
 
-            let accept_button = $("<button>Godta</button>").addClass("offer_button").val(element.tid);
-            let reject_button = $("<button>Avslå</button>").addCLass("offer_button").val(element.tid);
+            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(element.tid);
+            let reject_button = $("<button>Avslå</button>").addCLass("offer_button_reject").val(element.tid);
 
             $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button, reject_button);
         });
