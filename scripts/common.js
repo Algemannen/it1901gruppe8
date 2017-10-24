@@ -209,6 +209,6 @@ function injectOffers(bruker) {
     4 : Tilbud godkjent av manager
     8 : Tilbud avslått av manager
 */
-function updateOfferStatus(tid, status) {
+function updateOfferStatus(tid_status_obj) {
     console.log(status);
 }
