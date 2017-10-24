@@ -94,6 +94,7 @@ $(document).ready(function(){
                 $("#root").html(result);
                 $('#username').html(user.name);
                 getListOfScenesForBookingSjef(user);
+                concertPricing();
               }});
               break;
             default:
