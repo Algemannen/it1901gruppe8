@@ -4,6 +4,8 @@
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
 
+var debug_mode = false;
+
 function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
@@ -182,15 +184,31 @@ function injectOffers(bruker) {
         l = safeJsonParse(output)
         console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
+            
+            // Overskrift
+            let overskrift = $("<h2></h2>");
+            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
+            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
+            overskrift.append(band_navn," på ", scene_navn);
+
+            // Sender
+            let sender = $("<p></p>");
+            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+            sender.append(sender_navn);
+
+
+            // Tidspunkt
+            let tidsinfo = $("<p></p>");
             let dato = $("<span></span>").text("Dato: "+element.dato);
             let start_tid = $("<span></span>").text("Start: "+element.start_tid);
             let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
-            let pris = $("<span></span>").text("Pris: "+element.pris);
-            let status = $("<span></span>").text("Status: "+element.statusflags);
-            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
-            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
-            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+            tidsinfo.append(dato, start_tid, slutt_tid);
 
+
+            // Pris
+            let prisinfo = $("<p></p>")
+            let pris = $("<span></span>").text("Pris: "+element.pris);
+            prisinfo.append(pris);
 
             let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
@@ -207,8 +225,12 @@ function injectOffers(bruker) {
             }
 
 
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, buttons, element.statusflags);
+            $("#"+html_id).append(overskrift, tidsinfo, prisinfo,sender, buttons);
             $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
+            if (debug_mode) {
+                let status = $("<span></span>").text("Status: "+element.statusflags);
+                $("#"+html_id).append(status);
+            }
         });
     },
     error: function(xmlhttprequest, textstatus, message) {
@@ -230,11 +252,14 @@ function injectOffers(bruker) {
 */
 
 function getStatusColor(statusflags) {
-    if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
+    if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
+        return "reject"
+    }
+    else if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
         return  "accept";
     }
-    else if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
-        return "reject"
+    else if ((statusflags &  1) == 1 && (statusflags & 4 ) == 0) {
+        return "partial-accept";
     }
     else {
         return "#unknown"

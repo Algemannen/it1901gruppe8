@@ -152,6 +152,7 @@ $(document).ready(function(){
     $(".debug_button").click(function() {
         user.type = parseInt(this.id);
         redraw();
+        debug_mode = true;
     });
 
     // Fang 'enter'-trykk fra brukernavn-feltet
