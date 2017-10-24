@@ -90,12 +90,12 @@ $(document).ready(function(){
                 }});
                 break;
             case 5: //Bruker er bookingsjef
-                $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
-                    $("#root").html(result);
-                    $('#username').html(user.name);
-                    concertPricing();
-                }});
-                break;
+              $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
+                $("#root").html(result);
+                $('#username').html(user.name);
+                getListOfScenesForBookingSjef(user);
+              }});
+              break;
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }

@@ -14,14 +14,14 @@ function getConcertInfo(bruker, concert) {
     } else if (bruker.type===2) {
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
-        getTechnicalNeedsByKid(bruker.id,concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
-    } else if (bruker.type==5){
+        getTechnicalNeedsByKid(bruker.id, concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
+    } else if (bruker.type == 5) {
+        let concertReportDiv = $("<div></div>").addClass("EcReport");
         let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
-        container.append(cost_report);
-        buildConcertReport();
-
-    }
-
+        concertReportDiv.append(cost_report);
+        BSbuildConcertReport(concert.kid, concert.navn, concertReportDiv);
+        container.append(concertReportDiv);
+      }
     container.hide();
     return container;
 }
@@ -66,6 +66,7 @@ function safeJsonParse(output) {
         l = jQuery.parseJSON(output);
     }
     catch(err){
+        console.log(err);
         console.log(output);
         $("#root").after(output);
     }
@@ -166,34 +167,48 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
     });
 }
 
-function buildConcertReport(bruker){
-  $.ajax({ url: '/database.php?method=getConcertReport',
-      data: {konsertid: kid},
-      type: 'post',
-      success: function(output) {
-          l = safeJsonParse(output); //gjør en try-catch sjekk.
 
-          // Vi bygger et HTML-element
-          let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
-          let listContainer = $("<div></div>").addClass("");
-          listContainer.append('<br>');
-          for (i in l) {
-              let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
-              let kostnad = $("<span></span><br>").text(l[i].kostnad);
-              let billettpris = $("<span></span><br>").text(l[i].billettpris );
-              let tilskuere = $("<span></span>").text(l[i].tilskuere).css('font-weight', 'bold');
-              listContainer.append(tittel, kostnad, billettpris, tilskuere, '<br>');
+function injectOffers(bruker) {
+    $.ajax({ url: '/database.php?method=getOffers',
+    data: {uid:bruker.id},
+    type: 'post',
+    success: function(output) {
+        l = safeJsonParse(output)
+        injectList("manager_tilbud",l,function(html_id,element){
+            let dato = $("<span></span>").text("Dato: "+element.dato);
+            let start_tid = $("<span></span>").text("Start: "+element.start_tid);
+            let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
+            let pris = $("<span></span>").text("Pris: "+element.pris);
+            let status = $("<span></span>").text("Status: "+element.status);
+            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
+            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
+            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
 
-          }
-          $(container).append(kid,listContainer);
+            
 
-      },
-      error: function(xmlhttprequest, textstatus, message) {
-          if(textstatus==="timeout") {
-              alert("Timeout feil, kan ikke koble til databasen");
-          } else {
-              console.log("Error: "+message);
-          }
-      }
-  });
+            let accept_button = $("<button>Godta</button>").addClass("offer_button").val(element.tid);
+            let reject_button = $("<button>Avslå</button>").addCLass("offer_button").val(element.tid);
+
+            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button, reject_button);
+        });
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+});
+}
+
+/*
+    Bitflags status
+    1 : Tilbud godkjent av bookingsjef
+    2 : Tilbud avslått av bookingsjef
+    4 : Tilbud godkjent av manager
+    8 : Tilbud avslått av manager
+*/
+function updateOfferStatus(tid, status) {
+    console.log(status);
 }
