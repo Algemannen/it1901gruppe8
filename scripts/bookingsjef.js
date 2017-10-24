@@ -1,5 +1,19 @@
+function bookingsjeffane(index) {
+    if (index=="0") {
+        $("#listofscenes").show();
+        $("#ecorapport_knapp").css("background",selectedcolor);
 
-var current_fid = 1;
+        $("#prisgenerering").hide();
+        $("#prisgen_knapp").css("background",defaultcolor);
+    }
+    else if (index == "1") {
+        $("#prisgenerering").show();
+        $("#prisgen_knapp").css("background",selectedcolor);
+
+        $("#listofscenes").hide();
+        $("#ecorapport_knapp").css("background",defaultcolor);
+    }
+}
 
 function getListOfScenesForBookingSjef(bruker) {
 
@@ -13,9 +27,9 @@ function getListOfScenesForBookingSjef(bruker) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let overskrift = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
             let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
-            $('#divBS').append(overskrift,BSscenelist);
+            $('#divBS').append(BSscenelist);
             let container = $("<div></div>").addClass("scenelist");
-            $('#listofscenes').append(container);
+            $('#listofscenes').append(overskrift, container);
 
             for (i in l) {
                 let scenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
@@ -108,7 +122,7 @@ function concertPricing(){
   success: function(output) {
     l = safeJsonParse(output);
     console.log(output);
-    let container = $("<div></div>");
+    let container = $("<div></div>").attr('id', 'prisgenerering');
     let overskrift = $("<h2></h2>").text("Prisgenerering");
     container.append(overskrift);
     for (i in l){
@@ -123,7 +137,7 @@ function concertPricing(){
       konsertDiv.append(konsertHeader, konsertBand, konsertKostnad, konsertScene, konsertPlasser, konsertPris);
       container.append(konsertDiv);
     }
-    $("#listofscenes").append(container);
+    $("#divBS").append(container);
   },
   error: function(xmlhttprequest, textstatus, message) {
       if(textstatus==="timeout") {

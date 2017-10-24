@@ -348,3 +348,8 @@ li.scenePoint {
 .keyConcertInfo, .concertDetails {
   text-align: center;
 }
+
+#prisgenerering {
+  display: none;
+  text-align: center;
+}
