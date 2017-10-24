@@ -265,7 +265,17 @@ $(document).ready(function(){
         managerfane(1);
     });
 
+    $('body').on('click', "#offer_button_accept", function () {
+        let obj = this.value;
+        obj.status = obj.status & getAcceptStatusFlag(obj.type);
+        updateOfferStatus(obj);
+    });
 
+    $('body').on('click', "#offer_button_reject", function () {
+        let obj = this.value;
+        obj.status = obj.status ^ ~ getRejectStatusFlag(obj.type);
+        updateOfferStatus(obj);
+    });
 
 
 
