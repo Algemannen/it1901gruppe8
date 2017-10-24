@@ -349,7 +349,6 @@ li.scenePoint {
   text-align: center;
 }
 
-<<<<<<< HEAD
 .reject {
   border: 1px solid #F00;
 }
@@ -361,7 +360,6 @@ li.scenePoint {
 .unknown {
   border: 1px solid #B0B0B0;
 }
-=======
 #prisgenerering {
   display: none;
   text-align: center;
@@ -373,4 +371,3 @@ li.scenePoint {
   margin: 10px;
   padding: 10px;
 }
->>>>>>> a50049de19640316781f8eaaa09a173702d5d2e0
