@@ -43,7 +43,6 @@ function getListOfTechnicalNeeds(bruker) {
         data: {fid: current_fid},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             for (i in l) {
               getTechnicalNeedsByKid(bruker.id,l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
@@ -105,7 +104,6 @@ function getSearchInfo(searchtype, id) {
         data: {bid: id},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let bandOverskrift = $("<h3></h3>").text(l[0][0].navn);
 
@@ -185,7 +183,6 @@ function getSearchInfo(searchtype, id) {
           data: {kid: id},
           type: 'post',
           success: function(output) {
-            console.log(output);
               l = safeJsonParse(output); //gjør en try-catch sjekk.
               let konsertOverskrift = $("<h3></h3>").text(l[0].knavn);
               let konsertInfo = $("<div></div>").addClass("keyConcertInfo");
@@ -254,14 +251,18 @@ function validateOfferData(){
   let scene = $("#sceneSelect").val();
   let band = $("#bandSelect").val();
 
-  sendOffer(dato, starttid, sluttid, beløp, scene, band, user)
+  if (dato != '' && starttid != '' && sluttid != '' && beløp != ''){
+    sendOffer(dato, starttid, sluttid, beløp, scene, band, user);
+  } else {
+    alert("Feltene er ikke riktig utfyllt.");
+  }
 }
 
 function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
-  console.log(dato, starttid, sluttid, beløp, scene, band);
+  console.log(dato, starttid, sluttid, beløp, scene, band, bruker.id);
 
   $.ajax({ url: '/database.php?method=insertOffer',
-      data: {dato: dato, start_tid: starttid, slutt_tid: sluttid, pris: beløp, sid: scene, bid: band, sender_uid: bruker.uid},
+      data: {dato: dato, start_tid: starttid, slutt_tid: sluttid, pris: beløp, sid: scene, bid: band, sender_uid: bruker.id},
       type: 'post',
       success: function(output) {
         alert("Tilbudet er sendt.");

@@ -1496,7 +1496,7 @@ case 'getListOfBandsAndScenes':
 
 case 'insertOffer':
 
-  $query = "INSERT INTO tilbud(dato, start_tid, slutt_tid, pris, status, bid, sid, sender_uid)
+  $query = "INSERT INTO tilbud (dato, start_tid, slutt_tid, pris, status, bid, sid, sender_uid)
   VALUES (?,?,?,?,0,?,?,?)";
 
   // Gjør klar objekt for spørringen
@@ -1518,6 +1518,12 @@ case 'insertOffer':
       $bid = $_POST['bid'];
       $sid = $_POST['sid'];
       $uid = $_POST['sender_uid'];
+
+      if(strlen($dato) == 0 || strlen($start_tid) == 0 || strlen($slutt_tid) == 0
+      || strlen($pris) == 0 || strlen($bid) == 0 || strlen($sid) == 0 || strlen($uid) == 0) {
+        header("HTTP/1.0 400 Bad Request: Zero-length string");
+        die();
+      }
 
   // Utfører spørringen
       $stmt->execute();

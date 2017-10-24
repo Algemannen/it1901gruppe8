@@ -86,6 +86,7 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds(user);
                     getListOfBandsAndScenes();
+                    injectOffers(user);
                 }});
                 break;
             case 5: //Bruker er bookingsjef
