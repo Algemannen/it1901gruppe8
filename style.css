@@ -348,3 +348,15 @@ li.scenePoint {
 .keyConcertInfo, .concertDetails {
   text-align: center;
 }
+
+.reject {
+  border: 1px solid #F00;
+}
+
+.accept {
+  border: 1px solid #006400;
+}
+
+.unknown {
+  border: 1px solid #B0B0B0;
+}

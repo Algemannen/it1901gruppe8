@@ -1254,12 +1254,13 @@ break;
 
 case 'getOffers':
 
-$query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status, bruker.brukertype AS type,
-scene.navn AS scene_navn, band.navn AS band_navn, bruker.fornavn AS sender_fornavn, bruker.etternavn AS sender_etternavn
+$query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
+scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
 FROM tilbud
 INNER JOIN scene ON scene.sid = tilbud.sid
 INNER JOIN band ON band.bid = tilbud.bid
-INNER JOIN bruker ON bruker.uid = tilbud.sender_uid
+INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
+INNER JOIN bruker b ON b.uid = band.manager_uid
 WHERE band.manager_uid = ?";
 
   // Gjør klar objekt for spørringen
@@ -1295,23 +1296,23 @@ WHERE band.manager_uid = ?";
         */
 
         // Nytt tilbud, ikke godkjent av noen
-        if ($row['status'] === 0 && ( $row['type'] === 4 || $row['type'] === 5)) {
+        if ($row['statusflags'] === 0 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         } 
         // Tilbud godkjent av bookingsjef
-        if ($row['status'] & 1 === 1 && ( $row['type'] === 3 || $row['type'] === 5)) {
+        if ((int)$row['statusflags'] & 1 === 1 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         } 
         // Tilbud avslått av bookingsjef
-        if ($row['status'] & 2 === 1 && ( $row['type'] === 4 || $row['type'] === 5)) {
+        if ((int)$row['statusflags'] & 2 === 2 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;    
         } 
         // Tilbud godkjent av manager
-        if ($row['status'] & 4 === 1 && ( $row['type'] === 3)) {
+        if ((int)$row['statusflags'] & 4 === 4 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         }
         // Tilbud avslått av manager
-        if ($row['status'] & 8 === 1 && ( $row['type'] === 3 || $row['type'] === 4 || $row['type'] === 5)) {
+        if ((int)$row['statusflags'] & 8 === 8 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         }
         

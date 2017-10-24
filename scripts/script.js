@@ -9,8 +9,7 @@
 // Siden URL
 var options = "";
 
-// Brukervariabler
-var user = {type: 0, id: 0, name: "NONAME"};
+
 
 
 // Functions to run after DOM is ready
@@ -265,15 +264,17 @@ $(document).ready(function(){
         managerfane(1);
     });
 
-    $('body').on('click', "#offer_button_accept", function () {
-        let obj = this.value;
-        obj.status = obj.status & getAcceptStatusFlag(obj.type);
+    $('body').on('click', ".offer_button_accept", function () {
+        let obj = jQuery.parseJSON(this.value);
+        obj.statusflags = obj.statusflags | getAcceptStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(obj.usertype);
         updateOfferStatus(obj);
     });
 
-    $('body').on('click', "#offer_button_reject", function () {
-        let obj = this.value;
-        obj.status = obj.status ^ ~ getRejectStatusFlag(obj.type);
+    $('body').on('click', ".offer_button_reject", function () {
+        let obj = jQuery.parseJSON(this.value);
+        obj.statusflags = obj.statusflags | getRejectStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(obj.usertype);
         updateOfferStatus(obj);
     });
 

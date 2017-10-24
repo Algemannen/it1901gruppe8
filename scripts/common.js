@@ -1,6 +1,9 @@
 // Lager et html-element med informasjon om en konsert
 
-let debugMode = false;
+var debugMode = false;
+
+// Brukervariabler
+var user = {type: 0, id: 0, name: "NONAME"};
 
 function getConcertInfo(bruker, concert) {
 
@@ -173,6 +176,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
 }
 
 
+
 function injectOffers(bruker) {
     $.ajax({ url: '/database.php?method=getOffers',
     data: {uid:bruker.id},
@@ -184,17 +188,19 @@ function injectOffers(bruker) {
             let start_tid = $("<span></span>").text("Start: "+element.start_tid);
             let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
             let pris = $("<span></span>").text("Pris: "+element.pris);
-            let status = $("<span></span>").text("Status: "+element.status);
+            let status = $("<span></span>").text("Status: "+element.statusflags);
             let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
             let band_navn = $("<span></span>").text("Band: "+element.band_navn);
             let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
 
 
+            let obj = JSON.stringify({tid:element.tid, usertype:parseInt(element.usertype), statusflags:parseInt(element.statusflags)});
 
-            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val({tid:element.tid, type:element.type, status:element.status});
-            let reject_button = $("<button>Avslå</button>").addCLass("offer_button_reject").val({tid:element.tid, type:element.type, status:element.status});
+            let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
+            let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
 
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button, reject_button);
+            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button,reject_button,element.usertype,element.statusflags);
+            $("#"+html_id).addClass(getStatusColor(element.statusflags));
         });
     },
     error: function(xmlhttprequest, textstatus, message) {
@@ -215,30 +221,56 @@ function injectOffers(bruker) {
     8 : Tilbud avslått av manager
 */
 
-function getAcceptStatusFlag(brukertype) {
-    if (type == 3) {
+function getStatusColor(statusflags) {
+    if (statusflags & 1 == 1 && statusflags & 4 == 4) {
+        return  "accept";
+    }
+    else if (statusflags & 2 == 2 || statusflags & 8 == 8) {
+        return "reject"
+    }
+    else {
+        return "#unknown"
+    }
+}
+
+function getAcceptStatusFlag(usertype) {
+    if (usertype == 3) {
         return 4;
     }
-    else if (type == 4) {
+    else if (usertype == 4) {
         return 1;
     }
     else {
-        console.log("Usertype mismatch: "+type);
+        console.log("Usertype mismatch: "+usertype);
     }
 }
 
-function getRejectStatusFlag(brukertype) {
-    if (type == 3) {
+function getRejectStatusFlag(usertype) {
+    if (usertype == 3) {
         return 8;
     }
-    else if (type == 4) {
+    else if (usertype == 4) {
         return 2;
     }
     else {
-        console.log("Usertype mismatch: "+type);
+        console.log("Usertype mismatch: "+usertype);
     }
 }
 
-function updateOfferStatus(tid_status_obj) {
-    console.log(tid_status_obj);
+function updateOfferStatus(obj) {
+    $.ajax({ url: '/database.php?method=setOfferStatus',
+    data: {tid:obj.tid, status:obj.statusflags},
+    type: 'post',
+    success: function(output) {
+        $("#manager_tilbud").empty();
+        injectOffers(user);
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+});
 }
