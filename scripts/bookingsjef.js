@@ -11,7 +11,9 @@ function getListOfScenesForBookingSjef(bruker) {
         success: function(output) {
             console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-
+            let overskrift = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
+            let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
+            $('#divBS').append(overskrift,BSscenelist);
             let container = $("<div></div>").addClass("scenelist");
             $('#listofscenes').append(container);
 
@@ -71,7 +73,6 @@ function BSbuildConcertReport(kid, sname, container){
       success: function(output) {
 
           l = safeJsonParse(output); //gjør en try-catch sjekk.
-          console.log(l);
           // Vi bygger et HTML-element
           let listContainer = $("<div></div>").addClass("concertReportContainer");
           listContainer.append('<br>');
@@ -79,8 +80,10 @@ function BSbuildConcertReport(kid, sname, container){
               let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
               let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
               let billettpris = $("<span></span><br>").text('billettpris: ' + l[i].billettpris );
-              let tilskuere = $("<span></span>").text('Tilskuere: ' + l[i].tilskuere);
-              listContainer.append(tittel, kostnad, billettpris, tilskuere, '<br>');
+              let tilskuere = $("<span></span><br>").text('Tilskuere: ' + l[i].tilskuere);
+              let inntekt = $("<span></span><br>").text('Inntekt: ' + l[i].billettpris * l[i].tilskuere)
+              let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
+              listContainer.append(tittel, kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
           }
           $(container).append(listContainer);
 
