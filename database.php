@@ -1298,8 +1298,10 @@ else {
     header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
   } else {
 
-    // Binder brukerid som heltall
-    $stmt->bind_param('i', $uid);
+    if ($brukertype == 3 || $brukertype == 4) {
+        // Binder brukerid som heltall
+        $stmt->bind_param('i', $uid);
+    }
 
     // Leser inn sceneid
     $uid = $_POST['uid'];
@@ -1325,11 +1327,11 @@ else {
         if ($row['statusflags'] === 0 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         }
-        // Tilbud godkjent av bookingsjef
+        // Tilbud godkjent av bookingansvarlig
         else if ((int)$row['statusflags'] & 1 === 1 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         }
-        // Tilbud avslått av bookingsjef
+        // Tilbud avslått av ansvarlig
         else if ((int)$row['statusflags'] & 2 === 2 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;    
         } 

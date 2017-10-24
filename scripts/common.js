@@ -179,7 +179,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
 
 function injectOffers(bruker) {
     $.ajax({ url: '/database.php?method=getOffers',
-    data: {uid:bruker.id},
+    data: {uid:bruker.id, brukertype:bruker.type},
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)
@@ -199,11 +199,11 @@ function injectOffers(bruker) {
 
             let buttons = $("<span></span>");
             // Bookingsjef
-            if (bruker.id === 5) {
+            if (bruker.id === 4) {
                 let delete_button = $("<button>Slett</button>")
                 buttons.append(delete_button);
             }
-            else if (bruker.id === 3 || bruker.id == 4) {
+            else if (bruker.id === 3 || bruker.id == 5) {
                 let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
                 let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
                 buttons.append(accept_button, reject_button);
@@ -248,7 +248,7 @@ function getAcceptStatusFlag(usertype) {
     if (usertype == 3) {
         return 4;
     }
-    else if (usertype == 4) {
+    else if (usertype == 5) {
         return 1;
     }
     else {
@@ -260,7 +260,7 @@ function getRejectStatusFlag(usertype) {
     if (usertype == 3) {
         return 8;
     }
-    else if (usertype == 4) {
+    else if (usertype == 5) {
         return 2;
     }
     else {
