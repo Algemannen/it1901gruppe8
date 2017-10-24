@@ -85,7 +85,7 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds(user);
-                    getListOfBands();
+                    //getListOfBands();
                 }});
                 break;
             case 5: //Bruker er bookingsjef
@@ -93,6 +93,8 @@ $(document).ready(function(){
                 $("#root").html(result);
                 $('#username').html(user.name);
                 getListOfScenesForBookingSjef(user);
+                concertPricing();
+                bookingsjeffane(0);
               }});
               break;
             default:
@@ -279,6 +281,14 @@ $(document).ready(function(){
     });
 
 
+
+    $('body').on('click', "#ecorapport_knapp", function () {
+        bookingsjeffane(0);
+    });
+
+    $('body').on('click', "#prisgen_knapp", function () {
+        bookingsjeffane(1);
+    });
 
 
 

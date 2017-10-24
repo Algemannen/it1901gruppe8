@@ -1298,11 +1298,11 @@ WHERE band.manager_uid = ?";
         // Nytt tilbud, ikke godkjent av noen
         if ($row['statusflags'] === 0 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
-        } 
+        }
         // Tilbud godkjent av bookingsjef
         if ((int)$row['statusflags'] & 1 === 1 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
-        } 
+        }
         // Tilbud avslått av bookingsjef
         if ((int)$row['statusflags'] & 2 === 2 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;    
@@ -1315,7 +1315,45 @@ WHERE band.manager_uid = ?";
         if ((int)$row['statusflags'] & 8 === 8 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
         }
-        
+
+    }
+
+    // Returner json-string med data
+    echo json_encode($encode);
+
+    // Avslutt sql-setning
+    $stmt->close();
+  }
+
+break;
+
+case 'getConcertPricingInfo':
+
+$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, b.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+          FROM konsert k
+          INNER JOIN konsert_band kb ON k.kid =kb.kid
+          INNER JOIN band b ON b.bid = kb.bid
+          INNER JOIN scene s ON s.sid = k.sid
+          WHERE k.billettpris IS NULL";
+
+  // Gjør klar objekt for spørringen
+  $stmt = $dbconn->stmt_init();
+
+  // Gjør spørringen klar for databasen
+  if(!$stmt->prepare($query)) {
+    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+  } else {
+
+    // Utfører spørringen
+    $stmt->execute();
+
+    // Returnerer resultat fra spørringen
+    $result = $stmt->get_result();
+
+    // Hent ut alle rader fra en spørring
+    $encode = array();
+    while ($row = $result->fetch_assoc()) {
+        $encode[] = $row;
     }
 
     // Returner json-string med data
@@ -1328,26 +1366,26 @@ WHERE band.manager_uid = ?";
 break;
 
 /*
-      _  _  _  _                     _                                     _  _     _  _                              
-    _(_)(_)(_)(_)_                  (_)                                  _(_)(_)  _(_)(_)                             
-   (_)          (_)  _  _  _  _   _ (_) _  _               _  _  _    _ (_) _  _ (_) _  _  _  _  _   _       _  _     
-   (_)_  _  _  _    (_)(_)(_)(_)_(_)(_)(_)(_)           _ (_)(_)(_) _(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)    
-     (_)(_)(_)(_)_ (_) _  _  _ (_)  (_)                (_)         (_)  (_)      (_)  (_) _  _  _ (_) (_)(_)          
-    _           (_)(_)(_)(_)(_)(_)  (_)     _          (_)         (_)  (_)      (_)  (_)(_)(_)(_)(_) (_)             
-   (_)_  _  _  _(_)(_)_  _  _  _    (_)_  _(_)         (_) _  _  _ (_)  (_)      (_)  (_)_  _  _  _   (_)             
-     (_)(_)(_)(_)    (_)(_)(_)(_)     (_)(_)              (_)(_)(_)     (_)      (_)    (_)(_)(_)(_)  (_)             
-                                                                                                                      
-                                                                                                                      
-                     _                         _                                                                      
-                    (_)                       (_)                                                                     
-      _  _  _  _  _ (_) _  _     _  _  _    _ (_) _  _   _         _    _  _  _  _                                    
-    _(_)(_)(_)(_)(_)(_)(_)(_)   (_)(_)(_) _(_)(_)(_)(_) (_)       (_) _(_)(_)(_)(_)                                   
-   (_)_  _  _  _    (_)          _  _  _ (_)  (_)       (_)       (_)(_)_  _  _  _                                    
-     (_)(_)(_)(_)_  (_)     _  _(_)(_)(_)(_)  (_)     _ (_)       (_)  (_)(_)(_)(_)_                                  
-      _  _  _  _(_) (_)_  _(_)(_)_  _  _ (_)_ (_)_  _(_)(_)_  _  _(_)_  _  _  _  _(_)                                 
-     (_)(_)(_)(_)     (_)(_)    (_)(_)(_)  (_)  (_)(_)    (_)(_)(_) (_)(_)(_)(_)(_)                                   
-                                                                                                                      
-                                                                                                                      
+      _  _  _  _                     _                                     _  _     _  _
+    _(_)(_)(_)(_)_                  (_)                                  _(_)(_)  _(_)(_)
+   (_)          (_)  _  _  _  _   _ (_) _  _               _  _  _    _ (_) _  _ (_) _  _  _  _  _   _       _  _
+   (_)_  _  _  _    (_)(_)(_)(_)_(_)(_)(_)(_)           _ (_)(_)(_) _(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)
+     (_)(_)(_)(_)_ (_) _  _  _ (_)  (_)                (_)         (_)  (_)      (_)  (_) _  _  _ (_) (_)(_)
+    _           (_)(_)(_)(_)(_)(_)  (_)     _          (_)         (_)  (_)      (_)  (_)(_)(_)(_)(_) (_)
+   (_)_  _  _  _(_)(_)_  _  _  _    (_)_  _(_)         (_) _  _  _ (_)  (_)      (_)  (_)_  _  _  _   (_)
+     (_)(_)(_)(_)    (_)(_)(_)(_)     (_)(_)              (_)(_)(_)     (_)      (_)    (_)(_)(_)(_)  (_)
+
+
+                     _                         _
+                    (_)                       (_)
+      _  _  _  _  _ (_) _  _     _  _  _    _ (_) _  _   _         _    _  _  _  _
+    _(_)(_)(_)(_)(_)(_)(_)(_)   (_)(_)(_) _(_)(_)(_)(_) (_)       (_) _(_)(_)(_)(_)
+   (_)_  _  _  _    (_)          _  _  _ (_)  (_)       (_)       (_)(_)_  _  _  _
+     (_)(_)(_)(_)_  (_)     _  _(_)(_)(_)(_)  (_)     _ (_)       (_)  (_)(_)(_)(_)_
+      _  _  _  _(_) (_)_  _(_)(_)_  _  _ (_)_ (_)_  _(_)(_)_  _  _(_)_  _  _  _  _(_)
+     (_)(_)(_)(_)     (_)(_)    (_)(_)(_)  (_)  (_)(_)    (_)(_)(_) (_)(_)(_)(_)(_)
+
+
 */
 
 case 'setOfferStatus':
@@ -1380,10 +1418,9 @@ if(!$stmt->prepare($query)) {
     $stmt->close();
 }
 
-  
+
 
 break;
-
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
