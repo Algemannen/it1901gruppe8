@@ -85,7 +85,7 @@ $(document).ready(function(){
                     $("#root").html(result);
                     $('#username').html(user.name);
                     getListOfTechnicalNeeds(user);
-                    //getListOfBands();
+                    getListOfBandsAndScenes();
                 }});
                 break;
             case 5: //Bruker er bookingsjef
@@ -253,6 +253,14 @@ $(document).ready(function(){
 
     $('body').on('click', "#sokebutton", function () {
         search();
+    });
+
+    $('body').on('click', "#sendOfferButton", function () {
+      validateOfferData();
+    });
+
+    $('body').on('click', "#resetOfferButton", function () {
+      resetOfferData();
     });
 
     $('body').on('click', ".delete_technical_need", function () {
