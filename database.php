@@ -619,9 +619,9 @@ case 'getBandInfo':
 
     $finalencode = array();
 
-    
 
-    
+
+
 
         $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
             FROM band b
@@ -657,9 +657,9 @@ $bid = $_POST['bid'];
             // Avslutt sql-setning
             $stmt1->close();
         }
-    
 
-    
+
+
 
         // Gjør klar sql-setning
         $query2 = "SELECT *
@@ -701,11 +701,11 @@ $stmt2->execute();
             $stmt2->close();
         }
 
-    
 
 
 
-    
+
+
 
         // Gjør klar sql-setning
         $query3 = "SELECT *
@@ -745,9 +745,9 @@ $bid = $_POST['bid'];
             $stmt3->close();
         }
 
-    
 
-    
+
+
 
         // Gjør klar sql-setning
         $query4 = "SELECT *
@@ -787,7 +787,7 @@ $bid = $_POST['bid'];
             $stmt4->close();
         }
 
-    
+
 
     echo json_encode($finalencode);
 
@@ -799,7 +799,7 @@ case 'getConcertReport':
       INNER JOIN scene ON konsert.sid = scene.sid
       INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
       INNER JOIN band ON konsert_band.bid = band.bid
-      WHERE konsert.sid = ?
+      WHERE konsert.kid = ?
       AND fid = ?";
 
   // Gjør klar objekt for spørringen
@@ -811,12 +811,10 @@ case 'getConcertReport':
   } else {
 
       // Binder brukerid som heltall
-      $stmt->bind_param('ii', $sid, $fid);
+      $stmt->bind_param('ii', $cid, $fid);
 
       // Leser inn sceneid
-      $sid = $_POST['sceneid'];
-
-      // Leser inn festival
+      $cid = $_POST['cid'];
       $fid = $_POST['fid'];
 
       // Utfører spørringen

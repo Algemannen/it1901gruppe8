@@ -15,13 +15,7 @@ function getConcertInfo(bruker, concert) {
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
         getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
-    } else if (bruker.type==5){
-        let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
-        container.append(cost_report);
-        buildConcertReport();
-
-    }
-
+      }
     container.hide();
     return container;
 }
@@ -66,6 +60,7 @@ function safeJsonParse(output) {
         l = jQuery.parseJSON(output);
     }
     catch(err){
+        console.log(err);
         console.log(output);
         $("#root").after(output);
     }
@@ -158,36 +153,4 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
             }
         }
     });
-}
-
-function buildConcertReport(bruker){
-  $.ajax({ url: '/database.php?method=getConcertReport',
-      data: {konsertid: kid},
-      type: 'post',
-      success: function(output) {
-          l = safeJsonParse(output); //gjør en try-catch sjekk.
-
-          // Vi bygger et HTML-element
-          let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
-          let listContainer = $("<div></div>").addClass("");
-          listContainer.append('<br>');
-          for (i in l) {
-              let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
-              let kostnad = $("<span></span><br>").text(l[i].kostnad);
-              let billettpris = $("<span></span><br>").text(l[i].billettpris );
-              let tilskuere = $("<span></span>").text(l[i].tilskuere).css('font-weight', 'bold');
-              listContainer.append(tittel, kostnad, billettpris, tilskuere, '<br>');
-
-          }
-          $(container).append(kid,listContainer);
-
-      },
-      error: function(xmlhttprequest, textstatus, message) {
-          if(textstatus==="timeout") {
-              alert("Timeout feil, kan ikke koble til databasen");
-          } else {
-              console.log("Error: "+message);
-          }
-      }
-  });
-}
+  }
