@@ -1,4 +1,10 @@
 <?php
+/*
+ASCII-art tekst fra http://www.patorjk.com/software/taag/#p=display&f=Dot%20Matrix&t=Text
+
+
+*/
+
 // Skru på debug
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
@@ -74,6 +80,19 @@ case 'login':
 
     break;
 
+/*
+      _  _  _  _
+    _(_)(_)(_)(_)_
+   (_)          (_)   _  _  _  _  _  _  _    _  _  _  _     _  _  _  _      _  _  _  _
+   (_)_  _  _  _    _(_)(_)(_)(_)(_)(_)(_)_ (_)(_)(_)(_)_  (_)(_)(_)(_)_  _(_)(_)(_)(_)
+     (_)(_)(_)(_)_ (_)       (_) _  _  _ (_)(_)        (_)(_) _  _  _ (_)(_)_  _  _  _
+    _           (_)(_)       (_)(_)(_)(_)(_)(_)        (_)(_)(_)(_)(_)(_)  (_)(_)(_)(_)_
+   (_)_  _  _  _(_)(_)_  _  _(_)_  _  _  _  (_)        (_)(_)_  _  _  _     _  _  _  _(_)
+     (_)(_)(_)(_)    (_)(_)(_) (_)(_)(_)(_) (_)        (_)  (_)(_)(_)(_)   (_)(_)(_)(_)
+
+
+*/
+
     /// Returnerer en komplett liste av alle scener.
 case 'getListOfScenes':
     $query = "SELECT *
@@ -108,6 +127,19 @@ case 'getListOfScenes':
     }
 
     break;
+
+/*
+       _  _  _                                                                           _
+    _ (_)(_)(_) _                                                                       (_)
+   (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _   _  _  _  _
+   (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)
+   (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)     (_)_  _  _  _
+   (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _ (_)(_)(_)(_)_
+   (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_) _  _  _  _(_)
+      (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)  (_)(_)(_)(_)
+
+
+*/
 
     /// Returnerer en liste over konserter brukeren hjelper til med rigging på en gitt festival
 case 'getListOfConcertsForTechs':
@@ -159,6 +191,19 @@ case 'getListOfConcertsForTechs':
 
     break;
 
+/*
+       _  _  _                                                                           _
+    _ (_)(_)(_) _                                                                       (_)
+   (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _   _  _  _  _
+   (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)
+   (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)     (_)_  _  _  _
+   (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _ (_)(_)(_)(_)_
+   (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_) _  _  _  _(_)
+      (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)  (_)(_)(_)(_)
+
+
+*/
+
     /// Returnerer en liste over konserter som foregår på en gitt scene på en gitt festival
 case 'getListOfConcertsByScene':
 
@@ -209,6 +254,19 @@ case 'getListOfConcertsByScene':
 
     /// Returnerer en liste over alle teknikere på en gitt scene
 
+/*
+       _  _  _                                                                           _
+    _ (_)(_)(_) _                                                                       (_)
+   (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _   _  _  _  _
+   (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)
+   (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)     (_)_  _  _  _
+   (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _ (_)(_)(_)(_)_
+   (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_) _  _  _  _(_)
+      (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)  (_)(_)(_)(_)
+
+
+*/
+
 case 'getListOfConcertesByFestival':
 
     // Gjør klar sql-setning
@@ -218,8 +276,7 @@ case 'getListOfConcertesByFestival':
         INNER JOIN band b ON b.bid = kb.kid
         INNER JOIN scene s ON k.sid = s.sid
         WHERE fid = ?
-        ORDER BY k.kid ASC
-";
+        ORDER BY k.kid ASC";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -256,6 +313,19 @@ case 'getListOfConcertesByFestival':
 
     break;
 
+/*
+       _  _  _                                                                           _
+    _ (_)(_)(_) _                                                                       (_)
+   (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _   _  _  _  _
+   (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)
+   (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)     (_)_  _  _  _
+   (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _ (_)(_)(_)(_)_
+   (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_) _  _  _  _(_)
+      (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)  (_)(_)(_)(_)
+
+
+*/
+
 case 'getListOfConcertesByFestivalAndId':
 
     // Gjør klar sql-setning
@@ -266,8 +336,7 @@ case 'getListOfConcertesByFestivalAndId':
         INNER JOIN scene s ON k.sid = s.sid
         WHERE fid = ?
         AND b.manager_uid = ?
-        ORDER BY k.kid ASC
-";
+        ORDER BY k.kid ASC";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -309,14 +378,58 @@ case 'getListOfConcertesByFestivalAndId':
 
     /// Returnerer en liste over alle teknikere på en gitt scene
 
+// case 'getListOfBands':
+    //     // Gjør klar sql-setning
+    //     $query = "SELECT * FROM band";
+
+    //     // Gjør klar objekt for spørring
+    //     $stmt = $dbconn->stmt_init();
+
+    //     // Gjør klar spørringen for databsen
+    //     if(!$stmt->prepare($query)) {
+    //         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    //     } else {
+
+    //          // Utfør sql-setning
+    //         $stmt->execute();
+
+    //         // Henter resultat fra spørring
+    //         $result = $stmt->get_result();
+
+    //         // Hent ut alle rader fra en spørring
+    //         $encode = array();
+    //         while ($row = $result->fetch_assoc()) {
+    //             $encode[] = $row;
+    //         }
+
+    //         // Returner json-string med data
+    //         echo json_encode($encode);
+
+    //         // Avslutt sql-setning
+    //         $stmt->close();
+    //     }
+    //     break;
+
+/*
+    _  _  _  _  _                      _                              _                  _
+   (_)(_)(_)(_)(_)                    (_)                            (_)                (_)
+         (_)  _  _  _  _      _  _  _ (_) _  _  _    _  _  _  _    _  _      _  _  _  _  _      _  _  _       _  _  _  _      _  _  _  _
+         (_) (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_ (_)(_)(_)(_)_ (_)(_)   _(_)(_)(_)(_)(_)    (_)(_)(_) _   (_)(_)(_)(_)_  _(_)(_)(_)(_)
+         (_)(_) _  _  _ (_)(_)        (_)        (_)(_)        (_)   (_)  (_)           (_)     _  _  _ (_)  (_)        (_)(_)_  _  _  _
+         (_)(_)(_)(_)(_)(_)(_)        (_)        (_)(_)        (_)   (_)  (_)           (_)   _(_)(_)(_)(_)  (_)        (_)  (_)(_)(_)(_)_
+         (_)(_)_  _  _  _  (_)_  _  _ (_)        (_)(_)        (_) _ (_) _(_)_  _  _  _ (_) _(_)_  _  _ (_)_ (_)        (_)   _  _  _  _(_)
+         (_)  (_)(_)(_)(_)   (_)(_)(_)(_)        (_)(_)        (_)(_)(_)(_) (_)(_)(_)(_)(_)(_) (_)(_)(_)  (_)(_)        (_)  (_)(_)(_)(_)
+
+
+*/
+
 case 'getListOfTechs':
 
     // Gjør klar sql-setning
     $query = "SELECT *
         FROM bruker
         INNER JOIN konsert_rigging ON bruker.uid = konsert_rigging.uid
-        WHERE kid = ?
-";
+        WHERE kid = ?";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -352,6 +465,19 @@ case 'getListOfTechs':
     }
 
     break;
+
+    /*
+    _  _  _  _  _                      _                                                                             _
+   (_)(_)(_)(_)(_)                    (_)                                                                           (_)
+         (_)  _  _  _  _      _  _  _ (_) _  _  _             _  _  _  _     _  _  _  _     _  _  _  _      _  _  _ (_)   _  _  _  _
+         (_) (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_          (_)(_)(_)(_)_  (_)(_)(_)(_)_  (_)(_)(_)(_)_  _(_)(_)(_)(_) _(_)(_)(_)(_)
+         (_)(_) _  _  _ (_)(_)        (_)        (_)         (_)        (_)(_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _  _
+         (_)(_)(_)(_)(_)(_)(_)        (_)        (_)         (_)        (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)        (_)  (_)(_)(_)(_)_
+         (_)(_)_  _  _  _  (_)_  _  _ (_)        (_)         (_)        (_)(_)_  _  _  _  (_)_  _  _  _  (_)_  _  _ (_)   _  _  _  _(_)
+         (_)  (_)(_)(_)(_)   (_)(_)(_)(_)        (_)         (_)        (_)  (_)(_)(_)(_)   (_)(_)(_)(_)   (_)(_)(_)(_)  (_)(_)(_)(_)
+
+
+    */
 
     /// Returnerer en lste over tekniske behov for en gitt konsert.
 case 'getListOfTechnicalNeeds':
@@ -359,8 +485,7 @@ case 'getListOfTechnicalNeeds':
     // Gjør klar sql-setning
     $query = "SELECT *
         FROM tekniske_behov
-        WHERE kid = ?
-";
+        WHERE kid = ?";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -397,13 +522,35 @@ case 'getListOfTechnicalNeeds':
 
     break;
 
+/*
+       _  _  _                                                               _
+      (_)(_)(_)                                                             (_)
+         (_)    _  _  _  _      _  _  _  _     _  _  _  _   _       _  _  _ (_) _  _
+         (_)   (_)(_)(_)(_)_  _(_)(_)(_)(_)   (_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)
+         (_)   (_)        (_)(_)_  _  _  _   (_) _  _  _ (_) (_)(_)         (_)
+         (_)   (_)        (_)  (_)(_)(_)(_)_ (_)(_)(_)(_)(_) (_)            (_)     _
+       _ (_) _ (_)        (_)   _  _  _  _(_)(_)_  _  _  _   (_)            (_)_  _(_)
+      (_)(_)(_)(_)        (_)  (_)(_)(_)(_)    (_)(_)(_)(_)  (_)              (_)(_)
+
+
+        _                                   _                                                                             _
+       (_)                                 (_)                                                                           (_)
+     _ (_) _  _    _  _  _  _      _  _  _ (_) _  _  _             _  _  _  _     _  _  _  _     _  _  _  _      _  _  _ (_)   _  _  _  _
+    (_)(_)(_)(_)  (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_          (_)(_)(_)(_)_  (_)(_)(_)(_)_  (_)(_)(_)(_)_  _(_)(_)(_)(_) _(_)(_)(_)(_)
+       (_)       (_) _  _  _ (_)(_)        (_)        (_)         (_)        (_)(_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _  _
+       (_)     _ (_)(_)(_)(_)(_)(_)        (_)        (_)         (_)        (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)        (_)  (_)(_)(_)(_)_
+       (_)_  _(_)(_)_  _  _  _  (_)_  _  _ (_)        (_)         (_)        (_)(_)_  _  _  _  (_)_  _  _  _  (_)_  _  _ (_)   _  _  _  _(_)
+         (_)(_)    (_)(_)(_)(_)   (_)(_)(_)(_)        (_)         (_)        (_)  (_)(_)(_)(_)   (_)(_)(_)(_)   (_)(_)(_)(_)  (_)(_)(_)(_)
+
+
+*/
+
     /// Sette inn tekniske behov i databasen
 case 'insertTechnicalNeeds':
 
     // Gjør klar sql-setning
     $query = "INSERT INTO tekniske_behov (kid, tittel, behov)
-        VALUES (?,?,?)
-";
+        VALUES (?,?,?)";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -444,6 +591,84 @@ case 'insertTechnicalNeeds':
 
     break;
 
+/*
+
+    _  _  _  _                   _  _                     _
+   (_)(_)(_)(_)                 (_)(_)                   (_)
+    (_)      (_)_   _  _  _  _     (_)    _  _  _  _   _ (_) _  _    _  _  _  _
+    (_)        (_) (_)(_)(_)(_)_   (_)   (_)(_)(_)(_)_(_)(_)(_)(_)  (_)(_)(_)(_)_
+    (_)        (_)(_) _  _  _ (_)  (_)  (_) _  _  _ (_)  (_)       (_) _  _  _ (_)
+    (_)       _(_)(_)(_)(_)(_)(_)  (_)  (_)(_)(_)(_)(_)  (_)     _ (_)(_)(_)(_)(_)
+    (_)_  _  (_)  (_)_  _  _  _  _ (_) _(_)_  _  _  _    (_)_  _(_)(_)_  _  _  _
+   (_)(_)(_)(_)     (_)(_)(_)(_)(_)(_)(_) (_)(_)(_)(_)     (_)(_)    (_)(_)(_)(_)
+
+
+        _                                   _                                                                             _
+       (_)                                 (_)                                                                           (_)
+     _ (_) _  _    _  _  _  _      _  _  _ (_) _  _  _             _  _  _  _     _  _  _  _     _  _  _  _      _  _  _ (_)   _  _  _  _
+    (_)(_)(_)(_)  (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_          (_)(_)(_)(_)_  (_)(_)(_)(_)_  (_)(_)(_)(_)_  _(_)(_)(_)(_) _(_)(_)(_)(_)
+       (_)       (_) _  _  _ (_)(_)        (_)        (_)         (_)        (_)(_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _  _
+       (_)     _ (_)(_)(_)(_)(_)(_)        (_)        (_)         (_)        (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)        (_)  (_)(_)(_)(_)_
+       (_)_  _(_)(_)_  _  _  _  (_)_  _  _ (_)        (_)         (_)        (_)(_)_  _  _  _  (_)_  _  _  _  (_)_  _  _ (_)   _  _  _  _(_)
+         (_)(_)    (_)(_)(_)(_)   (_)(_)(_)(_)        (_)         (_)        (_)  (_)(_)(_)(_)   (_)(_)(_)(_)   (_)(_)(_)(_)  (_)(_)(_)(_)
+
+
+
+*/
+
+case 'deleteTechnicalNeed' :
+
+    $query = "DELETE FROM tekniske_behov
+                WHERE tbid = ?";
+
+                // Gjør klar objekt for spørring
+        $stmt = $dbconn->stmt_init();
+
+            // Gjør klar spørringen for databsen
+            if(!$stmt->prepare($query)) {
+                header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+            } else {
+
+                // Bind konsertid som heltall
+            $stmt->bind_param('i', $tbid);
+
+                    // Leser inn konsertid
+                    $tbid = $_POST['tbid'];
+
+                // Utfør sql-setning
+                $stmt->execute();
+
+                // Avslutt sql-setning
+                $stmt->close();
+            }
+
+    break;
+
+    /*
+
+      _  _  _  _   _  _               _
+    _(_)(_)(_)(_)_(_)(_)             (_)
+   (_)          (_)  (_)     _  _  _ (_)  _  _  _  _   _       _  _
+   (_)          (_)  (_)   _(_)(_)(_)(_) (_)(_)(_)(_)_(_)_  _ (_)(_)
+   (_)          (_)  (_)  (_)        (_)(_) _  _  _ (_) (_)(_)
+   (_)          (_)  (_)  (_)        (_)(_)(_)(_)(_)(_) (_)
+   (_)_  _  _  _(_)_ (_) _(_)_  _  _ (_)(_)_  _  _  _   (_)
+     (_)(_)(_)(_) (_)(_)(_) (_)(_)(_)(_)  (_)(_)(_)(_)  (_)
+
+
+                                                                                     _
+                                                                                    (_)
+       _  _  _    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _   _  _  _  _
+     _(_)(_)(_)_ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)
+    (_)       (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)     (_)_  _  _  _
+    (_)       (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _ (_)(_)(_)(_)_
+    (_)_  _  _(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_) _  _  _  _(_)
+      (_)(_)(_)  (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)  (_)(_)(_)(_)
+
+
+
+    */
+
     /// Returnerer en liste over alle teknikere på en gitt scene
 case 'getListOfOlderConserts':
 
@@ -452,8 +677,7 @@ case 'getListOfOlderConserts':
         FROM konsert
         INNER JOIN scene on konsert.sid = scene.sid
         WHERE fid != ?
-        AND sjanger = ?
-";
+        AND sjanger = ?";
 
     // Gjør klar objekt for spørring
     $stmt = $dbconn->stmt_init();
@@ -493,7 +717,28 @@ case 'getListOfOlderConserts':
 
     break;
 
+/*
+      _  _  _  _   _  _               _           _  _  _  _                                              _
+    _(_)(_)(_)(_)_(_)(_)             (_)         (_)(_)(_)(_) _                                          (_)
+   (_)          (_)  (_)     _  _  _ (_)          (_)        (_)   _  _  _       _  _  _  _      _  _  _ (_)
+   (_)          (_)  (_)   _(_)(_)(_)(_)          (_) _  _  _(_)  (_)(_)(_) _   (_)(_)(_)(_)_  _(_)(_)(_)(_)
+   (_)          (_)  (_)  (_)        (_)          (_)(_)(_)(_)_    _  _  _ (_)  (_)        (_)(_)        (_)
+   (_)          (_)  (_)  (_)        (_)          (_)        (_) _(_)(_)(_)(_)  (_)        (_)(_)        (_)
+   (_)_  _  _  _(_)_ (_) _(_)_  _  _ (_)          (_)_  _  _ (_)(_)_  _  _ (_)_ (_)        (_)(_)_  _  _ (_)
+     (_)(_)(_)(_) (_)(_)(_) (_)(_)(_)(_)         (_)(_)(_)(_)     (_)(_)(_)  (_)(_)        (_)  (_)(_)(_)(_)
 
+
+     _
+    (_)
+    (_) _  _  _   _               _             _  _  _  _   _  _  _  _    _  _  _  _   _       _  _  _  _  _  _
+    (_)(_)(_)(_)_(_)_           _(_)          _(_)(_)(_)(_) (_)(_)(_)(_)_ (_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)_
+    (_)        (_) (_)_       _(_)           (_)        (_)(_) _  _  _ (_)(_)        (_) (_)(_)     (_) _  _  _ (_)
+    (_)        (_)   (_)_   _(_)             (_)        (_)(_)(_)(_)(_)(_)(_)        (_) (_)        (_)(_)(_)(_)(_)
+    (_) _  _  _(_)     (_)_(_)               (_)_  _  _ (_)(_)_  _  _  _  (_)        (_) (_)        (_)_  _  _  _
+    (_)(_)(_)(_)        _(_)                   (_)(_)(_)(_)  (_)(_)(_)(_) (_)        (_) (_)          (_)(_)(_)(_)
+                   _  _(_)                      _  _  _ (_)
+                  (_)(_)                       (_)(_)(_)
+*/
 
 case 'getOldBandByGenre':
 
@@ -538,6 +783,19 @@ case 'getOldBandByGenre':
 
     break;
 
+/*
+      _  _  _  _                                                        _
+    _(_)(_)(_)(_)_                                                     (_)
+   (_)          (_)  _  _  _  _     _  _  _     _       _  _   _  _  _ (_) _  _  _
+   (_)_  _  _  _    (_)(_)(_)(_)_  (_)(_)(_) _ (_)_  _ (_)(_)_(_)(_)(_)(_)(_)(_)(_)_
+     (_)(_)(_)(_)_ (_) _  _  _ (_)  _  _  _ (_)  (_)(_)     (_)        (_)        (_)
+    _           (_)(_)(_)(_)(_)(_)_(_)(_)(_)(_)  (_)        (_)        (_)        (_)
+   (_)_  _  _  _(_)(_)_  _  _  _ (_)_  _  _ (_)_ (_)        (_)_  _  _ (_)        (_)
+     (_)(_)(_)(_)    (_)(_)(_)(_)  (_)(_)(_)  (_)(_)          (_)(_)(_)(_)        (_)
+
+
+*/
+
 case 'search':
     $text = "%{$_POST['text']}%";
     $type = $_POST['type'];
@@ -577,6 +835,19 @@ case 'search':
         }
         break;
 
+    /*
+    _           _                                                                             _
+   (_)       _ (_)                                                                           (_)
+   (_)    _ (_)      _  _  _     _  _  _  _      _  _  _  _     _  _  _  _   _       _  _  _ (_) _  _
+   (_) _ (_)      _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)   (_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)
+   (_)(_) _      (_)         (_)(_)        (_)(_)_  _  _  _   (_) _  _  _ (_) (_)(_)         (_)
+   (_)   (_) _   (_)         (_)(_)        (_)  (_)(_)(_)(_)_ (_)(_)(_)(_)(_) (_)            (_)     _
+   (_)      (_) _(_) _  _  _ (_)(_)        (_)   _  _  _  _(_)(_)_  _  _  _   (_)            (_)_  _(_)
+   (_)         (_)  (_)(_)(_)   (_)        (_)  (_)(_)(_)(_)    (_)(_)(_)(_)  (_)              (_)(_)
+
+
+    */
+
     case 'konsert':
         $query = "SELECT knavn AS navn, kid AS id FROM konsert WHERE NOT fid = ? AND sjanger LIKE ?";
 
@@ -608,22 +879,82 @@ case 'search':
             $stmt->close();
             break;
         }
+
+    /*
+      _  _  _  _
+    _(_)(_)(_)(_)_
+   (_)          (_)   _  _  _  _  _  _  _    _  _  _  _     _  _  _  _
+   (_)_  _  _  _    _(_)(_)(_)(_)(_)(_)(_)_ (_)(_)(_)(_)_  (_)(_)(_)(_)_
+     (_)(_)(_)(_)_ (_)       (_) _  _  _ (_)(_)        (_)(_) _  _  _ (_)
+    _           (_)(_)       (_)(_)(_)(_)(_)(_)        (_)(_)(_)(_)(_)(_)
+   (_)_  _  _  _(_)(_)_  _  _(_)_  _  _  _  (_)        (_)(_)_  _  _  _
+     (_)(_)(_)(_)    (_)(_)(_) (_)(_)(_)(_) (_)        (_)  (_)(_)(_)(_)
+
+
+    */
+
+    case 'scene':
+        $query = "SELECT DISTINCT b.navn, b.bid AS id
+        FROM band b
+        INNER JOIN konsert_band kb ON kb.bid = b.bid
+        INNER JOIN konsert k ON k.kid = kb.kid
+        INNER JOIN scene s ON k.sid = s.sid
+        WHERE s.navn LIKE ?";
+
+        $stmt = $dbconn->stmt_init();
+
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+
+            $stmt->bind_param("s", $text);
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+
+            // Returner json-string med data
+            echo json_encode($encode);
+
+            // Avslutt sql-setning
+            $stmt->close();
+            break;
+        }
+
     default:
         // Skriv en default her
         break;
     }
     break;
 
+/*
+    _  _  _  _                                              _           _  _  _                    _  _
+   (_)(_)(_)(_) _                                          (_)         (_)(_)(_)                 _(_)(_)
+    (_)        (_)   _  _  _       _  _  _  _      _  _  _ (_)            (_)    _  _  _  _   _ (_) _    _  _  _
+    (_) _  _  _(_)  (_)(_)(_) _   (_)(_)(_)(_)_  _(_)(_)(_)(_)            (_)   (_)(_)(_)(_)_(_)(_)(_)_ (_)(_)(_) _
+    (_)(_)(_)(_)_    _  _  _ (_)  (_)        (_)(_)        (_)            (_)   (_)        (_)  (_)  (_)         (_)
+    (_)        (_) _(_)(_)(_)(_)  (_)        (_)(_)        (_)            (_)   (_)        (_)  (_)  (_)         (_)
+    (_)_  _  _ (_)(_)_  _  _ (_)_ (_)        (_)(_)_  _  _ (_)          _ (_) _ (_)        (_)  (_)  (_) _  _  _ (_)
+   (_)(_)(_)(_)     (_)(_)(_)  (_)(_)        (_)  (_)(_)(_)(_)         (_)(_)(_)(_)        (_)  (_)     (_)(_)(_)
+*/
+
 case 'getBandInfo':
 
-
-    $finalencode = array();
-
-
-
+    /*
+    [0] Generell informasjon om band
+    */
 
 
-        $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email
+        $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email, bilde_url
             FROM band b
             INNER JOIN bruker br ON b.manager_uid = br.uid
             WHERE b.bid = ?";
@@ -637,8 +968,8 @@ case 'getBandInfo':
 
             $stmt1->bind_param("i", $bid);
 
-// Leser inn konsertid
-$bid = $_POST['bid'];
+            // Leser inn band id
+            $bid = $_POST['bid'];
 
             // Utfør sql-setning
             $stmt1->execute();
@@ -652,21 +983,20 @@ $bid = $_POST['bid'];
                 $encode1[] = $row1;
             }
 
-            $finalencode[] = $encode1;
 
             // Avslutt sql-setning
             $stmt1->close();
         }
 
-
-
+    /*
+    [1] Medialinker tilhørende band (youtube?)
+    */
 
         // Gjør klar sql-setning
         $query2 = "SELECT *
             FROM band_strommelinker
             WHERE bid = ?
-            ORDER BY  visninger DESC
-";
+            ORDER BY  visninger DESC";
 
         // Gjør klar objekt for spørring
         $stmt2 = $dbconn->stmt_init();
@@ -679,39 +1009,33 @@ $bid = $_POST['bid'];
             // Bind konsertid som heltall
             $stmt2->bind_param('i', $bid);
 
-// Leser inn konsertid
-$bid = $_POST['bid'];
+            // Leser inn band id
+            $bid = $_POST['bid'];
 
-// Utfør sql-setning
-$stmt2->execute();
+            // Utfør sql-setning
+            $stmt2->execute();
 
-          // Henter resultat fra spørring
-          $result2 = $stmt2->get_result();
+            // Henter resultat fra spørring
+            $result2 = $stmt2->get_result();
 
-          // Hent ut alle rader fra en spørring
-          $encode2 = array();
-          while ($row2 = $result2->fetch_assoc()) {
-              $encode2[] = $row2;
-          }
-
-
-            $finalencode[] = $encode2;
+            // Hent ut alle rader fra en spørring
+            $encode2 = array();
+            while ($row2 = $result2->fetch_assoc()) {
+                $encode2[] = $row2;
+            }
 
             // Avslutt sql-setning
             $stmt2->close();
         }
 
-
-
-
-
-
+    /*
+    [2] Album spilt inn av band
+    */
 
         // Gjør klar sql-setning
         $query3 = "SELECT *
             FROM album
-            WHERE bid = ?
-";
+            WHERE bid = ?";
 
         // Gjør klar objekt for spørring
         $stmt3 = $dbconn->stmt_init();
@@ -724,8 +1048,8 @@ $stmt2->execute();
             // Bind konsertid som heltall
             $stmt3->bind_param('i', $bid);
 
-// Leser inn konsertid
-$bid = $_POST['bid'];
+            // Leser inn band id
+            $bid = $_POST['bid'];
 
         // Utfører spørringen
         $stmt3->execute();
@@ -739,21 +1063,19 @@ $bid = $_POST['bid'];
             $encode3[] = $row3;
         }
 
-            $finalencode[] = $encode3;
 
             // Avslutt sql-setning
             $stmt3->close();
         }
 
-
-
-
+    /*
+    [3] Tidligere konserter band har spilt på
+    */
 
         // Gjør klar sql-setning
         $query4 = "SELECT *
             FROM band_tidligere_konserter
-            WHERE bid = ?
-";
+            WHERE bid = ?";
 
         // Gjør klar objekt for spørring
         $stmt4 = $dbconn->stmt_init();
@@ -766,8 +1088,8 @@ $bid = $_POST['bid'];
             // Bind konsertid som heltall
             $stmt4->bind_param('i', $bid);
 
-            // Leser inn konsertid
-    $bid = $_POST['bid'];
+            // Leser inn band id
+            $bid = $_POST['bid'];
 
             // Utfør sql-setning
             $stmt4->execute();
@@ -781,18 +1103,28 @@ $bid = $_POST['bid'];
                 $encode4[] = $row4;
             }
 
-            $finalencode = $encode4;
 
             // Avslutt sql-setning
             $stmt4->close();
         }
 
 
-
-    echo json_encode($finalencode);
+    // Koder bandinformasjon til liste over javascriptobjekter
+    echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "," .json_encode($encode3) . "," . json_encode($encode4) . "]");
 
     break;
-
+/*
+       _  _  _                                                                           _                  _  _  _  _                                                                _
+    _ (_)(_)(_) _                                                                       (_)                (_)(_)(_)(_) _                                                            (_)
+   (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _           (_)         (_) _  _  _  _    _  _  _  _       _  _  _    _       _  _  _ (_) _  _
+   (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)          (_) _  _  _ (_)(_)(_)(_)(_)_ (_)(_)(_)(_)_  _ (_)(_)(_) _(_)_  _ (_)(_)(_)(_)(_)(_)
+   (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)                (_)(_)(_)(_)  (_) _  _  _ (_)(_)        (_)(_)         (_) (_)(_)         (_)
+   (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _          (_)   (_) _   (_)(_)(_)(_)(_)(_)        (_)(_)         (_) (_)            (_)     _
+   (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_)         (_)      (_) _(_)_  _  _  _  (_) _  _  _(_)(_) _  _  _ (_) (_)            (_)_  _(_)
+      (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)           (_)         (_) (_)(_)(_)(_) (_)(_)(_)(_)     (_)(_)(_)    (_)              (_)(_)
+                                                                                                                                        (_)
+                                                                                                                                        (_)
+*/
 case 'getConcertReport':
   $query = "SELECT konsert.tilskuere, konsert.billettpris, band.kostnad
       FROM konsert
@@ -802,13 +1134,13 @@ case 'getConcertReport':
       WHERE konsert.kid = ?
       AND fid = ?";
 
-  // Gjør klar objekt for spørringen
-  $stmt = $dbconn->stmt_init();
+    // Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
 
-  // Gjør spørringen klar for databasen
-  if(!$stmt->prepare($query)) {
-      header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-  } else {
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
 
       // Binder brukerid som heltall
       $stmt->bind_param('ii', $cid, $fid);
@@ -837,6 +1169,134 @@ case 'getConcertReport':
   }
 
   break;
+
+/*
+      _  _  _  _   _  _               _              _  _  _                                                                           _
+    _(_)(_)(_)(_)_(_)(_)             (_)          _ (_)(_)(_) _                                                                       (_)
+   (_)          (_)  (_)     _  _  _ (_)         (_)         (_)    _  _  _     _  _  _  _      _  _  _  _  _  _  _   _       _  _  _ (_) _  _
+   (_)          (_)  (_)   _(_)(_)(_)(_)         (_)             _ (_)(_)(_) _ (_)(_)(_)(_)_  _(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)(_)(_)(_)(_)
+   (_)          (_)  (_)  (_)        (_)         (_)            (_)         (_)(_)        (_)(_)       (_) _  _  _ (_) (_)(_)         (_)
+   (_)          (_)  (_)  (_)        (_)         (_)          _ (_)         (_)(_)        (_)(_)       (_)(_)(_)(_)(_) (_)            (_)     _
+   (_)_  _  _  _(_)_ (_) _(_)_  _  _ (_)         (_) _  _  _ (_)(_) _  _  _ (_)(_)        (_)(_)_  _  _(_)_  _  _  _   (_)            (_)_  _(_)
+     (_)(_)(_)(_) (_)(_)(_) (_)(_)(_)(_)            (_)(_)(_)      (_)(_)(_)   (_)        (_)  (_)(_)(_) (_)(_)(_)(_)  (_)              (_)(_)
+
+
+       _  _  _                    _  _
+      (_)(_)(_)                 _(_)(_)
+         (_)    _  _  _  _   _ (_) _    _  _  _
+         (_)   (_)(_)(_)(_)_(_)(_)(_)_ (_)(_)(_) _
+         (_)   (_)        (_)  (_)  (_)         (_)
+         (_)   (_)        (_)  (_)  (_)         (_)
+       _ (_) _ (_)        (_)  (_)  (_) _  _  _ (_)
+      (_)(_)(_)(_)        (_)  (_)     (_)(_)(_)
+
+
+*/
+
+case 'getOldConcertInfo' :
+
+$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, b.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+          FROM konsert k
+          INNER JOIN konsert_band kb ON k.kid =kb.kid
+          INNER JOIN band b ON b.bid = kb.bid
+          INNER JOIN scene s ON s.sid = k.sid
+          WHERE k.kid = ?";
+
+            // Gjør klar objekt for spørring
+    $stmt = $dbconn->stmt_init();
+
+        // Gjør klar spørringen for databsen
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+
+            // Bind konsertid som heltall
+            $stmt->bind_param('i', $kid);
+
+            // Leser inn konsertid
+            $kid = $_POST['kid'];
+
+            // Utfør sql-setning
+            $stmt->execute();
+
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+
+            // Returner json-string med data
+            echo json_encode($encode);
+
+            // Avslutt sql-setning
+            $stmt->close();
+        }
+
+break;
+
+/*
+
+      _  _  _  _         _  _     _  _
+    _(_)(_)(_)(_)_     _(_)(_)  _(_)(_)
+   (_)          (_) _ (_) _  _ (_) _  _  _  _  _   _       _  _   _  _  _  _
+   (_)          (_)(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)_(_)(_)(_)(_)
+   (_)          (_)   (_)      (_)  (_) _  _  _ (_) (_)(_)     (_)_  _  _  _
+   (_)          (_)   (_)      (_)  (_)(_)(_)(_)(_) (_)          (_)(_)(_)(_)_
+   (_)_  _  _  _(_)   (_)      (_)  (_)_  _  _  _   (_)           _  _  _  _(_)
+     (_)(_)(_)(_)     (_)      (_)    (_)(_)(_)(_)  (_)          (_)(_)(_)(_)
+
+
+
+*/
+
+case 'getOffers':
+
+$query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status,
+scene.navn AS scene_navn, band.navn AS band_navn, bruker.fornavn AS sender_fornavn, bruker.etternavn AS sender_etternavn
+FROM tilbud
+INNER JOIN scene ON scene.sid = tilbud.sid
+INNER JOIN band ON band.bid = tilbud.bid
+INNER JOIN bruker ON bruker.uid = tilbud.sender_uid
+WHERE band.manager_uid = ?";
+
+  // Gjør klar objekt for spørringen
+  $stmt = $dbconn->stmt_init();
+
+  // Gjør spørringen klar for databasen
+  if(!$stmt->prepare($query)) {
+    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+  } else {
+
+    // Binder brukerid som heltall
+    $stmt->bind_param('i', $uid);
+
+    // Leser inn sceneid
+    $uid = $_POST['uid'];
+
+
+    // Utfører spørringen
+    $stmt->execute();
+
+    // Returnerer resultat fra spørringen
+    $result = $stmt->get_result();
+
+    // Hent ut alle rader fra en spørring
+    $encode = array();
+    while ($row = $result->fetch_assoc()) {
+        $encode[] = $row;
+    }
+
+    // Returner json-string med data
+    echo json_encode($encode);
+
+    // Avslutt sql-setning
+    $stmt->close();
+  }
+
+break;
 
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.

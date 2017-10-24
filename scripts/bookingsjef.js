@@ -121,15 +121,3 @@ function BSbuildConcertReport(kid, sname, container){
       }
   });
 }
-
-function safeJsonParse(output) {
-    try{
-        l = jQuery.parseJSON(output);
-    }
-    catch(err){
-        console.log(err);
-        console.log(output);
-        $("#root").after(output);
-    }
-    return l;
-}

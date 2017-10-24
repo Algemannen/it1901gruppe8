@@ -78,13 +78,15 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     manager_uid = user.id;
                     injectListOfAllNeeds();
+                    injectOffers(user);
                 }});
                 break;
             case 4: //Bruker er bookingansvarlig
                 $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfTechnicalNeeds();
+                    getListOfTechnicalNeeds(user);
+                    getListOfBands();
                 }});
                 break;
             case 5: //Bruker er bookingsjef
@@ -125,6 +127,9 @@ $(document).ready(function(){
                 if(textstatus==="timeout") {
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
+                    if(message=="Unauthorized user.") {
+                      alert("Invalid username or password")
+                    }
                     console.log("Error: "+message);
                 }
             }
@@ -227,59 +232,7 @@ $(document).ready(function(){
 
 
     $('body').on('click', ".bookingnavnsok", function () {
-      $.ajax({ url: '/database.php?method=getBandInfo',
-          data: {bid: this.value[1]},
-          type: 'post',
-          success: function(output) {
-              console.log(output);
-              l = safeJsonParse(output); //gjør en try-catch sjekk.
-              let bandInfo = $("<div></div>");
-              let bandOverskrift = $("<h3></h3>").text(l[0].navn);
-              let bandBio = $("<p></p>").text(l[0].bio);
-          },
-          error: function(xmlhttprequest, textstatus, message) {
-              if(textstatus==="timeout") {
-                  alert("Timeout feil, kan ikke koble til databasen");
-              } else {
-                  console.log("Error: "+message);
-              }
-          }
-      });
-
-      $.ajax({ url: '/database.php?method=getBandInfoAlbum',
-          data: {bid: this.value[1]},
-          type: 'post',
-          success: function(output) {
-              console.log(output);
-              l = safeJsonParse(output); //gjør en try-catch sjekk.
-
-          },
-          error: function(xmlhttprequest, textstatus, message) {
-              if(textstatus==="timeout") {
-                  alert("Timeout feil, kan ikke koble til databasen");
-              } else {
-                  console.log("Error: "+message);
-              }
-          }
-      });
-
-      $.ajax({ url: '/database.php?method=getBandInfoOldConserts',
-          data: {bid: this.value[1]},
-          type: 'post',
-          success: function(output) {
-              console.log(output);
-              l = safeJsonParse(output); //gjør en try-catch sjekk.
-
-          },
-          error: function(xmlhttprequest, textstatus, message) {
-              if(textstatus==="timeout") {
-                  alert("Timeout feil, kan ikke koble til databasen");
-              } else {
-                  console.log("Error: "+message);
-              }
-          }
-      });
-
+      getSearchInfo(this.value[0], this.value[1]);
     });
 
     $('body').on('click', "#tekniskebehov_knapp", function () {
@@ -290,8 +243,26 @@ $(document).ready(function(){
         bookingfane(1);
     });
 
+    $('body').on('click', "#bookingtilbud_knapp", function () {
+        bookingfane(2);
+    });
+
     $('body').on('click', "#sokebutton", function () {
         search();
+    });
+
+    $('body').on('click', ".delete_technical_need", function () {
+        deleteTechinalNeed(this.value);
+    });
+
+
+
+    $('body').on('click', "#booking_behov_knapp", function () {
+        managerfane(0);
+    });
+
+    $('body').on('click', "#booking_tilbud_knapp", function () {
+        managerfane(1);
     });
 
 

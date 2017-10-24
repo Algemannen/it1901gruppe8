@@ -8,13 +8,13 @@ function getConcertInfo(bruker, concert) {
         let maindiv = $("<div></div>").addClass("behov");
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         maindiv.append(tb);
-        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, maindiv);
+        getTechnicalNeedsByKid(bruker.id,concert.kid, concert.navn, concert.dato, maindiv);
         getListOfTechnicians(bruker, concert);
         container.append(maindiv);
     } else if (bruker.type===2) {
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
-        getTechnicalNeedsByKid(concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
+        getTechnicalNeedsByKid(bruker.id, concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
       }
     container.hide();
     return container;
@@ -118,7 +118,7 @@ function buildListOfConcerts(bruker,list) {
 }
 
 // Bygger HTML for tekniske behov
-function getTechnicalNeedsByKid(kid, kname, dato, container) {
+function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
     let l = [];
 
     $.ajax({ url: '/database.php?method=getListOfTechnicalNeeds',
@@ -130,6 +130,7 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
             // Vi bygger et HTML-element
             let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
             let listContainer = $("<div></div>").addClass("behov");
+            listContainer.append(kid);
             if (l.length === 0) {
               listContainer.append('Ingen tekniske behov meldt enda.')
             }
@@ -139,10 +140,15 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
                 let tittel2 = $("<span></span><br>").text(l[i].tittel);
                 let behov2 = $("<span></span><br>").text(l[i].behov);
                 let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
-                listContainer.append(tittel, tittel2, behov, behov2, '<br>');
+                listContainer.append(tittel, tittel2, behov, behov2)
+                if (bruker_id === 3) {
+                    let delete_button = $("<button>Slett</button>").addClass("delete_technical_need").addClass("delete_button").val(l[i].tbid);
+                    listContainer.append(delete_button);
+                }
+                listContainer.append('<br>');
 
             }
-            $(container).append(kid,listContainer);
+            $(container).append(listContainer);
 
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -153,4 +159,34 @@ function getTechnicalNeedsByKid(kid, kname, dato, container) {
             }
         }
     });
-  }
+}
+
+
+function injectOffers(bruker) {
+    $.ajax({ url: '/database.php?method=getOffers',
+    data: {uid:bruker.id},
+    type: 'post',
+    success: function(output) {
+        l = safeJsonParse(output)
+        injectList("manager_tilbud",l,function(html_id,element){
+            let dato = $("<span></span>").text("Dato: "+element.dato);
+            let start_tid = $("<span></span>").text("Start: "+element.start_tid);
+            let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
+            let pris = $("<span></span>").text("Pris: "+element.pris);
+            let status = $("<span></span>").text("Status: "+element.status);
+            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
+            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
+            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+
+            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn);
+        });
+    },
+    error: function(xmlhttprequest, textstatus, message) {
+        if(textstatus==="timeout") {
+            alert("Timeout feil, kan ikke koble til databasen");
+        } else {
+            console.log("Error: "+message);
+        }
+    }
+});
+}
