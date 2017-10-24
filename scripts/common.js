@@ -184,7 +184,7 @@ function injectOffers(bruker) {
         l = safeJsonParse(output)
         console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
-            
+
             // Overskrift
             let overskrift = $("<h2></h2>");
             let band_navn = $("<span></span>").text("Band: "+element.band_navn);
