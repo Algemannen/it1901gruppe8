@@ -209,6 +209,31 @@ function injectOffers(bruker) {
     4 : Tilbud godkjent av manager
     8 : Tilbud avslått av manager
 */
+
+function getAcceptStatusFlag(brukertype) {
+    if (type == 3) {
+        return 4;
+    }
+    else if (type == 4) {
+        return 1;
+    }
+    else {
+        console.log("Usertype mismatch: "+type);
+    }
+}
+
+function getRejectStatusFlag(brukertype) {
+    if (type == 3) {
+        return 8;
+    }
+    else if (type == 4) {
+        return 2;
+    }
+    else {
+        console.log("Usertype mismatch: "+type);
+    }
+}
+
 function updateOfferStatus(tid_status_obj) {
     console.log(tid_status_obj);
 }
