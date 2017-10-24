@@ -94,7 +94,9 @@ $(document).ready(function(){
                 $('#username').html(user.name);
                 getListOfScenesForBookingSjef(user);
                 concertPricing();
+                injectOffers(user);
                 bookingsjeffane(0);
+
               }});
               break;
             default:
@@ -288,6 +290,9 @@ $(document).ready(function(){
 
     $('body').on('click', "#prisgen_knapp", function () {
         bookingsjeffane(1);
+    });
+    $('body').on('click', "#tilbud_knapp", function () {
+        bookingsjeffane(2);
     });
 
 
