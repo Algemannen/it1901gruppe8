@@ -114,7 +114,7 @@ function getSearchInfo(searchtype, id) {
             let bandImage = $('<img class="bandImage"/>').attr('src', l[0][0].bilde_url.replace("\/", "/"));
             let bio = $("<span></span><br>").text("Bio: " + l[0][0].bio);
             let popularitet = $("<span></span><br>").text("Popularitet: " +l[0][0].popularitet);
-            let sjanger = $("<span></span><br>").text("Sjanger: " + l[0][0].sjanger);
+            let sjanger = $("<span></span><br><br>").text("Sjanger: " + l[0][0].sjanger);
             let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
             let managerFornavn = $("<span></span><br>").text(l[0][0].fornavn + " " + l[0][0].etternavn);
             let managerEmail = $("<span></span>").text(l[0][0].email);
@@ -216,4 +216,70 @@ function getSearchInfo(searchtype, id) {
               }
           }
       })};
+}
+
+
+function getListOfBandsAndScenes(){
+  let l = [];
+
+  $.ajax({ url: '/database.php?method=getListOfBandsAndScenes',
+      data: {},
+      type: 'post',
+      success: function(output) {
+          l = safeJsonParse(output); //gjør en try-catch sjekk.
+          for (i in l[0]){
+            let bandOption = $("<option></option>").text(l[0][i].navn).attr('value', l[0][i].bid);
+            $("#bandSelect").append(bandOption);
+          }
+          for (i in l[1]){
+            let sceneOption = $("<option></option>").text(l[1][i].navn).attr('value', l[1][i].sid);
+            $("#sceneSelect").append(sceneOption);
+          }
+      },
+      error: function(xmlhttprequest, textstatus, message) {
+          if(textstatus==="timeout") {
+              alert("Timeout feil, kan ikke koble til databasen");
+          } else {
+              console.log("Error: "+message);
+          }
+      }
+  });
+}
+
+function validateOfferData(){
+  let dato = $("#tilbudDato").val();
+  let starttid = $("#tilbudStarttid").val();
+  let sluttid = $("#tilbudSluttid").val();
+  let beløp = $("#tilbudBeløp").val();
+  let scene = $("#sceneSelect").val();
+  let band = $("#bandSelect").val();
+
+  sendOffer(dato, starttid, sluttid, beløp, scene, band, user)
+}
+
+function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
+  console.log(dato, starttid, sluttid, beløp, scene, band);
+
+  $.ajax({ url: '/database.php?method=insertOffer',
+      data: {dato: dato, start_tid: starttid, slutt_tid: sluttid, pris: beløp, sid: scene, bid: band, sender_uid: bruker.uid},
+      type: 'post',
+      success: function(output) {
+        alert("Tilbudet er sendt.");
+        resetOfferData();
+      },
+      error: function(xmlhttprequest, textstatus, message) {
+          if(textstatus==="timeout") {
+              alert("Timeout feil, kan ikke koble til databasen");
+          } else {
+              console.log("Error: "+message);
+          }
+      }
+  });
+}
+
+function resetOfferData(){
+  $("#tilbudDato").val('');
+  $("#tilbudStarttid").val('');
+  $("#tilbudSluttid").val('');
+  $("#tilbudBeløp").val('');
 }

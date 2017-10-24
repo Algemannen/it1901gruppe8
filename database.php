@@ -378,38 +378,6 @@ case 'getListOfConcertesByFestivalAndId':
 
     /// Returnerer en liste over alle teknikere på en gitt scene
 
-// case 'getListOfBands':
-    //     // Gjør klar sql-setning
-    //     $query = "SELECT * FROM band";
-
-    //     // Gjør klar objekt for spørring
-    //     $stmt = $dbconn->stmt_init();
-
-    //     // Gjør klar spørringen for databsen
-    //     if(!$stmt->prepare($query)) {
-    //         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-    //     } else {
-
-    //          // Utfør sql-setning
-    //         $stmt->execute();
-
-    //         // Henter resultat fra spørring
-    //         $result = $stmt->get_result();
-
-    //         // Hent ut alle rader fra en spørring
-    //         $encode = array();
-    //         while ($row = $result->fetch_assoc()) {
-    //             $encode[] = $row;
-    //         }
-
-    //         // Returner json-string med data
-    //         echo json_encode($encode);
-
-    //         // Avslutt sql-setning
-    //         $stmt->close();
-    //     }
-    //     break;
-
 /*
     _  _  _  _  _                      _                              _                  _
    (_)(_)(_)(_)(_)                    (_)                            (_)                (_)
@@ -1305,8 +1273,8 @@ WHERE band.manager_uid = ?";
         }
         // Tilbud avslått av bookingsjef
         if ((int)$row['statusflags'] & 2 === 2 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;    
-        } 
+            $encode[] = $row;
+        }
         // Tilbud godkjent av manager
         if ((int)$row['statusflags'] & 4 === 4 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
             $encode[] = $row;
@@ -1422,6 +1390,105 @@ if(!$stmt->prepare($query)) {
 
 break;
 
+case 'getListOfBandsAndScenes':
+
+
+         // [1] Finner liste av band
+
+         // Lager SQL-query
+         $query1 = "SELECT bid, navn FROM band";
+
+         // Gjør klar objekt for spørring
+         $stmt1 = $dbconn->stmt_init();
+
+         // Gjør klar spørringen for databsen
+         if(!$stmt1->prepare($query1)) {
+             header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+         } else {
+
+              // Utfør sql-setning
+             $stmt1->execute();
+
+             // Henter resultat fra spørring
+             $result1 = $stmt1->get_result();
+
+             // Hent ut alle rader fra en spørring
+             $encode1 = array();
+             while ($row = $result1->fetch_assoc()) {
+                 $encode1[] = $row;
+             }
+
+             // Avslutt sql-setning
+             $stmt1->close();
+
+
+            // [2] Finner liste av scener
+
+
+            // Lager SQL-query
+             $query2 = "SELECT sid, navn FROM scene";
+
+             // Gjør klar objekt for spørring
+             $stmt2 = $dbconn->stmt_init();
+
+             // Gjør klar spørringen for databsen
+             if(!$stmt2->prepare($query2)) {
+                 header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+             } else {
+
+                  // Utfør sql-setning
+                 $stmt2->execute();
+
+                 // Henter resultat fra spørring
+                 $result2 = $stmt2->get_result();
+
+                 // Hent ut alle rader fra en spørring
+                 $encode2 = array();
+                 while ($row = $result2->fetch_assoc()) {
+                     $encode2[] = $row;
+                 }
+
+             // Returner json-string med data
+             echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "]");
+
+             // Avslutt sql-setning
+             $stmt2->close();
+         }
+       }
+    break;
+
+case 'insertOffer':
+
+  $query = "INSERT INTO tilbud(dato, start_tid, slutt_tid, pris, status, bid, sid, sender_uid)
+  VALUES (?,?,?,?,0,?,?,?)";
+
+  // Gjør klar objekt for spørringen
+      $stmt = $dbconn->stmt_init();
+
+  // Gjør spørringen klar for databasen
+  if(!$stmt->prepare($query)) {
+      header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+  } else {
+
+  // Binder brukerid som heltall
+      $stmt->bind_param('sssiiii', $dato, $start_tid, $slutt_tid, $pris, $bid, $sid, $uid);
+
+  // Leser inn variabler
+      $dato = $_POST['dato'];
+      $start_tid = $_POST['start_tid'];
+      $slutt_tid = $_POST['slutt_tid'];
+      $pris = $_POST['pris'];
+      $bid = $_POST['bid'];
+      $sid = $_POST['sid'];
+      $uid = $_POST['sender_uid'];
+
+  // Utfører spørringen
+      $stmt->execute();
+
+  // Avslutt sql-setning
+      $stmt->close();
+}
+break;
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
     header('HTTP/1.0 501 Not implemented method.');

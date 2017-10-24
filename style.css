@@ -339,11 +339,7 @@ li.scenePoint {
   align-items: center;
 }
 
-.nokkelinfo{
-  display: inline-flex;
-  flex-direction: column;
-  align-content: center;
-}
+
 
 .keyConcertInfo, .concertDetails {
   text-align: center;
