@@ -1255,9 +1255,9 @@ break;
 case 'getOffers':
 
 // Leser inn brukertype
-$brukertype = $_POST['brukertype'];
+$brukertype = (int)$_POST['brukertype'];
 
-if ($brukertype ===3) {
+if ($brukertype === 3) {
     $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
     scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
     FROM tilbud
@@ -1277,7 +1277,7 @@ else if ($brukertype === 4) {
     INNER JOIN bruker b ON b.uid = band.manager_uid
     WHERE tilbud.sender_uid = ?";
 }
-else {
+else if ($brukertype === 5) {
     $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
     scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
     FROM tilbud
@@ -1298,7 +1298,7 @@ else {
     header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
   } else {
 
-    if ($brukertype == 3 || $brukertype == 4) {
+    if ($brukertype === 3 || $brukertype === 4) {
         // Binder brukerid som heltall
         $stmt->bind_param('i', $uid);
     }
@@ -1323,27 +1323,33 @@ else {
             5: bookingsjef
         */
 
+        $should_encode = false;
+
         // Nytt tilbud, ikke godkjent av noen
-        if ($row['statusflags'] === 0 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;
+        if (((int)$row['statusflags'] === 0 ) &&  ( $brukertype === 4 || $brukertype === 5)) {
+            $should_encode = true;
         }
-        // Tilbud godkjent av bookingansvarlig
-        else if ((int)$row['statusflags'] & 1 === 1 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;
+        // Tilbud godkjent av bookingsjef
+        if ((((int)$row['statusflags'] & 1 ) === 1 ) &&  ( $brukertype === 3 || $brukertype === 4 || $brukertype === 5)) {
+            $should_encode = true;
         }
-        // Tilbud avslått av ansvarlig
-        else if ((int)$row['statusflags'] & 2 === 2 && ( $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;    
+        // Tilbud avslått av bookingsjef
+        if ((((int)$row['statusflags'] & 2 ) === 2 ) && ( $brukertype === 4 || $brukertype === 5)) {
+            $should_encode = true;
         } 
         // Tilbud godkjent av manager
-        else if ((int)$row['statusflags'] & 4 === 4 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;
+        if ((((int)$row['statusflags'] & 4 ) === 4 ) &&  ( $brukertype === 3 || $brukertype === 4 || $brukertype === 5)) {
+            $should_encode = true;
         }
         // Tilbud avslått av manager
-        else if ((int)$row['statusflags'] & 8 === 8 && ( $row['usertype'] === 3 || $row['usertype'] === 4 || $row['usertype'] === 5)) {
-            $encode[] = $row;
+        if ((((int)$row['statusflags'] & 8 ) === 8 ) &&  ( $brukertype === 3 || $brukertype === 4 || $brukertype === 5)) {
+            $should_encode = true;
         }
 
+
+        if ($should_encode) {
+            $encode[] = $row;
+        }
     }
 
     // Returner json-string med data

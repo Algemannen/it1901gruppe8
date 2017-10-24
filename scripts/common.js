@@ -192,15 +192,15 @@ function injectOffers(bruker) {
             let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
 
 
-            let obj = JSON.stringify({tid:element.tid, usertype:parseInt(element.usertype), statusflags:parseInt(element.statusflags)});
+            let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
             let buttons = $("<span></span>");
             // Bookingsjef
-            if (bruker.id === 4) {
+            if (bruker.type === 4) {
                 let delete_button = $("<button>Slett</button>")
                 buttons.append(delete_button);
             }
-            else if (bruker.id === 3 || bruker.id == 5) {
+            else if (bruker.type === 3 || bruker.type == 5) {
                 let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
                 let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
                 buttons.append(accept_button, reject_button);
@@ -208,7 +208,7 @@ function injectOffers(bruker) {
 
 
             $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, buttons, element.statusflags);
-            $("#"+html_id).addClass(getStatusColor(element.statusflags));
+            $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
         });
     },
     error: function(xmlhttprequest, textstatus, message) {
@@ -230,10 +230,10 @@ function injectOffers(bruker) {
 */
 
 function getStatusColor(statusflags) {
-    if (statusflags & 1 == 1 && statusflags & 4 == 4) {
+    if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
         return  "accept";
     }
-    else if (statusflags & 2 == 2 || statusflags & 8 == 8) {
+    else if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
         return "reject"
     }
     else {

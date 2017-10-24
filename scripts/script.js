@@ -270,15 +270,15 @@ $(document).ready(function(){
 
     $('body').on('click', ".offer_button_accept", function () {
         let obj = jQuery.parseJSON(this.value);
-        obj.statusflags = obj.statusflags | getAcceptStatusFlag(obj.usertype);
-        obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags | getAcceptStatusFlag(user.type);
+        obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
     $('body').on('click', ".offer_button_reject", function () {
         let obj = jQuery.parseJSON(this.value);
-        obj.statusflags = obj.statusflags | getRejectStatusFlag(obj.usertype);
-        obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(obj.usertype);
+        obj.statusflags = obj.statusflags | getRejectStatusFlag(user.type);
+        obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
