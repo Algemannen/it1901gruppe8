@@ -104,6 +104,7 @@ function BSbuildConcertReport(kid, sname, container){
           let listContainer = $("<div></div>").addClass("concertReportContainer");
           listContainer.append('<br>');
           for (i in l) {
+
               let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
               let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
               let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
