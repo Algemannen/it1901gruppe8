@@ -102,3 +102,40 @@ function BSbuildConcertReport(kid, sname, container){
       }
   });
 }
+
+
+function concertPricing(){
+  let l = [];
+
+  $.ajax({ url: '/database.php?method=getConcertPricingInfo',
+  data: {},
+  type: 'post',
+  success: function(output) {
+    l = safeJsonParse(output);
+    console.log(output);
+    let container = $("<div></div>");
+    let overskrift = $("<h2></h2>").text("Prisgenerering");
+    container.append(overskrift);
+    for (i in l){
+      let konsertDiv = $("<div></div>");
+      let konsertHeader = $("<h4></h4>").text(l[i].knavn);
+      let konsertBand = $("<span></span><br>").text("Band: " + l[i].bnavn);
+      let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[i].kostnad);
+      let konsertScene = $("<span></span><br>").text("Scene: " + l[i].navn);
+      let konsertPlasser = $("<span></span><br>").text("Maksplasser på scene: " + l[i].maks_plasser);
+      let prisForslag = Math.ceil(l[i].kostnad*5 / l[i].maks_plasser);
+      let konsertPris = $("<span></span><br>").text("Prisforslag: " + prisForslag);
+      konsertDiv.append(konsertHeader, konsertBand, konsertKostnad, konsertScene, konsertPlasser, konsertPris);
+      container.append(konsertDiv);
+    }
+    $("#listofscenes").append(container);
+  },
+  error: function(xmlhttprequest, textstatus, message) {
+      if(textstatus==="timeout") {
+          alert("Timeout feil, kan ikke koble til databasen");
+      } else {
+          console.log("Error: "+message);
+      }
+  }
+});
+}
