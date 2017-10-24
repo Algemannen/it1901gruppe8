@@ -214,8 +214,9 @@ function injectOffers(bruker) {
 
             let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
-            let buttons = $("<span></span>");
-            // Bookingsjef
+            let buttons = $("<span></span>").addClass("manager_buttons");
+            let status_text = $("<p></p>").html(getStatusName(element.statusflags));
+            buttons.append(status_text);
             if (bruker.type === 4) {
                 let delete_button = $("<button>Slett</button>")
                 buttons.append(delete_button);
@@ -265,7 +266,22 @@ function getStatusColor(statusflags) {
         return "partial-accept";
     }
     else {
-        return "#unknown"
+        return "unknown"
+    }
+}
+
+function getStatusName(statusflags) {
+    if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
+        return "Avslått"
+    }
+    else if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
+        return  "Akseptert av <br> alle";
+    }
+    else if ((statusflags &  1) == 1 && (statusflags & 4 ) == 0) {
+        return "Akseptert av <br> bookingsjef";
+    }
+    else {
+        return "Avventer <br> godkjenning"
     }
 }
 

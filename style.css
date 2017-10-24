@@ -379,4 +379,17 @@ li.scenePoint {
 .tilbud {
   margin: 0.5em;
   padding: 0.5;
+  position: relative;
+}
+
+.tilbud p, .tilbud h2 {
+  margin:0px;
+  padding: 0px;
+}
+
+.manager_buttons {
+  position: absolute;
+  bottom:10px;
+  right:10px;
+  text-align: center;
 }
