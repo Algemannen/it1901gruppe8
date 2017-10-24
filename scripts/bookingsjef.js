@@ -12,12 +12,12 @@ function getListOfScenesForBookingSjef(bruker) {
             console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
-            let container = $("<div></div>").addClass("scenelistforBS");
-            $('#listofscenesforBS').append(container);
+            let container = $("<div></div>").addClass("scenelist");
+            $('#listofscenes').append(container);
 
             for (i in l) {
                 let scenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
-                $('.scenelistforBS').append(scenediv);
+                $('.scenelist').append(scenediv);
                 getListOfConcertesBySceneForBookingSjef(bruker,l[i])
             }
 
@@ -43,7 +43,7 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
 
             let l = safeJsonParse(output); //gjør en try-catch sjekk.
 
-            let scenePoint = $("<li></li>").addClass("scenePointforBS");
+            let scenePoint = $("<li></li>").addClass("scenePoint");
             let concerts = buildListOfConcerts(bruker,l,scene.sid);
             let sceneHead = $("<li></li>").text(scene.navn);
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
