@@ -1126,7 +1126,7 @@ case 'getBandInfo':
                                                                                                                                         (_)
 */
 case 'getConcertReport':
-  $query = "SELECT konsert.tilskuere, konsert.billettpris, band.kostnad
+  $query = "SELECT konsert.tilskuere, konsert.billettpris, konsert.kostnad
       FROM konsert
       INNER JOIN scene ON konsert.sid = scene.sid
       INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
@@ -1195,7 +1195,7 @@ case 'getConcertReport':
 
 case 'getOldConcertInfo' :
 
-$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, b.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
           FROM konsert k
           INNER JOIN konsert_band kb ON k.kid =kb.kid
           INNER JOIN band b ON b.bid = kb.bid
@@ -1328,7 +1328,7 @@ break;
 
 case 'getConcertPricingInfo':
 
-$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, b.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
           FROM konsert k
           INNER JOIN konsert_band kb ON k.kid =kb.kid
           INNER JOIN band b ON b.bid = kb.bid
