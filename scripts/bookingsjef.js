@@ -93,10 +93,20 @@ function BSbuildConcertReport(kid, sname, container){
           for (i in l) {
               let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
               let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
-              let billettpris = $("<span></span><br>").text('billettpris: ' + l[i].billettpris );
-              let tilskuere = $("<span></span><br>").text('Tilskuere: ' + l[i].tilskuere);
-              let inntekt = $("<span></span><br>").text('Inntekt: ' + l[i].billettpris * l[i].tilskuere)
+              let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
               let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
+              let inntekt = $("<span></span><br>").text('Inntekt: ' + l[i].billettpris * l[i].tilskuere)
+              if(!(l[i].billettpris)){
+                billettpris =  $("<span></span><br>").text('Billettpris: Utilgjengelig');
+                EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
+                inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
+              }
+              let tilskuere = $("<span></span><br>").text('Tilskuere: ' + l[i].tilskuere);
+              if(!(l[i].tilskuere)){
+                tilskuere = $("<span></span><br>").text('Tilskuere: Utilgjengelig');
+                EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
+                inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
+              }
               listContainer.append(tittel, kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
           }
           $(container).append(listContainer);
