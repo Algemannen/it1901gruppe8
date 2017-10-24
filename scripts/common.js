@@ -135,6 +135,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
             // Vi bygger et HTML-element
             let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
             let listContainer = $("<div></div>").addClass("behov");
+            listContainer.append(kid);
             if (l.length === 0) {
               listContainer.append('Ingen tekniske behov meldt enda.')
             }
@@ -152,7 +153,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
                 listContainer.append('<br>');
 
             }
-            $(container).append(kid,listContainer);
+            $(container).append(listContainer);
 
         },
         error: function(xmlhttprequest, textstatus, message) {
