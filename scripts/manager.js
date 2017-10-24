@@ -113,31 +113,3 @@ function registerConcertNeed(kid,title,desc) {
 });
 }
 
-function injectOffers(bruker) {
-    $.ajax({ url: '/database.php?method=getOffers',
-    data: {uid:bruker.id},
-    type: 'post',
-    success: function(output) {
-        l = safeJsonParse(output)
-        injectList("manager_tilbud",l,function(html_id,element){
-            let dato = $("<span></span>").text("Dato: "+element.dato);
-            let start_tid = $("<span></span>").text("Start: "+element.start_tid);
-            let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
-            let pris = $("<span></span>").text("Pris: "+element.pris);
-            let status = $("<span></span>").text("Status: "+element.status);
-            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
-            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
-            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
-
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn);
-        });
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
-        }
-    }
-});
-}
