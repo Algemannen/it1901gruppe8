@@ -15,6 +15,12 @@ function getConcertInfo(bruker, concert) {
         let tb = $("<h3></h3>").text("Tekniske Behov:");
         container.append(tb);
         getTechnicalNeedsByKid(bruker.id, concert.kid, concert.navn, concert.dato, '#cid'+concert.kid);
+    } else if (bruker.type == 5) {
+        let concertReportDiv = $("<div></div>").addClass("EcReport");
+        let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
+        concertReportDiv.append(cost_report);
+        BSbuildConcertReport(concert.kid, concert.navn, concertReportDiv);
+        container.append(concertReportDiv);
       }
     container.hide();
     return container;

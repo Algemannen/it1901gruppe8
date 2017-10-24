@@ -44,7 +44,7 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
             let l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePointforBS");
-            let concerts = BSbuildListOfConcerts(bruker,l,scene.sid);
+            let concerts = buildListOfConcerts(bruker,l,scene.sid);
             let sceneHead = $("<li></li>").text(scene.navn);
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
@@ -61,33 +61,6 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
             }
         }
     });
-}
-
-function BSbuildListOfConcerts(bruker,list) {
-    let listContainer = $("<ul></ul>").addClass("concertlist");
-    for (i in list) {
-        let listPoint = $("<li></li>");
-        let concertInfo = $("<div></div>").addClass("button_text").text(' ' + list[i].navn +' | ' + list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
-        let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
-        listPoint.append(concertInfo, concertButton, BSgetConcertInfo(bruker, list[i]));
-        listContainer.append(listPoint);
-    }
-    return listContainer;
-}
-
-function BSgetConcertInfo(bruker, concert ) {
-
-    // Vi bygger et HTML-element
-    let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid' + concert.kid);
-
-    let concertReportDiv = $("<div></div>").addClass("EcReport");
-    let cost_report = $("<h3></h3>").text("Økonomisk rapport:");
-    concertReportDiv.append(cost_report);
-    BSbuildConcertReport(concert.kid, concert.navn, concertReportDiv);
-    container.append(concertReportDiv);
-
-    container.hide();
-    return container;
 }
 
 function BSbuildConcertReport(kid, sname, container){
