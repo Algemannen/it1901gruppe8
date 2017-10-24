@@ -69,14 +69,16 @@ function getListOfTechnicians(bruker, concert) {
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-      try{
-          l = jQuery.parseJSON(output);
-      }
-      catch(err){
-          console.log(err);
-          console.log(output);
-          $("#root").after(output);
-      }
+    if(debug_mode){
+        try{
+            l = jQuery.parseJSON(output);
+        }
+        catch(err){
+            console.log(err);
+            console.log(output);
+            $("#root").after(output);
+        }
+    }
     return l;
 }
 
@@ -184,7 +186,7 @@ function injectOffers(bruker) {
         l = safeJsonParse(output)
         console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
-            
+
             // Overskrift
             let overskrift = $("<h2></h2>");
             let band_navn = $("<span></span>").text("Band: "+element.band_navn);
