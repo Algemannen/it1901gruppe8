@@ -214,7 +214,12 @@ function injectOffers(bruker) {
             let band_navn = $("<span></span>").text("Band: "+element.band_navn);
             let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
 
-            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn);
+            
+
+            let accept_button = $("<button>Godta</button>").addClass("offer_button").val(element.tid);
+            let reject_button = $("<button>Avslå</button>").addCLass("offer_button").val(element.tid);
+
+            $("#"+html_id).append(dato, start_tid, slutt_tid, pris, status, scene_navn, band_navn, sender_navn, accept_button, reject_button);
         });
     },
     error: function(xmlhttprequest, textstatus, message) {
@@ -225,4 +230,15 @@ function injectOffers(bruker) {
         }
     }
 });
+}
+
+/*
+    Bitflags status
+    1 : Tilbud godkjent av bookingsjef
+    2 : Tilbud avslått av bookingsjef
+    4 : Tilbud godkjent av manager
+    8 : Tilbud avslått av manager
+*/
+function updateOfferStatus(tid, status) {
+    console.log(status);
 }

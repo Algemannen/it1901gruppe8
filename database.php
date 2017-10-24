@@ -1256,7 +1256,7 @@ break;
 
 case 'getOffers':
 
-$query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status,
+$query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status, bruker.brukertype AS type,
 scene.navn AS scene_navn, band.navn AS band_navn, bruker.fornavn AS sender_fornavn, bruker.etternavn AS sender_etternavn
 FROM tilbud
 INNER JOIN scene ON scene.sid = tilbud.sid
@@ -1288,7 +1288,35 @@ WHERE band.manager_uid = ?";
     // Hent ut alle rader fra en spørring
     $encode = array();
     while ($row = $result->fetch_assoc()) {
-        $encode[] = $row;
+
+        /*
+            Brukertyper vi er interesserte i:
+            3: manager
+            4: bookingansvarlig
+            5: bookingsjef
+        */
+
+        // Nytt tilbud, ikke godkjent av noen
+        if ($row['status'] === 0 && ( $row['type'] === 4 || $row['type'] === 5)) {
+            $encode[] = $row;
+        } 
+        // Tilbud godkjent av bookingsjef
+        if ($row['status'] & 1 === 1 && ( $row['type'] === 3 || $row['type'] === 5)) {
+            $encode[] = $row;
+        } 
+        // Tilbud avslått av bookingsjef
+        if ($row['status'] & 2 === 1 && ( $row['type'] === 4 || $row['type'] === 5)) {
+            $encode[] = $row;    
+        } 
+        // Tilbud godkjent av manager
+        if ($row['status'] & 4 === 1 && ( $row['type'] === 3)) {
+            $encode[] = $row;
+        }
+        // Tilbud avslått av manager
+        if ($row['status'] & 8 === 1 && ( $row['type'] === 3 || $row['type'] === 4 || $row['type'] === 5)) {
+            $encode[] = $row;
+        }
+        
     }
 
     // Returner json-string med data
@@ -1297,6 +1325,63 @@ WHERE band.manager_uid = ?";
     // Avslutt sql-setning
     $stmt->close();
   }
+
+break;
+
+/*
+      _  _  _  _                     _                                     _  _     _  _                              
+    _(_)(_)(_)(_)_                  (_)                                  _(_)(_)  _(_)(_)                             
+   (_)          (_)  _  _  _  _   _ (_) _  _               _  _  _    _ (_) _  _ (_) _  _  _  _  _   _       _  _     
+   (_)_  _  _  _    (_)(_)(_)(_)_(_)(_)(_)(_)           _ (_)(_)(_) _(_)(_)(_)(_)(_)(_)(_)(_)(_)(_)_(_)_  _ (_)(_)    
+     (_)(_)(_)(_)_ (_) _  _  _ (_)  (_)                (_)         (_)  (_)      (_)  (_) _  _  _ (_) (_)(_)          
+    _           (_)(_)(_)(_)(_)(_)  (_)     _          (_)         (_)  (_)      (_)  (_)(_)(_)(_)(_) (_)             
+   (_)_  _  _  _(_)(_)_  _  _  _    (_)_  _(_)         (_) _  _  _ (_)  (_)      (_)  (_)_  _  _  _   (_)             
+     (_)(_)(_)(_)    (_)(_)(_)(_)     (_)(_)              (_)(_)(_)     (_)      (_)    (_)(_)(_)(_)  (_)             
+                                                                                                                      
+                                                                                                                      
+                     _                         _                                                                      
+                    (_)                       (_)                                                                     
+      _  _  _  _  _ (_) _  _     _  _  _    _ (_) _  _   _         _    _  _  _  _                                    
+    _(_)(_)(_)(_)(_)(_)(_)(_)   (_)(_)(_) _(_)(_)(_)(_) (_)       (_) _(_)(_)(_)(_)                                   
+   (_)_  _  _  _    (_)          _  _  _ (_)  (_)       (_)       (_)(_)_  _  _  _                                    
+     (_)(_)(_)(_)_  (_)     _  _(_)(_)(_)(_)  (_)     _ (_)       (_)  (_)(_)(_)(_)_                                  
+      _  _  _  _(_) (_)_  _(_)(_)_  _  _ (_)_ (_)_  _(_)(_)_  _  _(_)_  _  _  _  _(_)                                 
+     (_)(_)(_)(_)     (_)(_)    (_)(_)(_)  (_)  (_)(_)    (_)(_)(_) (_)(_)(_)(_)(_)                                   
+                                                                                                                      
+                                                                                                                      
+*/
+
+case 'setOfferStatus':
+
+$query = "UPDATE tilbud
+SET status = ?
+WHERE tid = ?";
+
+// Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
+
+// Gjør spørringen klar for databasen
+if(!$stmt->prepare($query)) {
+    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+} else {
+
+// Binder brukerid som heltall
+    $stmt->bind_param('ii', $status, $tid);
+
+// Leser inn status
+    $status = $_POST['status'];
+
+// Leser inn sceneid
+    $tid = $_POST['tid'];
+
+// Utfører spørringen
+    $stmt->execute();
+
+// Avslutt sql-setning
+    $stmt->close();
+}
+
+  
 
 break;
 
