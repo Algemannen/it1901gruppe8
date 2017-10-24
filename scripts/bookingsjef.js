@@ -4,14 +4,27 @@ function bookingsjeffane(index) {
         $("#ecorapport_knapp").css("background",selectedcolor);
 
         $("#prisgenerering").hide();
+        $("#manager_tilbud").hide();
         $("#prisgen_knapp").css("background",defaultcolor);
+        $("#tilbud_knapp").css("background",defaultcolor);
     }
     else if (index == "1") {
         $("#prisgenerering").show();
         $("#prisgen_knapp").css("background",selectedcolor);
 
         $("#listofscenes").hide();
+        $("#manager_tilbud").hide();
         $("#ecorapport_knapp").css("background",defaultcolor);
+        $("#tilbud_knapp").css("background",defaultcolor);
+    }
+    else if (index == "2") {
+        $("#manager_tilbud").show();
+        $("#tilbud_knapp").css("background",selectedcolor);
+
+        $("#listofscenes").hide();
+        $("#prisgenerering").hide();
+        $("#ecorapport_knapp").css("background",defaultcolor);
+        $("#prisgen_knapp").css("background",defaultcolor);
     }
 }
 

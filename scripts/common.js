@@ -183,6 +183,7 @@ function injectOffers(bruker) {
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)
+        console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
             let dato = $("<span></span>").text("Dato: "+element.dato);
             let start_tid = $("<span></span>").text("Start: "+element.start_tid);
