@@ -1532,6 +1532,33 @@ case 'insertOffer':
       $stmt->close();
 }
 break;
+
+case 'deleteOffer':
+
+  $query = "DELETE FROM tilbud WHERE tid = ?";
+
+  // Gjør klar objekt for spørringen
+      $stmt = $dbconn->stmt_init();
+
+  // Gjør spørringen klar for databasen
+  if(!$stmt->prepare($query)) {
+      header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+  } else {
+
+  // Binder brukerid som heltall
+      $stmt->bind_param('i', $tid);
+
+  // Leser inn variabler
+      $tid = $_POST['tid'];
+
+  // Utfører spørringen
+      $stmt->execute();
+
+  // Avslutt sql-setning
+      $stmt->close();
+}
+break;
+
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
     header('HTTP/1.0 501 Not implemented method.');

@@ -292,6 +292,11 @@ $(document).ready(function(){
         updateOfferStatus(obj);
     });
 
+    $('body').on('click', ".offer_button_delete", function () {
+        let obj = jQuery.parseJSON(this.value);
+        deleteOffer(obj);
+    });
+
 
 
     $('body').on('click', "#ecorapport_knapp", function () {
