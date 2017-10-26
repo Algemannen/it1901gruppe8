@@ -5,6 +5,8 @@ function bookingsjeffane(index) {
 
         $("#prisgenerering").hide();
         $("#manager_tilbud").hide();
+        $("#kalender").hide();
+        $('#kalender_knapp').css("background"),defaultcolor);
         $("#prisgen_knapp").css("background",defaultcolor);
         $("#tilbud_knapp").css("background",defaultcolor);
     }
@@ -14,6 +16,8 @@ function bookingsjeffane(index) {
 
         $("#listofscenes").hide();
         $("#manager_tilbud").hide();
+        $("#kalender").hide();
+        $('#kalender_knapp').css("background"),defaultcolor);
         $("#ecorapport_knapp").css("background",defaultcolor);
         $("#tilbud_knapp").css("background",defaultcolor);
     }
@@ -23,6 +27,19 @@ function bookingsjeffane(index) {
 
         $("#listofscenes").hide();
         $("#prisgenerering").hide();
+        $("#kalender").hide();
+        $('#kalender_knapp').css("background"),defaultcolor);
+        $("#ecorapport_knapp").css("background",defaultcolor);
+        $("#prisgen_knapp").css("background",defaultcolor);
+    }
+    else if (index == "3") {
+        $("#kalender").show();
+        $("#kalender_knapp").css("background",selectedcolor);
+
+        $("#listofscenes").hide();
+        $("#prisgenerering").hide();
+        $("#manager_tilbud").hide();
+        $("tilbud_knapp").css("background", defaultcolor);
         $("#ecorapport_knapp").css("background",defaultcolor);
         $("#prisgen_knapp").css("background",defaultcolor);
     }
