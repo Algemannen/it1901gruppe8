@@ -321,6 +321,9 @@ $(document).ready(function(){
     $('body').on('click', "#tilbud_knapp", function () {
         bookingsjeffane(2);
     });
+    $('body').on('click', "#kalender_knapp", function () {
+        bookingsjeffane(3);
+    });
 
 
 
