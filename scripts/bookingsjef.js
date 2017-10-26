@@ -199,12 +199,17 @@ function buildScenesForCal(bruker){
             $('#divBS').append(calscenelist);
             let calcontainer = $("<div></div").addClass("calscenes");
 
-            let datefield = $("<p></p>").text("Dato: ");
-            let dateinput = $("<input>").attr('id', "datepicker");
-            $("datepicker").datepicker();
+            let datefield = $("<p></p>").text("Dato:");
+            let dateinput = $("<input>").attr("id", "datepicker");
+            dateinput.attr("type", "text");
+
+            $(function() {
+                $( "#datepicker" ).datepicker();   
+            });
+
             datefield.append(dateinput);
-            calcontainer.append(datefield);
-            $('#kalender').append(headline, calcontainer);
+
+            $('#kalender').append(headline, datefield, calcontainer);
             
 
 
