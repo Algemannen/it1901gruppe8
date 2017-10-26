@@ -3,7 +3,7 @@ let defaultcolor = 'rgba(255,255,255,0.4)'
 let selectedcolor = 'rgba(0,0,0,0.4)'
 
 function bookingfane(index) {
-    if (index=="0") {
+    if (index==0) {
         $("#tekniskebehov").show();
         $("#tekniskebehov_knapp").css("background",selectedcolor);
 
@@ -13,7 +13,7 @@ function bookingfane(index) {
         $("#bookingtilbud").hide();
         $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == "1") {
+    else if (index == 1) {
         $("#sok").show();
         $("#sok_knapp").css("background",selectedcolor);
 
@@ -23,7 +23,7 @@ function bookingfane(index) {
         $("#bookingtilbud").hide();
         $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == "2") {
+    else if (index == 2) {
         $("#bookingtilbud").show();
         $("#bookingtilbud_knapp").css("background",selectedcolor);
 
@@ -32,7 +32,6 @@ function bookingfane(index) {
 
         $("#sok").hide();
         $("#sok_knapp").css("background",defaultcolor);
-
     }
 }
 
