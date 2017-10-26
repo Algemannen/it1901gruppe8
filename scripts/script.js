@@ -319,9 +319,11 @@ $(document).ready(function(){
     $('body').on('click', "#prisgen_knapp", function () {
         bookingsjeffane(1);
     });
+
     $('body').on('click', "#tilbud_knapp", function () {
         bookingsjeffane(2);
     });
+    
     $('body').on('click', "#kalender_knapp", function () {
         bookingsjeffane(3);
     });

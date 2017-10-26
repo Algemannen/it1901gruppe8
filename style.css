@@ -419,3 +419,7 @@ li.scenePoint {
 .tilbudButtons button {
   padding:  10px 18px;
 }
+
+#kalender {
+    display: none;
+}
