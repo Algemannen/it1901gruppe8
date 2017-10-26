@@ -11,7 +11,7 @@ function bookingfane(index) {
         $("#sok_knapp").css("background",defaultcolor);
 
         $("#bookingtilbud").hide();
-        $("#bookingtilbud").css("background",defaultcolor);
+        $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
     else if (index == "1") {
         $("#sok").show();
@@ -21,11 +21,11 @@ function bookingfane(index) {
         $("#tekniskebehov_knapp").css("background",defaultcolor);
 
         $("#bookingtilbud").hide();
-        $("#bookingtilbud").css("background",defaultcolor);
+        $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
     else if (index == "2") {
         $("#bookingtilbud").show();
-        $("#bookingtilbud").css("background",selectedcolor);
+        $("#bookingtilbud_knapp").css("background",selectedcolor);
 
         $("#tekniskebehov").hide();
         $("#tekniskebehov_knapp").css("background",defaultcolor);
