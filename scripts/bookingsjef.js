@@ -226,7 +226,7 @@ function buildCalendar(sett noe input greier){
     l = [];
 
     $.ajax({ url: '',
-        data: {username: bruker.name, usertype: bruker.type},
+        data: {},
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
