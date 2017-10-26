@@ -199,8 +199,11 @@ function buildScenesForCal(bruker){
             let headline = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
-            let calcontainer = $("<div></div>").addClass("calscenes");
+           
+            calcontainer.append(datefield);
             $('#kalender').append(headline, calcontainer);
+            
+
 
             for (i in l) {
                 let calscenediv = $("<ul></ul>").addClass("calscene"+l[i].sid);
