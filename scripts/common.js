@@ -181,9 +181,10 @@ function injectOffers(bruker) {
     data: {uid:bruker.id, brukertype:bruker.type},
     type: 'post',
     success: function(output) {
-        l = safeJsonParse(output)
-        console.log(output);
-        injectList("manager_tilbud",l,function(html_id,element){
+        l = safeJsonParse(output);
+        for(i in l){
+        
+        injectList("manager_tilbud",l[i],function(html_id,element){
 
             // Overskrift
             let overskrift = $("<h2></h2>");
@@ -233,6 +234,7 @@ function injectOffers(bruker) {
                 $("#"+html_id).append(status);
             }
         });
+    }
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
