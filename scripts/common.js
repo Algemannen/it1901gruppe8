@@ -10,7 +10,6 @@ function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
     let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid' + concert.kid);
-    console.log(concert);
     if (bruker.type===1) {
         let maindiv = $("<div></div>").addClass("behov");
         let tb = $("<h3></h3>").text("Tekniske Behov:");
@@ -182,7 +181,6 @@ function injectOffers(bruker) {
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output)
-        console.log(output);
         injectList("manager_tilbud",l,function(html_id,element){
 
             // Overskrift

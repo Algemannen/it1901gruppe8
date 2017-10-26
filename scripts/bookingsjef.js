@@ -53,7 +53,6 @@ function getListOfScenesForBookingSjef(bruker) {
         data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let overskrift = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
             let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
@@ -161,7 +160,6 @@ function concertPricing(){
   type: 'post',
   success: function(output) {
     l = safeJsonParse(output);
-    console.log(output);
     let container = $("<div></div>").attr('id', 'prisgenerering');
     let overskrift = $("<h2></h2>").text("Prisgenerering");
     container.append(overskrift);
@@ -195,7 +193,6 @@ function buildScenesForCal(bruker){
         data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let headline = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
@@ -209,9 +206,9 @@ function buildScenesForCal(bruker){
                 let calsceneHead = $("<li></li>").text(l[i].navn);
                 let calsceneInfo = $("<li></li>").text("Maks plasser: " + l[i].maks_plasser);
 
-                let calinfo = buildCalendar();
+                //let calinfo = buildCalendar();
 
-                $('.calscene'+l[i].sid).append(calsceneHead,calsceneInfo,calinfo);
+                $('.calscene'+l[i].sid).append(calsceneHead,calsceneInfo,'calinfo');
             }
 
         },
@@ -224,7 +221,24 @@ function buildScenesForCal(bruker){
         }
     });
 }
-
+/*
 function buildCalendar(sett noe input greier){
+    l = [];
 
-}
+    $.ajax({ url: '',
+        data: {username: bruker.name, usertype: bruker.type},
+        type: 'post',
+        success: function(output) {
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    });
+}*/
