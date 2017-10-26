@@ -205,6 +205,13 @@ function buildScenesForCal(bruker){
             for (i in l) {
                 let calscenediv = $("<ul></ul>").addClass("calscene"+l[i].sid);
                 $('.calscenes').append(calscenediv);
+                let calscenePoint = $("<li></li>").addClass("scenePoint");
+                let calsceneHead = $("<li></li>").text(scene.navn);
+                let calsceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
+
+                scenePoint.append(concerts);
+
+                $('.calscene'+scene.sid).append(calsceneHead,calsceneInfo);
             }
 
         },
