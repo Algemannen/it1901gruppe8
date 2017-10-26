@@ -39,7 +39,7 @@ function bookingsjeffane(index) {
         $("#listofscenes").hide();
         $("#prisgenerering").hide();
         $("#manager_tilbud").hide();
-        $("tilbud_knapp").css("background", defaultcolor);
+        $("#tilbud_knapp").css("background", defaultcolor);
         $("#ecorapport_knapp").css("background",defaultcolor);
         $("#prisgen_knapp").css("background",defaultcolor);
     }
@@ -187,4 +187,33 @@ function concertPricing(){
       }
   }
 });
+}
+function buildScenesForCal(bruker){
+    l = [];
+
+    $.ajax({ url: '/database.php?method=getListOfScenes',
+        data: {username: bruker.name, usertype: bruker.type},
+        type: 'post',
+        success: function(output) {
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
+            let headline = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
+            let calscenelist = $("<div></div>").attr('id', 'kalender')
+            $('#divBS').append(calscenelist);
+            let calcontainer = $("<div></div>").addClass("calscenes");
+            $('#kalender').append(headline, calcontainer);
+
+            for (i in l) {
+                let calscenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
+                $('.calscenes').append(calscenediv);
+            }
+
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    });
 }

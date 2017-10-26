@@ -212,11 +212,10 @@ function injectOffers(bruker) {
 
             let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
-            let buttons = $("<span></span>").addClass("manager_buttons");
-            let status_text = $("<p></p>").html(getStatusName(element.statusflags));
-            buttons.append(status_text);
+            let buttons = $("<span></span>");
+            // Bookingsjef
             if (bruker.type === 4) {
-                let delete_button = $("<button>Slett</button>").addClass("offer_button_delete").val(obj);
+                let delete_button = $("<button>Slett</button>")
                 buttons.append(delete_button);
             }
             else if (bruker.type === 3 || bruker.type == 5) {
@@ -263,22 +262,7 @@ function getStatusColor(statusflags) {
         return "partial-accept";
     }
     else {
-        return "unknown"
-    }
-}
-
-function getStatusName(statusflags) {
-    if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
-        return "Avslått"
-    }
-    else if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
-        return  "Akseptert av <br> alle";
-    }
-    else if ((statusflags &  1) == 1 && (statusflags & 4 ) == 0) {
-        return "Akseptert av <br> bookingsjef";
-    }
-    else {
-        return "Avventer <br> godkjenning"
+        return "#unknown"
     }
 }
 
@@ -306,29 +290,9 @@ function getRejectStatusFlag(usertype) {
     }
 }
 
-
 function updateOfferStatus(obj) {
     $.ajax({ url: '/database.php?method=setOfferStatus',
     data: {tid:obj.tid, status:obj.statusflags},
-    type: 'post',
-    success: function(output) {
-        $("#manager_tilbud").empty();
-        injectOffers(user);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
-        }
-    }
-});
-}
-
-
-function deleteOffer(obj) {
-    $.ajax({ url: '/database.php?method=deleteOffer',
-    data: {tid:obj.tid},
     type: 'post',
     success: function(output) {
         $("#manager_tilbud").empty();
