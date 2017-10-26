@@ -393,3 +393,29 @@ li.scenePoint {
   right:10px;
   text-align: center;
 }
+
+.sendNyttTilbud input, .sendNyttTilbud select {
+  padding: 6px 10px;
+  color: black;
+  font-size: 16px;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+.tilbudInputs div select, .tilbudInputs div input {
+  width: 100%;
+}
+
+.tilbudInputs {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tilbudButtons, .sendNyttTilbud h2 {
+  text-align: center;
+}
+
+.tilbudButtons button {
+  padding:  10px 18px;
+}

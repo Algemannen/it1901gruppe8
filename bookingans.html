@@ -30,20 +30,35 @@
             </div>
             <div class="sendNyttTilbud">
               <h2>Send nytt tilbud!</h2>
-              <label for="dato">Dato:</label>
-              <input type="date" id="tilbudDato" style="color: black;" required>
-              <label for="starttid">Start-tid:</label>
-              <input type="time" id="tilbudStarttid" style="color: black;" required>
-              <label for="sluttid">Slutt-tid</label>
-              <input type="time" id="tilbudSluttid" style="color: black;" required><br>
-              <label for="beløp">Beløp:</label>
-              <input type="number" id="tilbudBeløp" style="color: black;" required>
-              <label for="sceneSelect">Scene:</label>
-              <select id="sceneSelect" required></select>
-              <label for="bandSelect">Artist:</label>
-              <select id="bandSelect" required></select><br>
-              <button id="resetOfferButton">Reset</button>
-              <button id="sendOfferButton">Send Tilbud</button>
+
+              <div class="tilbudInputs">
+                <div>
+                  <label for="dato">Dato:</label>
+                  <input type="date" id="tilbudDato"><br><br>
+                  <label for="beløp">Beløp:</label>
+                  <input type="number" id="tilbudBeløp">
+                </div>
+
+                <div>
+                  <label for="starttid">Start-tid:</label>
+                  <input type="time" id="tilbudStarttid"><br><br>
+                  <label for="sluttid">Slutt-tid</label>
+                  <input type="time" id="tilbudSluttid">
+                </div>
+
+                <div>
+                  <label for="sceneSelect">Scene:</label>
+                  <select id="sceneSelect" required></select><br><br>
+                  <label for="bandSelect">Artist:</label>
+                  <select id="bandSelect" required></select>
+                </div>
+              </div>
+              <br>
+              <div class="tilbudButtons">              
+                <button id="sendOfferButton">Send Tilbud</button>
+                <button id="resetOfferButton">Reset</button>
+              </div>
+              <br>
 
             </div>
 
