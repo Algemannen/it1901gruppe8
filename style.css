@@ -190,7 +190,7 @@ ul.singleScene {
   padding-left: 15px;
 }
 
-.scenelist {
+.scenelist, .calscenes {
     margin:0px;
     padding:0px;
     display: flex !important;
@@ -199,7 +199,7 @@ ul.singleScene {
     text-align: center;
 }
 
-.scene1, .scene2, .scene3 {
+.scene1, .scene2, .scene3, .calscene1, .calscene2, .calscene3 {
   width: 100%;
   padding-right: 20px;
   padding-left: 20px;
