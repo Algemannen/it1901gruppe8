@@ -100,6 +100,16 @@ $(document).ready(function(){
 
               }});
               break;
+            case 6: //Bruker er PR-ansvarlig
+                $.ajax({url: "pransv.html",dataType: 'html', success: function(result){
+
+                }});
+                break;
+            case 6: //Bruker er PR-ansvarlig
+                $.ajax({url: "servering.html",dataType: 'html', success: function(result){
+
+                }});
+                break;
             default:
                 $("#root").html("<p>Error: invalid usertype "+user.type+"</p>");
         }
