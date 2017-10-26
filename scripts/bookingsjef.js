@@ -203,7 +203,7 @@ function buildScenesForCal(bruker){
             $('#kalender').append(headline, calcontainer);
 
             for (i in l) {
-                let calscenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
+                let calscenediv = $("<ul></ul>").addClass("calscene"+l[i].sid);
                 $('.calscenes').append(calscenediv);
             }
 
