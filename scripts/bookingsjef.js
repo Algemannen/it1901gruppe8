@@ -194,16 +194,16 @@ function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-            let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
+            /*let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
             let calcontainer = $("<div></div").addClass("calscenes");
-            $('#kalender').append(headline, calcontainer);
+            $('#kalender').append(headline, calcontainer);*/
             createListOfConcertDays()
 
 
 
-            for (i in l) {
+            /*for (i in l) {
                 let calscenediv = $("<ul></ul>").addClass("calscene"+l[i].sid);
                 $('.calscenes').append(calscenediv);
                 let calsceneHead = $("<li></li>").text(l[i].navn);
@@ -212,7 +212,7 @@ function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
                 //let calinfo = buildCalendar();
 
                 $('.calscene'+l[i].sid).append(calsceneHead,calsceneInfo,'calinfo');
-            }
+            }*/
 
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -235,10 +235,23 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             console.log(l);
 
             let dateArray = new Array();
-            let startdate = l.startDag;
-            console.log(startdate);
-            let sluttdate = l.sluttDag;
-            console.log(sluttdate);
+            let currentDate = parseDate(l.startDag);
+            let sluttDate = parseDate(l.sluttDag);
+
+            while(currentDate <= sluttDate){
+                dateArray.push(new Date(currentDate));
+                currentDate = currentDate.addDays(1);
+            }
+
+            let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
+            let calscenelist = $("<div></div>").attr('id', 'kalender')
+            $('#divBS').append(calscenelist);
+            let calcontainer = $("<div></div").addClass("calscenes");
+
+            for(let i = 0; i < dateArray.length; i++){
+                $(calcontainer).append($("<li></li>").text(dateArray[i]).attr('id','dato'+i).addClass('datoliste'));
+            }
+            $('#kalender').append(headline, calcontainer);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -248,6 +261,18 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             }
         }
     });
+}
+
+function parseDate(date){ // Hentet fra https://stackoverflow.com/questions/2627650/why-javascript-gettime-is-not-a-function
+    var parts = date.match(/(\d+)/g);
+  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+    return new Date(parts[0], parts[1]-1, parts[2]);
+}
+
+Date.prototype.addDays = function(days) { //Hentet fra https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
 }
 /*
 function buildCalendar(dato){
