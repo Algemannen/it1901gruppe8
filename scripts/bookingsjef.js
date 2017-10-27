@@ -54,7 +54,7 @@ function getListOfScenesForBookingSjef(bruker) {
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-            let overskrift = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
+            let overskrift = $("<h2></h2>").text('Økonomisk rapport').addClass('brukeroverskrift');
             let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
             $('#divBS').append(BSscenelist);
             let container = $("<div></div>").addClass("scenelist");
@@ -198,18 +198,7 @@ function buildScenesForCal(bruker){
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
             let calcontainer = $("<div></div").addClass("calscenes");
-
-            let datefield = $("<p></p>").text("Dato:");
-            let dateinput = $("<input>").attr("id", "datepicker");
-            dateinput.attr("type", "text");
-
-            $(function() {
-                $( "#datepicker" ).datepicker();   
-            });
-
-            datefield.append(dateinput);
-
-            $('#kalender').append(headline, datefield, calcontainer);
+            $('#kalender').append(headline, calcontainer);
             
 
 
