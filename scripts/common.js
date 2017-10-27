@@ -185,6 +185,9 @@ function injectOffers(bruker) {
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output);
+
+        let yoffset = window.pageYOffset;
+        $("#manager_tilbud").empty();
         
         injectList("manager_tilbud",l,function(html_id,element){
         
@@ -222,15 +225,23 @@ function injectOffers(bruker) {
             let buttons = $("<span></span>").addClass("manager_buttons");
             let status_text = $("<p></p>").html(getStatusName(element.statusflags));
             buttons.append(status_text);
-            if (bruker.type === 4) {
+            if (bruker.type === 4 && (element.statusflags === 0 || (element.statusflags & 2) === 2  || (element.statusflags & 8  ) === 8)) {
                 let delete_button = $("<button>Slett</button>").addClass("offer_button_delete").val(obj);
                 buttons.append(delete_button);
             }
-            else if (bruker.type === 3 || bruker.type == 5) {
+
+            if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
+                || (bruker.type === 5 && element.statusflags === 0)) {
                 let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
-                let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
-                buttons.append(accept_button, reject_button);
+                buttons.append(accept_button);
             }
+            if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
+            || (bruker.type === 5 && element.statusflags === 0)) {
+                let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
+                buttons.append(reject_button);
+            }
+                
+
 
 
             $("#"+html_id).append(overskrift, dato, start_tid, slutt_tid, pris, sender_navn, buttons);
@@ -241,6 +252,9 @@ function injectOffers(bruker) {
             }*/
         });
     });
+
+    window.scrollTo(0,yoffset);
+
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
@@ -280,7 +294,7 @@ function getStatusName(statusflags) {
         return "Avslått"
     }
     else if ((statusflags & 1 ) == 1 && (statusflags & 4) == 4) {
-        return  "Akseptert av <br> alle";
+        return  "Akseptert av <br> manager";
     }
     else if ((statusflags &  1) == 1 && (statusflags & 4 ) == 0) {
         return "Akseptert av <br> bookingsjef";
@@ -320,7 +334,6 @@ function updateOfferStatus(obj) {
     data: {tid:obj.tid, status:obj.statusflags},
     type: 'post',
     success: function(output) {
-        $("#manager_tilbud").empty();
         injectOffers(user);
     },
     error: function(xmlhttprequest, textstatus, message) {
