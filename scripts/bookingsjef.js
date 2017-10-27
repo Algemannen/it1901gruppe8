@@ -255,7 +255,9 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let calcontainer = $("<div></div").addClass("calscenes");
 
             for(let i = 0; i < dateArray.length; i++){
-                $(calcontainer).append($("<li></li>").text(dateArray[i]).attr('id','dato'+i).addClass('datoliste'));
+              let calenderText = dateArray[i].toString();
+              let calenderText2 = calenderText.substr(0,16);
+                $(calcontainer).append($("<li></li>").text(calenderText2).attr('id','dato'+i).addClass('datoliste'));
             }
             $('#kalender').append(headline, calcontainer);
 
