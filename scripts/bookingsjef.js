@@ -1,5 +1,5 @@
-function bookingsjeffane(index) {
-    if (index=="0") {
+function bookingsjeffane(index) {  //Visning og skjuling av divs for å vise korrekt info for fanesystemet
+    if (index=="0") { //Viser den økonomiske rapporten
         $("#listofscenes").show();
         $("#ecorapport_knapp").css("background",selectedcolor);
 
@@ -10,7 +10,7 @@ function bookingsjeffane(index) {
         $("#prisgen_knapp").css("background",defaultcolor);
         $("#tilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == "1") {
+    else if (index == "1") { // Viser prisgenereringen
         $("#prisgenerering").show();
         $("#prisgen_knapp").css("background",selectedcolor);
 
@@ -21,7 +21,7 @@ function bookingsjeffane(index) {
         $("#ecorapport_knapp").css("background",defaultcolor);
         $("#tilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == "2") {
+    else if (index == "2") { //Viser tilbud mottat fra Booking Ansvarlig
         $("#manager_tilbud").show();
         $("#tilbud_knapp").css("background",selectedcolor);
 
@@ -32,7 +32,7 @@ function bookingsjeffane(index) {
         $("#ecorapport_knapp").css("background",defaultcolor);
         $("#prisgen_knapp").css("background",defaultcolor);
     }
-    else if (index == "3") {
+    else if (index == "3") { //Viser kalender for ledige tidspunkt for konserter.
         $("#kalender").show();
         $("#kalender_knapp").css("background",selectedcolor);
 
@@ -45,7 +45,7 @@ function bookingsjeffane(index) {
     }
 }
 
-function getListOfScenesForBookingSjef(bruker) {
+function getListOfScenesForBookingSjef(bruker) { //Starter oppbygging av hele den økonomiske rapporten. Henter scenelistene.
 
     l = [];
 
@@ -80,7 +80,7 @@ function getListOfScenesForBookingSjef(bruker) {
 }
 
 // Lager et html-element med konserter filtrert etter scene
-function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
+function getListOfConcertesBySceneForBookingSjef(bruker, scene) { //Bygger scenene til den økonomiske rapporten
     $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
         data: {username: bruker.name, usertype: bruker.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
@@ -89,7 +89,7 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
             let l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
-            let concerts = buildListOfConcerts(bruker,l,scene.sid);
+            let concerts = buildListOfConcerts(bruker,l,scene.sid); //Bygger konsertene. Common.js funksjon.
             let sceneHead = $("<li></li>").text(scene.navn);
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
@@ -108,7 +108,7 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
     });
 }
 
-function BSbuildConcertReport(kid, sname, container){
+function BSbuildConcertReport(kid, sname, container){ //Setter inn inforasjon i økonomisk rapport til bookingsjef
 
   $.ajax({ url: '/database.php?method=getConcertReport',
       data: {cid : kid , fid:current_fid},
@@ -152,7 +152,7 @@ function BSbuildConcertReport(kid, sname, container){
 }
 
 
-function concertPricing(){
+function concertPricing(){ //Setter opp prisgenereringsiden til bookingansvarlig
   let l = [];
 
   $.ajax({ url: '/database.php?method=getConcertPricingInfo',
@@ -186,7 +186,7 @@ function concertPricing(){
   }
 });
 }
-function buildScenesForCal(bruker){
+function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
     l = [];
 
     $.ajax({ url: '/database.php?method=getListOfScenes',
@@ -203,14 +203,11 @@ function buildScenesForCal(bruker){
             let dateinput = $("<input>").attr("id", "datepicker");
             dateinput.attr("type", "text");
 
-            $(function() {
-                $( "#datepicker" ).datepicker();   
-            });
-
             datefield.append(dateinput);
+            createListOfConcertDays();
 
             $('#kalender').append(headline, datefield, calcontainer);
-            
+
 
 
             for (i in l) {
@@ -224,6 +221,25 @@ function buildScenesForCal(bruker){
                 $('.calscene'+l[i].sid).append(calsceneHead,calsceneInfo,'calinfo');
             }
 
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    });
+}
+
+function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
+    l = [];
+    $.ajax({ url: '/database.php?method=getListOfConcertDays',
+        data: {fid: current_fid},
+        type: 'post',
+        success: function(output) {
+            l = safeJsonParse(output);
+            console.log(l);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {

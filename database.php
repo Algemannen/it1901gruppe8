@@ -1559,6 +1559,44 @@ case 'deleteOffer':
 }
 break;
 
+
+case 'getListOfConcertDays':
+  $query = "SELECT startDag, sluttDag FROM festival WHERE fid = ?";
+
+    // Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+      // Binder brukerid som heltall
+      $stmt->bind_param('i', $fid);
+
+      // Leser inn sceneid
+      $fid = $_POST['fid'];
+
+      // Utfører spørringen
+      $stmt->execute();
+
+      // Returnerer resultat fra spørringen
+      $result = $stmt->get_result();
+
+      // Hent ut alle rader fra en spørring
+      $encode = array();
+      while ($row = $result->fetch_assoc()) {
+          $encode[] = $row;
+      }
+
+      // Returner json-string med data
+      echo json_encode($encode);
+
+      // Avslutt sql-setning
+      $stmt->close();
+}
+
+break;
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
     header('HTTP/1.0 501 Not implemented method.');
