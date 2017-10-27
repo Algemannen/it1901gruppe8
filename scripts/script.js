@@ -110,6 +110,7 @@ $(document).ready(function(){
                 $.ajax({url: "servering.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
+                    getListOfScenesS(user);
                 }});
                 break;
             default:
