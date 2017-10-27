@@ -234,15 +234,20 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let l = safeJsonParse(output);
             console.log(l);
 
-            let dateArray = new Array();
-<<<<<<< HEAD
-            let currentDate = parseDate(l.startDag);
-            let sluttDate = parseDate(l.sluttDag);
+            let startdate = l.startDag;
+            let sluttdate = l.sluttDag;
 
-            while(currentDate <= sluttDate){
-                dateArray.push(new Date(currentDate));
-                currentDate = currentDate.addDays(1);
+            let dateArray = [];
+            let date = new Date(startdate);
+            let e = new Date(sluttdate);
+            date.setDate(date.getDate()-1);
+
+            while(date < e) {
+              dateArray.push(date);
+              date = new Date(date.setDate(date.getDate() + 1));
             }
+
+            console.log(dateArray);
 
             let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
@@ -253,25 +258,8 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
                 $(calcontainer).append($("<li></li>").text(dateArray[i]).attr('id','dato'+i).addClass('datoliste'));
             }
             $('#kalender').append(headline, calcontainer);
-=======
-            let startdate = l.startDag;
-            console.log(startdate);
-            let sluttdate = l.sluttDag;
-            console.log(sluttdate);
-
-            let list = [];
-            let date = new Date(startdate);
-            let e = new Date(sluttdate);
-            date.setDate(date.getDate()-1);
-            
-            while(date < e) {
-              list.push(date);
-              date = new Date(date.setDate(date.getDate() + 1));
-          }
-          console.log(list);
 
 
->>>>>>> 1e2e05570ac5366184feaffea8a56f7229d7a60b
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -283,17 +271,6 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
     });
 }
 
-function parseDate(date){ // Hentet fra https://stackoverflow.com/questions/2627650/why-javascript-gettime-is-not-a-function
-    var parts = date.match(/(\d+)/g);
-  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-    return new Date(parts[0], parts[1]-1, parts[2]);
-}
-
-Date.prototype.addDays = function(days) { //Hentet fra https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
 /*
 function buildCalendar(dato){
     l = [];
