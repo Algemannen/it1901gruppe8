@@ -106,11 +106,11 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                 }});
                 break;
-            case 7: //Bruker er PR-ansvarlig
+            case 7: //Bruker er Serverings-ansvarlig
                 $.ajax({url: "servering.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
-                    getListOfScenesS(user);
+                    setupServering(user);
                 }});
                 break;
             default:
