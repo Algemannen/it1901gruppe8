@@ -9,6 +9,12 @@ ASCII-art tekst fra http://www.patorjk.com/software/taag/#p=display&f=Dot%20Matr
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
+//Funksjon for rekkefølge av tilbudselementer
+function reorder_offers($i){
+    $map = array(0,1,4,2,3,5,6,7,8,9,10,11,12,13,14,15);
+    return $map[$i];
+}
+
 // Header for php-enkoding
 header('Content-type: text/plain; charset=utf-8');
 
@@ -1319,12 +1325,16 @@ case 'getOffers':
 
 
         if ($should_encode) {
-            $encode[] = $row;
+            $encode[reorder_offers((int)$row['statusflags'])][] = $row;
         }
     }
-
+    $returnString = "[";
     // Returner json-string med data
-    echo json_encode($encode);
+    foreach($encode as $array){
+        $returnString .= json_encode($array) . ",";
+
+    }
+    echo substr_replace($returnString,"]",-1);
 
     // Avslutt sql-setning
     $stmt->close();
