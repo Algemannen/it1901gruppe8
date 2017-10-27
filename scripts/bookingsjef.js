@@ -21,6 +21,8 @@ function bookingsjeffane(index) {
         $("#manager_tilbud").show();
         $("#tilbud_knapp").css("background",selectedcolor);
 
+        $(".tilbud_attention").removeClass("tilbud_attention");
+
         $("#listofscenes").hide();
         $("#prisgenerering").hide();
         $("#ecorapport_knapp").css("background",defaultcolor);

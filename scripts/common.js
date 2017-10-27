@@ -6,6 +6,8 @@ var user = {type: 0, id: 0, name: "NONAME"};
 
 var debug_mode = false;
 
+var ventende_tilbud = 0;
+
 function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
@@ -186,6 +188,7 @@ function injectOffers(bruker) {
     success: function(output) {
         l = safeJsonParse(output);
 
+        ventende_tilbud = 0;
         let yoffset = window.pageYOffset;
         $("#manager_tilbud").empty();
         
@@ -234,6 +237,8 @@ function injectOffers(bruker) {
                 || (bruker.type === 5 && element.statusflags === 0)) {
                 let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
                 buttons.append(accept_button);
+
+                ventende_tilbud++;
             }
             if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
             || (bruker.type === 5 && element.statusflags === 0)) {
@@ -254,6 +259,13 @@ function injectOffers(bruker) {
     });
 
     window.scrollTo(0,yoffset);
+
+    if (ventende_tilbud > 0) {
+        $(".tilbuds_notifikasjon").addClass("tilbud_attention");
+    } 
+    else {
+        $(".tilbud_attention").removeClass("tilbud_attention");
+    }
 
     },
     error: function(xmlhttprequest, textstatus, message) {

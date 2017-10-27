@@ -13,6 +13,8 @@ function managerfane(index) {
         $("#booking_tilbud_fane").show();
         $("#booking_tilbud_knapp").css("background",selectedcolor);
 
+        $(".tilbud_attention").removeClass("tilbud_attention");
+
         $("#booking_behov_fane").hide();
         $("#booking_behov_knapp").css("background",defaultcolor);
     }

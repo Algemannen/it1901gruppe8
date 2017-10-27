@@ -435,3 +435,13 @@ li.scenePoint {
 .tilbudButtons button {
   padding:  10px 18px;
 }
+
+@keyframes blinking {
+  50% {background-color: rgb(219, 142, 40);}
+}
+
+.tilbud_attention {
+  animation-name: blinking;
+  animation-duration: 1.6s;
+  animation-iteration-count: infinite;
+}
