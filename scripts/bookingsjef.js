@@ -235,6 +235,7 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             console.log(l);
 
             let dateArray = new Array();
+<<<<<<< HEAD
             let currentDate = parseDate(l.startDag);
             let sluttDate = parseDate(l.sluttDag);
 
@@ -252,6 +253,25 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
                 $(calcontainer).append($("<li></li>").text(dateArray[i]).attr('id','dato'+i).addClass('datoliste'));
             }
             $('#kalender').append(headline, calcontainer);
+=======
+            let startdate = l.startDag;
+            console.log(startdate);
+            let sluttdate = l.sluttDag;
+            console.log(sluttdate);
+
+            let list = [];
+            let date = new Date(startdate);
+            let e = new Date(sluttdate);
+            date.setDate(date.getDate()-1);
+            
+            while(date < e) {
+              list.push(date);
+              date = new Date(date.setDate(date.getDate() + 1));
+          }
+          console.log(list);
+
+
+>>>>>>> 1e2e05570ac5366184feaffea8a56f7229d7a60b
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
