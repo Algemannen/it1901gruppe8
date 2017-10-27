@@ -377,21 +377,37 @@ li.scenePoint {
 }
 
 .tilbud {
-  margin: 0.5em;
+  margin: 1em;
   padding: 0.5;
   position: relative;
 }
 
-.tilbud p, .tilbud h2 {
-  margin:0px;
-  padding: 0px;
+.tilbud h2 {
+  margin-top:0px;
 }
 
 .manager_buttons {
   position: absolute;
-  bottom:10px;
+  bottom:35px;
   right:10px;
   text-align: center;
+  width: 20%;
+}
+
+.manager_buttons button {
+  padding: 8px 16px;
+}
+
+.offer_button_reject {
+  margin-left: 10px;
+}
+
+#manager_tilbud ul {
+  padding: 0;
+}
+
+#manager_tilbud li {
+  padding: 10px;
 }
 
 .sendNyttTilbud input, .sendNyttTilbud select {

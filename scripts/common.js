@@ -192,23 +192,23 @@ function injectOffers(bruker) {
             overskrift.append(band_navn," på ", scene_navn);
 
             // Sender
-            let sender = $("<p></p>");
-            let sender_navn = $("<span></span>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
-            sender.append(sender_navn);
+            //let sender = $("<p></p>");
+            let sender_navn = $("<span></span><br>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+            //sender.append(sender_navn);
 
 
             // Tidspunkt
-            let tidsinfo = $("<p></p>");
-            let dato = $("<span></span>").text("Dato: "+element.dato);
-            let start_tid = $("<span></span>").text("Start: "+element.start_tid);
-            let slutt_tid = $("<span></span>").text("Slutt: "+element.slutt_tid);
-            tidsinfo.append(dato, start_tid, slutt_tid);
+            //let tidsinfo = $("<p></p>");
+            let dato = $("<span></span><br>").text("Dato: "+element.dato);
+            let start_tid = $("<span></span><br>").text("Start: "+element.start_tid);
+            let slutt_tid = $("<span></span><br>").text("Slutt: "+element.slutt_tid);
+            //tidsinfo.append(dato, start_tid, slutt_tid);
 
 
             // Pris
-            let prisinfo = $("<p></p>")
-            let pris = $("<span></span>").text("Pris: "+element.pris);
-            prisinfo.append(pris);
+            //let prisinfo = $("<p></p>")
+            let pris = $("<span></span><br>").text("Pris: "+element.pris);
+            //prisinfo.append(pris);
 
             let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
 
@@ -226,12 +226,12 @@ function injectOffers(bruker) {
             }
 
 
-            $("#"+html_id).append(overskrift, tidsinfo, prisinfo,sender, buttons);
+            $("#"+html_id).append(overskrift, dato, start_tid, slutt_tid, pris, sender_navn, buttons);
             $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
-            if (debug_mode) {
+            /*if (debug_mode) {
                 let status = $("<span></span>").text("Status: "+element.statusflags);
                 $("#"+html_id).append(status);
-            }
+            }*/
         });
     },
     error: function(xmlhttprequest, textstatus, message) {

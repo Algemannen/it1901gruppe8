@@ -11,7 +11,7 @@ function bookingfane(index) {
         $("#sok_knapp").css("background",defaultcolor);
 
         $("#bookingtilbud").hide();
-        $("#bookingtilbud_knapp ").css("background",defaultcolor);
+        $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
     else if (index == 1) {
         $("#sok").show();
