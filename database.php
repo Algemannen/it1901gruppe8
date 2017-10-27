@@ -32,8 +32,8 @@ $dbconn->set_charset("utf8");
 
 // Henter ut hvilken funksjon som skal kalles.
 $method = $_GET['method'];
-
-
+// $method = 'serveringInfo';
+// echo 'e';
 switch ($method) {
     /// Dette er en metode for å sjekke at oppkobling mot serveren fungerer
 case 'ping':
@@ -1169,7 +1169,7 @@ case 'getConcertReport':
 
 case 'getOldConcertInfo' :
 
-$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+  $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
           FROM konsert k
           INNER JOIN konsert_band kb ON k.kid =kb.kid
           INNER JOIN band b ON b.bid = kb.bid
@@ -1228,70 +1228,70 @@ break;
 
 case 'getOffers':
 
-// Leser inn brukertype
-$brukertype = (int)$_POST['brukertype'];
+    // Leser inn brukertype
+    $brukertype = (int)$_POST['brukertype'];
 
-if ($brukertype === 3) {
-    $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
-    scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
-    FROM tilbud
-    INNER JOIN scene ON scene.sid = tilbud.sid
-    INNER JOIN band ON band.bid = tilbud.bid
-    INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
-    INNER JOIN bruker b ON b.uid = band.manager_uid
-    WHERE band.manager_uid = ?
-    ORDER BY tilbud.status ASC";
-}
-else if ($brukertype === 4) {
-    $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
-    scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
-    FROM tilbud
-    INNER JOIN scene ON scene.sid = tilbud.sid
-    INNER JOIN band ON band.bid = tilbud.bid
-    INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
-    INNER JOIN bruker b ON b.uid = band.manager_uid
-    WHERE tilbud.sender_uid = ?
-    ORDER BY tilbud.status ASC";
-}
-else if ($brukertype === 5) {
-    $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
-    scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
-    FROM tilbud
-    INNER JOIN scene ON scene.sid = tilbud.sid
-    INNER JOIN band ON band.bid = tilbud.bid
-    INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
-    INNER JOIN bruker b ON b.uid = band.manager_uid
-    ORDER BY tilbud.status ASC";
-}
-
-
-
-
-  // Gjør klar objekt for spørringen
-  $stmt = $dbconn->stmt_init();
-
-  // Gjør spørringen klar for databasen
-  if(!$stmt->prepare($query)) {
-    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-  } else {
-
-    if ($brukertype === 3 || $brukertype === 4) {
-        // Binder brukerid som heltall
-        $stmt->bind_param('i', $uid);
+    if ($brukertype === 3) {
+        $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
+        scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
+        FROM tilbud
+        INNER JOIN scene ON scene.sid = tilbud.sid
+        INNER JOIN band ON band.bid = tilbud.bid
+        INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
+        INNER JOIN bruker b ON b.uid = band.manager_uid
+        WHERE band.manager_uid = ?
+        ORDER BY tilbud.status ASC";
+    }
+    else if ($brukertype === 4) {
+        $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
+        scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
+        FROM tilbud
+        INNER JOIN scene ON scene.sid = tilbud.sid
+        INNER JOIN band ON band.bid = tilbud.bid
+        INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
+        INNER JOIN bruker b ON b.uid = band.manager_uid
+        WHERE tilbud.sender_uid = ?
+        ORDER BY tilbud.status ASC";
+    }
+    else if ($brukertype === 5) {
+        $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
+        scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
+        FROM tilbud
+        INNER JOIN scene ON scene.sid = tilbud.sid
+        INNER JOIN band ON band.bid = tilbud.bid
+        INNER JOIN bruker sender ON sender.uid = tilbud.sender_uid
+        INNER JOIN bruker b ON b.uid = band.manager_uid
+        ORDER BY tilbud.status ASC";
     }
 
-    // Leser inn sceneid
-    $uid = $_POST['uid'];
 
-    // Utfører spørringen
-    $stmt->execute();
 
-    // Returnerer resultat fra spørringen
-    $result = $stmt->get_result();
 
-    // Hent ut alle rader fra en spørring
-    $encode = array(array());
-    while ($row = $result->fetch_assoc()) {
+      // Gjør klar objekt for spørringen
+      $stmt = $dbconn->stmt_init();
+
+      // Gjør spørringen klar for databasen
+      if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+      } else {
+
+        if ($brukertype === 3 || $brukertype === 4) {
+            // Binder brukerid som heltall
+            $stmt->bind_param('i', $uid);
+        }
+
+        // Leser inn sceneid
+        $uid = $_POST['uid'];
+
+        // Utfører spørringen
+        $stmt->execute();
+
+        // Returnerer resultat fra spørringen
+        $result = $stmt->get_result();
+
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
 
         /*
             Brukertyper vi er interesserte i:
@@ -1344,7 +1344,7 @@ break;
 
 case 'getConcertPricingInfo':
 
-$query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+  $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
           FROM konsert k
           INNER JOIN konsert_band kb ON k.kid =kb.kid
           INNER JOIN band b ON b.bid = kb.bid
@@ -1405,37 +1405,37 @@ break;
 
 case 'setOfferStatus':
 
-$query = "UPDATE tilbud
-SET status = ?
-WHERE tid = ?";
+    $query = "UPDATE tilbud
+    SET status = ?
+    WHERE tid = ?";
 
-// Gjør klar objekt for spørringen
-    $stmt = $dbconn->stmt_init();
+    // Gjør klar objekt for spørringen
+        $stmt = $dbconn->stmt_init();
 
-// Gjør spørringen klar for databasen
-if(!$stmt->prepare($query)) {
-    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-} else {
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
 
-// Binder brukerid som heltall
-    $stmt->bind_param('ii', $status, $tid);
+    // Binder brukerid som heltall
+        $stmt->bind_param('ii', $status, $tid);
 
-// Leser inn status
-    $status = $_POST['status'];
+    // Leser inn status
+        $status = $_POST['status'];
 
-// Leser inn sceneid
-    $tid = $_POST['tid'];
+    // Leser inn sceneid
+        $tid = $_POST['tid'];
 
-// Utfører spørringen
-    $stmt->execute();
+    // Utfører spørringen
+        $stmt->execute();
 
-// Avslutt sql-setning
-    $stmt->close();
-}
+    // Avslutt sql-setning
+        $stmt->close();
+    }
 
 
 
-break;
+    break;
 
 case 'getListOfBandsAndScenes':
 
@@ -1501,7 +1501,7 @@ case 'getListOfBandsAndScenes':
              // Avslutt sql-setning
              $stmt2->close();
          }
-       }
+    }
     break;
 
 case 'insertOffer':
@@ -1540,8 +1540,8 @@ case 'insertOffer':
 
   // Avslutt sql-setning
       $stmt->close();
-}
-break;
+    }
+    break;
 
 case 'deleteOffer':
 
@@ -1551,23 +1551,105 @@ case 'deleteOffer':
       $stmt = $dbconn->stmt_init();
 
   // Gjør spørringen klar for databasen
-  if(!$stmt->prepare($query)) {
+    if(!$stmt->prepare($query)) {
       header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-  } else {
+    } else {
 
-  // Binder brukerid som heltall
-      $stmt->bind_param('i', $tid);
+        // Binder brukerid som heltall
+        $stmt->bind_param('i', $tid);
 
-  // Leser inn variabler
-      $tid = $_POST['tid'];
+        // Leser inn variabler
+        $tid = $_POST['tid'];
 
-  // Utfører spørringen
-      $stmt->execute();
+        // Utfører spørringen
+        $stmt->execute();
 
-  // Avslutt sql-setning
-      $stmt->close();
-}
-break;
+        // Avslutt sql-setning
+        $stmt->close();
+    }
+    break;
+
+case 'genreByKid':
+    $query = "SELECT sjanger FROM konsert WHERE kid = ?";
+
+     // Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+        // Binder brukerid som heltall
+        $stmt->bind_param('i', $kid);
+
+        // Leser inn sceneid
+        $kid = $_POST['kid'];
+
+        // Utfører spørringen
+        $stmt->execute();
+
+        // Returnerer resultat fra spørringen
+        $result = $stmt->get_result();
+
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
+            $encode[] = $row;
+        }
+
+        // Returner json-string med data
+        echo json_encode($encode);
+
+        // Avslutt sql-setning
+        $stmt->close();
+    }
+    break;
+
+case 'serveringInfo':
+    
+    $query = "SELECT knavn, dato, start_tid, slutt_tid, tilskuere, sjanger
+        FROM konsert
+        WHERE konsert.sid = ?
+        AND fid = ?";
+
+    // Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+        // Binder brukerid som heltall
+        $stmt->bind_param('ii', $sid, $fid);
+
+        // Leser inn sceneid
+        $sid = $_POST['sceneid'];
+
+        // Leser inn festival
+        $fid = $_POST['fid'];
+
+        // Utfører spørringen
+        $stmt->execute();
+
+        // Returnerer resultat fra spørringen
+        $result = $stmt->get_result();
+
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
+            $encode[] = $row;
+        }
+
+        // Returner json-string med data
+        echo json_encode($encode);
+
+        // Avslutt sql-setning
+        $stmt->close();
+    }
+
+    break;
 
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:

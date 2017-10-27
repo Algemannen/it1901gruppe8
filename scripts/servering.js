@@ -1,4 +1,6 @@
-function getListOfScenesS(bruker) {
+// getListOfScenesS
+
+function setupServering(bruker) {
 
     l = [];
 
@@ -33,7 +35,7 @@ function getListOfScenesS(bruker) {
 
 // Lager et html-element med konserter filtrert etter scene
 function getListOfConcertesBySceneS(bruker, scene) {
-    $.ajax({ url: '/database.php?method=getListOfConcertsByScene',
+    $.ajax({ url: '/database.php?method=serveringInfo',
         data: {username: bruker.name, usertype: bruker.type, sceneid: scene.sid, fid:current_fid},
         type: 'post',
         success: function(output) {
@@ -41,7 +43,7 @@ function getListOfConcertesBySceneS(bruker, scene) {
             let l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let scenePoint = $("<li></li>").addClass("scenePoint");
-            let concerts = buildListOfConcertsS(bruker,l,scene);
+            let concerts = buildListOfConcertsS(l,scene);
             let sceneHead = $("<li></li>").text(scene.navn);
             let sceneInfo = $("<li></li>").text("Maks plasser: " + scene.maks_plasser);
 
@@ -62,14 +64,15 @@ function getListOfConcertesBySceneS(bruker, scene) {
 
 }
 
-function buildListOfConcertsS(bruker,list,scene) {
+function buildListOfConcertsS(list,scene) {
     let listContainer = $("<ul></ul>").addClass("concertlist");
     for (i in list) {
         let listPoint = $("<li></li>");
-        let concertInfo = $("<p></p>").text(' ' + list[i].navn +' | ' + 
+        let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' + 
         	list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
 		listPoint.append(concertInfo);
-
+		listPoint.append($("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0));
+		listPoint.append($("<p></p>").text('Tilskuere: ' + list[i].tilskuere).css("margin", 0));
 
         let p = calculatePurchase(scene.maks_plasser);
         for (let key in p) {
@@ -86,8 +89,8 @@ function calculatePurchase(seats) {
 	let beerrate = 0.7;
 
 	let retval = {
-		"Antall brus": seats*sodarate,
-		"Antall øl": seats*beerrate
+		"Anbefalt antall brus": seats*sodarate,
+		"Anbefalt antall øl": seats*beerrate
 	};
 	return retval;
 }
