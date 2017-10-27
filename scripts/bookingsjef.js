@@ -194,11 +194,12 @@ function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-            let headline = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
+            let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
             let calcontainer = $("<div></div").addClass("calscenes");
             $('#kalender').append(headline, calcontainer);
+            createListOfConcertDays()
 
 
 
@@ -225,13 +226,19 @@ function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
 }
 
 function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
-    l = [];
+
     $.ajax({ url: '/database.php?method=getListOfConcertDays',
         data: {fid: current_fid},
         type: 'post',
         success: function(output) {
-            l = safeJsonParse(output);
+            let l = safeJsonParse(output);
             console.log(l);
+
+            let dateArray = new Array();
+            let startdate = l.startDag;
+            console.log(startdate);
+            let sluttdate = l.sluttDag;
+            console.log(sluttdate);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -243,7 +250,7 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
     });
 }
 /*
-function buildCalendar(sett noe input greier){
+function buildCalendar(dato){
     l = [];
 
     $.ajax({ url: '',

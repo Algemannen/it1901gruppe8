@@ -1584,13 +1584,9 @@ case 'getListOfConcertDays':
       $result = $stmt->get_result();
 
       // Hent ut alle rader fra en spørring
-      $encode = array();
-      while ($row = $result->fetch_assoc()) {
-          $encode[] = $row;
-      }
 
       // Returner json-string med data
-      echo json_encode($encode);
+      echo json_encode($result->fetch_assoc());
 
       // Avslutt sql-setning
       $stmt->close();
