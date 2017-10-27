@@ -239,6 +239,19 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             console.log(startdate);
             let sluttdate = l.sluttDag;
             console.log(sluttdate);
+
+            let list = [];
+            let date = new Date(startdate);
+            let e = new Date(sluttdate);
+            date.setDate(date.getDate()-1);
+            
+            while(date < e) {
+              list.push(date);
+              date = new Date(date.setDate(date.getDate() + 1));
+          }
+          console.log(list);
+
+
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
