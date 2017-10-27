@@ -1290,7 +1290,7 @@ else if ($brukertype === 5) {
     $result = $stmt->get_result();
 
     // Hent ut alle rader fra en spørring
-    $encode = array();
+    $encode = array(array());
     while ($row = $result->fetch_assoc()) {
 
         /*

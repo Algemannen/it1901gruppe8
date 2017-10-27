@@ -100,9 +100,12 @@ Denne funksjonen er async-sikker
 */
 
 function injectList(html_id, list, formatingfunction) {
+    if (list.length === 0) {
+        return;
+    }
     let listContainer = $("<ul></ul>");
     let child_id = [];
-    for (i = 0; i<list.length; i++) {
+    for (let i = 0; i<list.length; i++) {
         child_id.push(html_id+"_"+i+"_");
         let listElement = $("<li></li>").attr("id",child_id[i]);
         listContainer.append(listElement);
@@ -110,7 +113,7 @@ function injectList(html_id, list, formatingfunction) {
 
     $("#"+html_id).append(listContainer);
 
-    for (i = 0; i<list.length; i++) {
+    for (let i = 0; i<list.length; i++) {
         formatingfunction(child_id[i],list[i]);
     }
 }
@@ -120,7 +123,7 @@ function injectList(html_id, list, formatingfunction) {
 // Bygger en korrekt liste av scener
 function buildListOfConcerts(bruker,list) {
     let listContainer = $("<ul></ul>").addClass("concertlist");
-    for (i in list) {
+    for (let i in list) {
         let listPoint = $("<li></li>");
         let concertInfo = $("<div></div>").addClass("button_text").text(' ' + list[i].navn +' | ' + list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
         let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
@@ -182,9 +185,12 @@ function injectOffers(bruker) {
     type: 'post',
     success: function(output) {
         l = safeJsonParse(output);
-        for(i in l){
         
-        injectList("manager_tilbud",l[i],function(html_id,element){
+        injectList("manager_tilbud",l,function(html_id,element){
+        
+        injectList(html_id,element,function(html_id,element){
+
+            
 
             // Overskrift
             let overskrift = $("<h2></h2>");
@@ -234,7 +240,7 @@ function injectOffers(bruker) {
                 $("#"+html_id).append(status);
             }*/
         });
-    }
+    });
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {
