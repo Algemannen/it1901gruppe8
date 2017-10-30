@@ -1,3 +1,10 @@
+/*
+
+Javascript-funksjonalitet for serveringsansvarlig
+
+*/
+
+
 // getListOfScenesS
 
 function setupServering(bruker) {
@@ -69,14 +76,14 @@ function buildListOfConcertsS(list,scene) {
     for (i in list) {
         let listPoint = $("<li></li>");
         let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' + 
-        	list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
-		listPoint.append(concertInfo);
-		listPoint.append($("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0));
-		listPoint.append($("<p></p>").text('Tilskuere: ' + list[i].tilskuere).css("margin", 0));
+            list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
+        listPoint.append(concertInfo);
+        listPoint.append($("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0));
+        listPoint.append($("<p></p>").text('Tilskuere: ' + list[i].tilskuere).css("margin", 0));
 
         let p = calculatePurchase(scene.maks_plasser);
         for (let key in p) {
-        	listPoint.append($("<p></p>").text(key + ": " + p[key]).css("margin", 0));
+            listPoint.append($("<p></p>").text(key + ": " + p[key]).css("margin", 0));
         }
         listContainer.append(listPoint);
     }
@@ -85,12 +92,12 @@ function buildListOfConcertsS(list,scene) {
 
 
 function calculatePurchase(seats) {
-	let sodarate = 0.1;
-	let beerrate = 0.7;
+    let sodarate = 0.1;
+    let beerrate = 0.7;
 
-	let retval = {
-		"Anbefalt antall brus": seats*sodarate,
-		"Anbefalt antall øl": seats*beerrate
-	};
-	return retval;
+    let retval = {
+        "Anbefalt antall brus": seats*sodarate,
+        "Anbefalt antall øl": seats*beerrate
+    };
+    return retval;
 }
