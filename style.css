@@ -424,13 +424,14 @@ li.scenePoint {
     display: none;
 }
 
-
+.calscenes {
+  width: 100%;
+}
 .datoliste {
-  position: relative;
   border: 1px solid #565656;
   margin: 5px;
-  padding: 5px;
-  width: 97%;
+  width: 100%;
+  margin-right: 10px;
   list-style: none;
   text-align: center;
 }
