@@ -273,6 +273,7 @@ case 'getListOfConcertsByScene':
 
 */
 
+	/// Returnerer en liste over alle konserter med hvem som spiller på konserten på en gitt festival
 case 'getListOfConcertesByFestival':
 
     // Gjør klar sql-setning
@@ -332,6 +333,7 @@ case 'getListOfConcertesByFestival':
 
 */
 
+	/// Returnerer en liste over konserter med de som spiller på en gitt festival som tilhører en gitt manager
 case 'getListOfConcertesByFestivalAndId':
 
     // Gjør klar sql-setning
@@ -397,6 +399,7 @@ case 'getListOfConcertesByFestivalAndId':
 
 */
 
+	/// Returnerer en liste over alle teknikere forbundet med en gitt konsert
 case 'getListOfTechs':
 
     // Gjør klar sql-setning
@@ -590,6 +593,7 @@ case 'insertTechnicalNeeds':
 
 */
 
+	/// Slette tekniske behov fra databasen
 case 'deleteTechnicalNeed' :
 
     $query = "DELETE FROM tekniske_behov
@@ -714,6 +718,7 @@ case 'getListOfOlderConserts':
                   (_)(_)                       (_)(_)(_)
 */
 
+	/// Returnerer en liste over konserter fra tidligere festivaler med en gitt sjanger
 case 'getOldBandByGenre':
 
     $query = "SELECT *
@@ -770,6 +775,7 @@ case 'getOldBandByGenre':
 
 */
 
+	/// Søker etter band i databsen
 case 'search':
     $text = "%{$_POST['text']}%";
     $type = $_POST['type'];
@@ -822,6 +828,7 @@ case 'search':
 
     */
 
+	/// Søker konserter i databasen etter sjanger
     case 'konsert':
         $query = "SELECT knavn AS navn, kid AS id FROM konsert WHERE NOT fid = ? AND sjanger LIKE ?";
 
@@ -867,6 +874,7 @@ case 'search':
 
     */
 
+	/// Søker etter band i databasen etter scene
     case 'scene':
         $query = "SELECT DISTINCT b.navn, b.bid AS id
         FROM band b
@@ -921,6 +929,7 @@ case 'search':
    (_)(_)(_)(_)     (_)(_)(_)  (_)(_)        (_)  (_)(_)(_)(_)         (_)(_)(_)(_)        (_)  (_)     (_)(_)(_)
 */
 
+/// Henter ut en stor mengde informasjon om et gitt band fra databasen
 case 'getBandInfo':
 
     /*
@@ -1099,6 +1108,8 @@ case 'getBandInfo':
                                                                                                                                         (_)
                                                                                                                                         (_)
 */
+
+/// Henter informasjon for økonomisk rapport om en konsert fra databasen
 case 'getConcertReport':
   $query = "SELECT konsert.tilskuere, konsert.billettpris, konsert.kostnad
       FROM konsert
@@ -1167,6 +1178,7 @@ case 'getConcertReport':
 
 */
 
+/// Henter ut informasjon om en (gammel) konsert
 case 'getOldConcertInfo' :
 
   $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
@@ -1226,11 +1238,13 @@ break;
 
 */
 
+/// For en gitt bruker, returnerer en liste over tilbud for godkjenning / avslag
 case 'getOffers':
 
     // Leser inn brukertype
     $brukertype = (int)$_POST['brukertype'];
 
+	// Manager
     if ($brukertype === 3) {
         $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
         scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
@@ -1241,7 +1255,8 @@ case 'getOffers':
         INNER JOIN bruker b ON b.uid = band.manager_uid
         WHERE band.manager_uid = ?
         ORDER BY tilbud.status ASC";
-    }
+	}
+	// Bookingansvarlig
     else if ($brukertype === 4) {
         $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
         scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
@@ -1252,7 +1267,8 @@ case 'getOffers':
         INNER JOIN bruker b ON b.uid = band.manager_uid
         WHERE tilbud.sender_uid = ?
         ORDER BY tilbud.status ASC";
-    }
+	}
+	// Bookingsjef
     else if ($brukertype === 5) {
         $query = "SELECT tilbud.tid, tilbud.dato, tilbud.start_tid, tilbud.slutt_tid, tilbud.pris, tilbud.status AS statusflags, b.brukertype AS usertype,
         scene.navn AS scene_navn, band.navn AS band_navn, sender.fornavn AS sender_fornavn, sender.etternavn AS sender_etternavn
@@ -1323,7 +1339,8 @@ case 'getOffers':
             $should_encode = true;
         }
 
-
+		// Bitflaggene gjør at hvis vi naivt sorterer etter tilbud.status så vil vi ikke få ting i den rekkefølgen vi ønsker, derfor har vi
+		// en funksjon med oppgave å endre rekkefølgen tilbudene returneres i. (Vi ønsker at tilbud du som bruker skal prioritere skal komme øverst)
         if ($should_encode) {
             $encode[reorder_offers((int)$row['statusflags'])][] = $row;
         }
@@ -1342,6 +1359,8 @@ case 'getOffers':
 
 break;
 
+
+/// Henter informasjon relatert til pris
 case 'getConcertPricingInfo':
 
   $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
@@ -1403,6 +1422,8 @@ break;
 
 */
 
+/// Oppdaterer statusen på et tilbud, gjør ingen sjekker om statuskoden faktisk gir mening, dermed er det opp til javascript-funksjonen
+/// som kaller denne å sørge for at statuskoden er velformatert
 case 'setOfferStatus':
 
     $query = "UPDATE tilbud
@@ -1437,6 +1458,7 @@ case 'setOfferStatus':
 
     break;
 
+	/// Returnerer en liste over alle band og alle scener
 case 'getListOfBandsAndScenes':
 
 
@@ -1504,6 +1526,7 @@ case 'getListOfBandsAndScenes':
     }
     break;
 
+/// Registrerer et nytt tilbud i databasen
 case 'insertOffer':
 
   $query = "INSERT INTO tilbud (dato, start_tid, slutt_tid, pris, status, bid, sid, sender_uid)
@@ -1543,6 +1566,7 @@ case 'insertOffer':
     }
     break;
 
+	/// Sletter et tilbud fra databasen
 case 'deleteOffer':
 
   $query = "DELETE FROM tilbud WHERE tid = ?";
@@ -1569,6 +1593,7 @@ case 'deleteOffer':
     }
     break;
 
+	/// Finner sjangeren tilhørende en gitt konsert
 case 'genreByKid':
     $query = "SELECT sjanger FROM konsert WHERE kid = ?";
 
@@ -1606,6 +1631,7 @@ case 'genreByKid':
     }
     break;
 
+	/// Henter ut informasjon til serveringssjef
 case 'serveringInfo':
     
     $query = "SELECT knavn, dato, start_tid, slutt_tid, tilskuere, sjanger
