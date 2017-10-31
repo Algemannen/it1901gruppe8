@@ -328,10 +328,6 @@ li.scenePoint {
   border-radius: 10px;
 }
 
-#informationlist h3, #bandinformasjon h3 {
-  text-align: center;
-}
-
 #informationlist a, #bandinformasjon a {
   text-align: center;
   display: block;

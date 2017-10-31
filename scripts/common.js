@@ -395,7 +395,7 @@ function deleteOffer(obj) {
 }
 
 // Henter informasjon om band eller konsert
-function getSearchInfo(searchtype, id, container) {
+function getSearchInfo(searchtype, id, container, bruker) {
     $(container).empty();
 
     if (searchtype === 'band' | searchtype === 'scene') {
@@ -404,20 +404,20 @@ function getSearchInfo(searchtype, id, container) {
             type: 'post',
             success: function(output) {
                 l = safeJsonParse(output); //gjør en try-catch sjekk.
-                let bandOverskrift = $("<h3></h3>").text(l[0][0].navn);
+                let bandOverskrift = $("<h2></h2>").text(l[0][0].navn).addClass("centeredText");
                 $(container).append(bandOverskrift);
 
                 //Lager HTML-kode for nøkkelinformasjon om band
                 createBandInfoHTML(l[0], container);
 
                 // Lager HTML-kode til albuminformasjon
-                if (l[2].length > 0) { createAlbumListHTML(l[2], container); }
+                if (l[2].length > 0  && searchtype === 'band') { createAlbumListHTML(l[2], container); }
 
                 // Lager HTML-kode til tidligere konserter
-                if (l[3].length > 0) { createOldConcertListHTML(l[3], container); }
+                if (l[3].length > 0 && bruker.type === 4) { createOldConcertListHTML(l[3], container); }
 
                 //Lager HTML-kode for presseomtaler
-                if (l[4].length > 0) { createMediaReviewHTML(l[4], container); }
+                if (l[4].length > 0 && bruker.type === 6) { createMediaReviewHTML(l[4], container); }
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
@@ -438,6 +438,12 @@ function getSearchInfo(searchtype, id, container) {
 
                 //Lager HTML-kode for Konserten
                 createConcertInfoHTML(l[0], container);
+
+                if (bruker.type === 4) {
+                  createConcertDetailsHTML(l[0], container);
+                } else if (bruker.type === 6) {
+
+                }
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
@@ -469,7 +475,7 @@ function createBandInfoHTML(list, container) {
 function createAlbumListHTML(list, container) {
 
     let albumDiv = $("<div></div>").addClass("albumsalg");
-    let albumOverskrift = $("<h3></h3>").text("Album");
+    let albumOverskrift = $("<h3></h3>").text("Album").addClass("centeredText");
     let albumTable = $("<table></table>");
     let albumHeader = $("<tr></tr>");
     let albumHeaderNavn = $("<th></th>").text("Albumnavn");
@@ -494,7 +500,7 @@ function createAlbumListHTML(list, container) {
 function createOldConcertListHTML(list, container) {
 
       let konsertDiv = $("<div></div>").addClass("tidligereKonserter");
-      let konsertOverskrift = $("<h3></h3>").text("Tidligere Konserter");
+      let konsertOverskrift = $("<h3></h3>").text("Tidligere Konserter").addClass("centeredText");
       let konsertTable = $("<table></table>");
       let konsertHeader = $("<tr></tr>");
       let konsertHeaderNavn = $("<th></th>").text("Konsertnavn");
@@ -520,7 +526,7 @@ function createOldConcertListHTML(list, container) {
 //Lager HTML-kode for Presseomtaler
 function createMediaReviewHTML(list, container) {
     let omtaleDiv = $("<div></div>").addClass("bandOmtale");
-    let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler");
+    let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler").addClass("centeredText");
     omtaleDiv.append(omtaleOverskrift);
 
     for (i in list) {
@@ -532,14 +538,20 @@ function createMediaReviewHTML(list, container) {
 
 // Lager HTML-kode for en konsert
 function createConcertInfoHTML(list, container) {
-  let konsertOverskrift = $("<h3></h3>").text(list.knavn);
+  let konsertOverskrift = $("<h2></h2>").text(list.knavn).addClass("centeredText");
   let konsertInfo = $("<div></div>").addClass("keyConcertInfo");
-  let konsertDato = $("<span></span><br>").text("Gjennomført dato: " + list.dato);
-  let konsertStartTid = $("<span></span><br>").text("Konserten Startet: " + list.start_tid);
-  let konsertSluttTid = $("<span></span><br>").text("Konserten avsluttet: " + list.slutt_tid);
-  let konsertBand = $("<span></span><br>").text("Spilt av: " + list.bnavn);
+  let konsertDato = $("<span></span><br>").text("Dato: " + list.dato);
+  let konsertStartTid = $("<span></span><br>").text("Start-tid: " + list.start_tid);
+  let konsertSluttTid = $("<span></span><br>").text("Slutt-tid: " + list.slutt_tid);
+  let konsertBand = $("<span></span><br>").text("Artist: " + list.bnavn);
   let konsertSjanger = $("<span></span><br>").text("Sjanger: " + list.sjanger);
-  let konsertScene = $("<span></span><br>").text("Spilt på scene: " + list.navn);
+  let konsertScene = $("<span></span><br>").text("Scene: " + list.navn);
+  konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
+  $(container).append(konsertOverskrift, konsertInfo);
+}
+
+// Lager HTML-kode for konsert-detaljer med økonomisk resultat
+function createConcertDetailsHTML(list, container) {
   let konsertDetaljerOverskrift = $("<h4></h4>").text("Detaljer");
   let konsertDetaljer = $("<div></div>").addClass("concertDetails");
   let konsertTilskuere = $("<span></span><br>").text("Antall tilskuere: " + list.tilskuere);
@@ -550,6 +562,5 @@ function createConcertInfoHTML(list, container) {
   let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + list.kostnad);
   let konsertPris = $("<span></span><br>").text("Billettpris: " + list.billettpris);
   konsertDetaljer.append(konsertDetaljerOverskrift, konsertMaks, konsertTilskuere, konsertLedigePlasser, konsertKostnad, konsertPris, konsertInntekt, konsertOverskudd);
-  konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
-  $(container).append(konsertOverskrift, konsertInfo, konsertDetaljer);
+  $(container).append(konsertDetaljer);
 }

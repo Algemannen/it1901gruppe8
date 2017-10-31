@@ -4,12 +4,11 @@ function pr_bandListe(festivalid){
     type: 'post',
     success: function(output) {
         let l = safeJsonParse(output);
-        console.log(output);
         let bandHeader = $("<h3></h3>").text('Bookede band');
         $("#bandliste").append(bandHeader);
 
         injectList('bandliste',l[0], function(html_id, element) {
-            let container = $("<span></span>").text(element.navn).addClass('bandListElement').val(element.bid);
+            let container = $("<span></span>").text(element.navn).addClass('listElementBand').val(element.bid);
             $('#bandliste').append(container);
         });
 
@@ -17,7 +16,7 @@ function pr_bandListe(festivalid){
         $("#bandliste").append(konsertHeader);
 
         injectList('bandliste',l[1], function(html_id, element) {
-            let container = $("<span></span>").text(element.knavn).addClass('bandListElement').val(element.kid);
+            let container = $("<span></span>").text(element.knavn).addClass('listElementConcert').val(element.kid);
             $('#bandliste').append(container);
         });
     },
