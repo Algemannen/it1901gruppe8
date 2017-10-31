@@ -1594,7 +1594,10 @@ case 'getListOfConcertDays':
 break;
 
 case 'getOffersForCalender':
-    $query = "SELECT * FROM tilbud";
+    $query = "SELECT scene.navn AS snavn, tilbud.*, band.* FROM tilbud
+            INNER JOIN band ON tilbud.bid = band.bid
+            INNER JOIN scene ON tilbud.sid = scene.sid
+    ";
 
     $stmt = $dbconn->stmt_init();
 
@@ -1612,9 +1615,9 @@ case 'getOffersForCalender':
       // Hent ut alle rader fra en spørring
 
       // Returner json-string med data
-      $encode2 = array();
-      while ($row = $result2->fetch_assoc()) {
-          $encode2[] = $row;
+      $encode = array();
+      while ($row = $result->fetch_assoc()) {
+          $encode[] = $row;
       }
 
       echo json_encode($encode);
@@ -1624,7 +1627,11 @@ case 'getOffersForCalender':
   }
 break;
 case 'getConcertsForCalender':
-    $query = "SELECT * FROM konsert";
+    $query = "SELECT scene.navn AS snavn, band.*, konsert.* FROM konsert
+            INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
+            INNER JOIN band ON konsert_band.bid = band.bid
+            INNER JOIN scene ON konsert.sid = scene.sid
+    ";
 
     $stmt = $dbconn->stmt_init();
 
@@ -1633,11 +1640,11 @@ case 'getConcertsForCalender':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-      // Binder brukerid som heltall
+      /*// Binder brukerid som heltall
       $stmt->bind_param('i', $fid);
 
       // Leser inn sceneid
-      $fid = $_POST['fid'];
+      $fid = $_POST['fid'];*/
 
       // Utfører spørringen
       $stmt->execute();
@@ -1649,11 +1656,11 @@ case 'getConcertsForCalender':
 
       // Returner json-string med data
       $encode2 = array();
-      while ($row = $result2->fetch_assoc()) {
+      while ($row = $result->fetch_assoc()) {
           $encode2[] = $row;
       }
 
-      echo json_encode($encode);
+      echo json_encode($encode2);
 
       // Avslutt sql-setning
       $stmt->close();

@@ -186,44 +186,6 @@ function concertPricing(){ //Setter opp prisgenereringsiden til bookingansvarlig
   }
 });
 }
-function buildScenesForCal(bruker){ //Lager scener til bruk av calender siden
-    l = [];
-
-    $.ajax({ url: '/database.php?method=getListOfScenes',
-        data: {username: bruker.name, usertype: bruker.type},
-        type: 'post',
-        success: function(output) {
-            l = safeJsonParse(output); //gjør en try-catch sjekk.
-            /*let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
-            let calscenelist = $("<div></div>").attr('id', 'kalender')
-            $('#divBS').append(calscenelist);
-            let calcontainer = $("<div></div").addClass("calscenes");
-            $('#kalender').append(headline, calcontainer);*/
-            createListOfConcertDays()
-
-
-
-            /*for (i in l) {
-                let calscenediv = $("<ul></ul>").addClass("calscene"+l[i].sid);
-                $('.calscenes').append(calscenediv);
-                let calsceneHead = $("<li></li>").text(l[i].navn);
-                let calsceneInfo = $("<li></li>").text("Maks plasser: " + l[i].maks_plasser);
-
-                //let calinfo = buildCalendar();
-
-                $('.calscene'+l[i].sid).append(calsceneHead,calsceneInfo,'calinfo');
-            }*/
-
-        },
-        error: function(xmlhttprequest, textstatus, message) {
-            if(textstatus==="timeout") {
-                alert("Timeout feil, kan ikke koble til databasen");
-            } else {
-                console.log("Error: "+message);
-            }
-        }
-    });
-}
 
 function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
 
@@ -236,6 +198,7 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
 
             let startdate = l.startDag;
             let sluttdate = l.sluttDag;
+
 
             let dateArray = [];
             let date = new Date(startdate);
@@ -252,13 +215,21 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
-            let calcontainer = $("<div></div").addClass("calscenes");
+            let calcontainer = $("<div></div").addClass("calscenes")
 
             for(let i = 0; i < dateArray.length; i++){
-              let calenderText = dateArray[i].toString();
-              let calenderText2 = calenderText.substr(0,16);
-                $(calcontainer).append($("<li></li>").text(calenderText2).attr('id','dato'+i).addClass('datoliste'));
+                let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
+                let calenderText = dateArray[i].toString();
+                let calenderText2 = calenderText.substr(0,16);
+                let calenderID = dateArray[i].yyyymmdd();
+                let calenderHeadline = $('<p></p>').text(calenderText2).addClass('calenderHeadline');
+                let standardTextForCalender = $('<p></p>').text("Denne datoen er ledig").attr('id','Standard'+calenderID);
+                let temp = $('<div></div>').attr('id',calenderID).addClass('datoliste').addClass('concertInfo').css('display', 'none');
+                temp.append(standardTextForCalender);
+                $(calcontainer).append(calenderHeadline, concertButton, temp);
             }
+            getConcertsForCalender();
+            getOffersForCalender();
             $('#kalender').append(headline, calcontainer);
 
 
@@ -273,17 +244,40 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
     });
 }
 
-/*
-function buildCalendar(dato){
-    l = [];
+Date.prototype.yyyymmdd = function() {  //Hentet fra https://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
 
-    $.ajax({ url: '',
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+         ].join('');
+};
+
+function getConcertsForCalender(){
+    let l = [];
+
+    $.ajax({ url: '/database.php?method=getConcertsForCalender',
         data: {},
         type: 'post',
         success: function(output) {
-            l = safeJsonParse(output); //gjør en try-catch sjekk.
-
-
+            l = safeJsonParse(output);
+            for(i in l){
+                let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
+                if(element){
+                    let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
+                    $(standardID).css('display','none');
+                    let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
+                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
+                    let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
+                    let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
+                    let concertCalenderScene = $('<p></p>').text(l[i].snavn);
+                    let concertCalenderEconomics = $('<p></p>').text(l[i].kostnad + ' ' + l[i].tilskuere + ' ' + l[i].billettpris);
+                    $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
+                    let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
+                    $(dateID).append(concertCalenderDiv);
+                }
+            }
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
@@ -293,4 +287,49 @@ function buildCalendar(dato){
             }
         }
     });
-}*/
+}
+
+function getOffersForCalender() {
+    let l = [];
+
+    $.ajax({ url: '/database.php?method=getOffersForCalender',
+        data: {},
+        type: 'post',
+        success: function(output) {
+            l = safeJsonParse(output);
+            console.log(l);
+            for(i in l){
+                let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
+                if(element){
+                    let offerCalenderStatusMessage;
+
+                    switch(l[i].status){
+                        case 0:
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Tilbud sendt fra Bookingansvarlig').css('border', '1px solid #FFFF00');
+                            break;
+                        case 1:
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Venter på svar fra manager').css('border', '1px solid #FFFF00');
+                            break;
+                        case 2:
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').css('border', '1px solid green');
+                            break;
+                    }
+
+                    let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo').css("background-color", "red");
+                    let offerCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
+                    let offerCalenderScene = $('<p></p>').text(l[i].snavn);
+                    $(offerCalenderDiv).append(offerCalenderStatusMessage, offerCalenderScene,offerCalenderTime);
+                    let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
+                    $(dateID).append(offerCalenderDiv);
+                }
+            }
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    });
+}

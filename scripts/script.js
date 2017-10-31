@@ -94,7 +94,7 @@ $(document).ready(function(){
                 $("#root").html(result);
                 $('#username').html(user.name);
                 getListOfScenesForBookingSjef(user);
-                buildScenesForCal(user)
+                createListOfConcertDays()
                 concertPricing();
                 injectOffers(user);
                 bookingsjeffane(0);
@@ -323,7 +323,7 @@ $(document).ready(function(){
     $('body').on('click', "#tilbud_knapp", function () {
         bookingsjeffane(2);
     });
-    
+
     $('body').on('click', "#kalender_knapp", function () {
         bookingsjeffane(3);
     });

@@ -426,6 +426,7 @@ li.scenePoint {
 
 .calscenes {
   width: 100%;
+  border: 1px solid #565656;
 }
 .datoliste {
   border: 1px solid #565656;
@@ -434,4 +435,7 @@ li.scenePoint {
   margin-right: 10px;
   list-style: none;
   text-align: center;
+}
+.calenderDiv {
+    display: none;
 }
