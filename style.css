@@ -426,16 +426,37 @@ li.scenePoint {
 
 .calscenes {
   width: 100%;
-  border: 1px solid #565656;
 }
 .datoliste {
-  border: 1px solid #565656;
-  margin: 5px;
-  width: 100%;
-  margin-right: 10px;
-  list-style: none;
-  text-align: center;
+    margin: 5px;
+    margin-top: 30px;
+    width: 100%;
+    margin-right: 10px;
+    list-style: none;
+    text-align: center;
+
+
 }
 .calenderDiv {
     display: none;
+}
+
+.calenderItemsDiv{
+    border: 1px solid #565656;
+    margin: 10px;
+    position: relative;
+    min-height: 26px;
+}
+.calenderButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.headlineStatus{
+    float: left;
+}
+.calenderHeadline{
+    display:inline-block;
+    float:left;
+    margin-right: 10px;
 }

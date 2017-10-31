@@ -210,7 +210,6 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
               date = new Date(date.setDate(date.getDate() + 1));
             }
 
-            console.log(dateArray);
 
             let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
@@ -218,15 +217,20 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let calcontainer = $("<div></div").addClass("calscenes")
 
             for(let i = 0; i < dateArray.length; i++){
-                let concertButton = $("<button></button>").addClass("concert_button").text("Mer info");
+                let concertButton = $("<button></button>").addClass("concert_button").addClass("calenderButton").text("Mer info");
                 let calenderText = dateArray[i].toString();
                 let calenderText2 = calenderText.substr(0,16);
                 let calenderID = dateArray[i].yyyymmdd();
-                let calenderHeadline = $('<p></p>').text(calenderText2).addClass('calenderHeadline');
+                let mainCalenderHeadline = $('<div></div>');
+                let headlineStatus = $('<div></div>').text(" | Denne datoen er ledig").attr('id', 'Status' + calenderID).addClass('headlineStatus');
+                let calenderHeadline = $('<div></div>').text(calenderText2).addClass('calenderHeadline');
+                mainCalenderHeadline.append(calenderHeadline, headlineStatus);
                 let standardTextForCalender = $('<p></p>').text("Denne datoen er ledig").attr('id','Standard'+calenderID);
                 let temp = $('<div></div>').attr('id',calenderID).addClass('datoliste').addClass('concertInfo').css('display', 'none');
+                let calenderItemsDiv = $('<div></div>').addClass('calenderItemsDiv');
                 temp.append(standardTextForCalender);
-                $(calcontainer).append(calenderHeadline, concertButton, temp);
+                calenderItemsDiv.append(mainCalenderHeadline, concertButton, temp);
+                $(calcontainer).append(calenderItemsDiv);
             }
             getConcertsForCalender();
             getOffersForCalender();
@@ -267,12 +271,14 @@ function getConcertsForCalender(){
                 if(element){
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
                     $(standardID).css('display','none');
+                    let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
+                    $(statusID).css('display','none')
                     let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
                     let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
-                    let concertCalenderEconomics = $('<p></p>').text(l[i].kostnad + ' ' + l[i].tilskuere + ' ' + l[i].billettpris);
+                    let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Bilettpris: ' + l[i].billettpris);
                     $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
@@ -314,8 +320,11 @@ function getOffersForCalender() {
                             offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').css('border', '1px solid green');
                             break;
                     }
-
-                    let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo').css("background-color", "red");
+                    let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
+                    $(standardID).css('display','none');
+                    let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
+                    $(statusID).css('display','none');
+                    let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo');
                     let offerCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let offerCalenderScene = $('<p></p>').text(l[i].snavn);
                     $(offerCalenderDiv).append(offerCalenderStatusMessage, offerCalenderScene,offerCalenderTime);
