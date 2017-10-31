@@ -150,16 +150,19 @@ function concertPricing(){
     let container = $("<div></div>").attr('id', 'prisgenerering');
     let overskrift = $("<h2></h2>").text("Prisgenerering");
     container.append(overskrift);
-    for (i in l){
+    for (i in l[0]){
       let konsertDiv = $("<div></div>");
-      let konsertHeader = $("<h4></h4>").text(l[i].knavn);
-      let konsertBand = $("<span></span><br>").text("Band: " + l[i].bnavn);
-      let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[i].kostnad);
-      let konsertScene = $("<span></span><br>").text("Scene: " + l[i].navn);
-      let konsertPlasser = $("<span></span><br>").text("Maksplasser på scene: " + l[i].maks_plasser);
-      let prisForslag = Math.ceil(l[i].kostnad*5 / l[i].maks_plasser);
-      let konsertPris = $("<span></span><br>").text("Prisforslag: " + prisForslag);
-      konsertDiv.append(konsertHeader, konsertBand, konsertKostnad, konsertScene, konsertPlasser, konsertPris);
+      let konsertHeader = $("<h4></h4>").text(l[0][i].knavn);
+      let konsertBand = $("<span></span><br>").text("Band: " + l[0][i].bnavn);
+      let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[0][i].kostnad);
+
+      let prisForslagByscenen = Math.ceil(l[0][i].kostnad*5 / l[1][0].maks_plasser);
+      let prisForslagStorsalen = Math.ceil(l[0][i].kostnad*5 / l[1][1].maks_plasser);
+      let prisForslagAmfiet = Math.ceil(l[0][i].kostnad*5 / l[1][2].maks_plasser);
+      let konsertPrisByscenen = $("<span></span><br>").text("Prisforslag Byscenen: " + prisForslagByscenen);
+      let konsertPrisStorsalen = $("<span></span><br>").text("Prisforslag Storsalen: " + prisForslagStorsalen);
+      let konsertPrisAmfiet = $("<span></span><br>").text("Prisforslag Amfiet: " + prisForslagAmfiet);
+      konsertDiv.append(konsertHeader, konsertBand, konsertKostnad, konsertPrisByscenen, konsertPrisStorsalen, konsertPrisAmfiet);
       container.append(konsertDiv);
     }
     $("#divBS").append(container);

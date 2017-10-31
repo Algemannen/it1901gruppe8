@@ -2,19 +2,17 @@
     <button class = "logout_button">Logg ut</button>
     <p>Bookingansvarlig: <span id="username"></span></p>
     <div>
-        <button class="faneknapp" id="tekniskebehov_knapp">Tekniske behov</button>
         <button class="faneknapp" id="sok_knapp">Søk</button>
+        <button class="faneknapp" id="tekniskebehov_knapp">Tekniske behov</button>
         <button class="faneknapp" id="bookingtilbud_knapp">Bookingtilbud</button>
-
-        <div class="fane" id="tekniskebehov"></div>
 
 
         <div class="fane" id="sok">
             <div class="sokeinput">
                 <input type="text" name="tekstinput" placeholder="Søk etter..." id="textinput">
                 <button type="button" id="sokebutton">Søk</button><br>
-                <input type="radio" name="type" value="konsert" id="radioKonsert" checked><label for="radioKonsert">Sjanger på tidligere konserter</label> <br>
-                <input type="radio" name="type" value="band" id="radioBand"><label for="radioBand">Band</label><br>
+                <input type="radio" name="type" value="konsert" id="radioKonsert"><label for="radioKonsert">Sjanger på tidligere konserter</label> <br>
+                <input type="radio" name="type" value="band" id="radioBand" checked><label for="radioBand">Band</label><br>
                 <input type="radio" name="type" value="scene" id="radioScene"><label for="radioScene">Scene</label><br>
             </div>
             <br>
@@ -24,10 +22,10 @@
             </div>
         </div>
 
+        <div class="fane" id="tekniskebehov"></div>
 
         <div class="fane" id="bookingtilbud">
-            <div id="manager_tilbud">
-            </div>
+
             <div class="sendNyttTilbud">
               <h2>Send nytt tilbud!</h2>
 
@@ -59,6 +57,9 @@
                 <button id="resetOfferButton">Reset</button>
               </div>
               <br>
+
+              <div id="manager_tilbud">
+              </div>
 
             </div>
 

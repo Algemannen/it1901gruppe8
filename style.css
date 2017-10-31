@@ -306,7 +306,7 @@ li.scenePoint {
   display: none;
 }
 
-#tekniskebehov {
+#sok {
   display: initial;
 }
 
@@ -314,7 +314,7 @@ li.scenePoint {
   background: rgba(255,255,255,0.4);
 }
 
-#tekniskebehov_knapp {
+#sok_knapp {
   background: rgba(0,0,0,0.4);
 }
 
