@@ -44,7 +44,6 @@ function getListOfScenesForBookingSjef(bruker) {
         data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let overskrift = $("<h2></h2>").text('Scener').addClass('brukeroverskrift');
             let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
@@ -152,7 +151,6 @@ function concertPricing(){
   type: 'post',
   success: function(output) {
     l = safeJsonParse(output);
-    console.log(output);
     let container = $("<div></div>").attr('id', 'prisgenerering');
     let overskrift = $("<h2></h2>").text("Prisgenerering");
     container.append(overskrift);

@@ -251,7 +251,7 @@ li.scenePoint {
 
 #resultlist, #bandliste{
   width: 25%;
-  height: 400px;
+  height: 450px;
   background-color: #E3E3E3;
   color: black;
   overflow-y: scroll;
@@ -274,7 +274,7 @@ li.scenePoint {
   color: #F4F4F4;
 }
 
-#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover, #bandliste tr:hover {
+#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover, #bandliste span:hover {
   background-color: #D8D8D8;
   cursor: pointer;
 }
@@ -286,9 +286,10 @@ li.scenePoint {
 #informationlist, #bandinformasjon{
   border: 1px solid gray;
   width: 70%;
-  min-height: 400px;
+  height: 450px;
   background-color: #E3E3E3;
   color: black;
+  overflow-y: scroll;
 }
 
 #results, #band{
@@ -327,8 +328,14 @@ li.scenePoint {
   border-radius: 10px;
 }
 
-#informationlist h3, #bandinformasjon {
+#informationlist h3, #bandinformasjon h3 {
   text-align: center;
+}
+
+#informationlist a, #bandinformasjon a {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
 }
 
 .bandInfo{
@@ -444,4 +451,22 @@ li.scenePoint {
   animation-name: blinking;
   animation-duration: 1.6s;
   animation-iteration-count: infinite;
+}
+
+#bandliste ul{
+  padding-left: 0;
+  margin: 0;
+}
+
+#bandliste span {
+  display: block;
+  padding: 8px 10px;
+}
+
+#bandliste h3 {
+  text-align: center;
+}
+
+.centeredText {
+  text-align: center;
 }

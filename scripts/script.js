@@ -253,7 +253,7 @@ $(document).ready(function(){
 
     // Fang trykk på knapp for å søke som bookingansvarlig
     $('body').on('click', ".bookingnavnsok", function () {
-      getSearchInfo(this.value[0], this.value[1]);
+      getSearchInfo(this.value[0], this.value[1], '#informationlist');
       $('.bookingnavnsok').css('background', 'rgba(0,0,0,0)');
       $(this).css('background', 'rgba(0,0,0,0.3)');
     });
@@ -343,5 +343,12 @@ $(document).ready(function(){
     });
 
 
+    // Fang trykk på knapp for PR-ansvarlig
+    $('body').on('click', ".bandListElement", function () {
+      getSearchInfo('band', this.value, '#bandinformasjon');
+      $('.bandListElement').css('background', 'rgba(0,0,0,0)');
+      $(this).css('background', 'rgba(0,0,0,0.3)');
+    });
 
+    
 });

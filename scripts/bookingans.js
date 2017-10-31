@@ -99,9 +99,9 @@ function search() { //search funksjon for bookingansvarlig
 }
 
 // Henter informasjon om band eller konsert
-function getSearchInfo(searchtype, id) {
+function getSearchInfo(searchtype, id, container) {
     let bandInfo = $("<div></div>").addClass("bandInfo");
-    $("#informationlist").empty();
+    $(container).empty();
 
     if (searchtype === 'band' | searchtype === 'scene') {
         $.ajax({ url: '/database.php?method=getBandInfo',
@@ -122,7 +122,7 @@ function getSearchInfo(searchtype, id) {
                 let managerEmail = $("<span></span>").text(l[0][0].email);
                 bandInformation.append(bio, popularitet, sjanger, manager, managerFornavn, managerEmail)
                 bandInfo.append(bandImage, bandInformation);
-                $("#informationlist").append(bandOverskrift, bandInfo);
+                $(container).append(bandOverskrift, bandInfo);
 
                 // Lager HTML-kode til albuminformasjon
                 if (l[2].length > 0) {
@@ -144,7 +144,7 @@ function getSearchInfo(searchtype, id) {
                         albumTable.append(tableRow);
                     }
                     albumDiv.append(albumOverskrift, albumTable);
-                    $("#informationlist").append(albumDiv);
+                    $(container).append(albumDiv);
                 }
 
                 // Lager HTML-kode til tidligere konserter
@@ -169,7 +169,18 @@ function getSearchInfo(searchtype, id) {
                         konsertTable.append(tableRow);
                     }
                     konsertDiv.append(konsertOverskrift, konsertTable);
-                    $("#informationlist").append(konsertDiv);
+                    $(container).append(konsertDiv);
+                }
+
+                if (l[4].length > 0) {
+                  let omtaleDiv = $("<div></div>").addClass("bandOmtale");
+                  let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler");
+                  omtaleDiv.append(omtaleOverskrift);
+                  for (i in l[4]) {
+                    let link = $("<a></a><br>").attr('href', l[4][i].link).text(l[4][i].link);
+                    omtaleDiv.append(link);
+                  }
+                  $(container).append(omtaleDiv);
                 }
             },
             error: function(xmlhttprequest, textstatus, message) {
@@ -207,7 +218,7 @@ function getSearchInfo(searchtype, id) {
                 let konsertPris = $("<span></span><br>").text("Billettpris: " + l[0].billettpris);
                 konsertDetaljer.append(konsertDetaljerOverskrift, konsertMaks, konsertTilskuere, konsertLedigePlasser, konsertKostnad, konsertPris, konsertInntekt, konsertOverskudd);
                 konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
-                $("#informationlist").append(konsertOverskrift, konsertInfo, konsertDetaljer);
+                $(container).append(konsertOverskrift, konsertInfo, konsertDetaljer);
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {

@@ -22,7 +22,6 @@ function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
     let container = $("<div></div>").text(" ").addClass("concertInfo").attr('id', 'cid' + concert.kid);
-    console.log(concert);
     if (bruker.type===1) {
         let maindiv = $("<div></div>").addClass("behov");
         let tb = $("<h3></h3>").text("Tekniske Behov:");
@@ -277,7 +276,7 @@ function injectOffers(bruker) {
             // Hvis brukeren har tilbud som må sees på så setter vi knappen til en stil som gjør at brukeren legger merke til det.
             if (ventende_tilbud > 0) {
                 $(".tilbuds_notifikasjon").addClass("tilbud_attention");
-            } 
+            }
             else {
                 $(".tilbud_attention").removeClass("tilbud_attention");
             }
