@@ -396,7 +396,6 @@ function deleteOffer(obj) {
 
 // Henter informasjon om band eller konsert
 function getSearchInfo(searchtype, id, container) {
-    let bandInfo = $("<div></div>").addClass("bandInfo");
     $(container).empty();
 
     if (searchtype === 'band' | searchtype === 'scene') {
@@ -406,78 +405,19 @@ function getSearchInfo(searchtype, id, container) {
             success: function(output) {
                 l = safeJsonParse(output); //gjør en try-catch sjekk.
                 let bandOverskrift = $("<h3></h3>").text(l[0][0].navn);
+                $(container).append(bandOverskrift);
 
-                // Lager HTML-kode til bandinformasjon
-                let bandInformation = $("<div></div>").addClass("nokkelinfo");
-                let bandImage = $('<img class="bandImage"/>').attr('src', l[0][0].bilde_url.replace("\/", "/"));
-                let bio = $("<span></span><br>").text("Bio: " + l[0][0].bio);
-                let popularitet = $("<span></span><br>").text("Popularitet: " +l[0][0].popularitet);
-                let sjanger = $("<span></span><br><br>").text("Sjanger: " + l[0][0].sjanger);
-                let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
-                let managerFornavn = $("<span></span><br>").text(l[0][0].fornavn + " " + l[0][0].etternavn);
-                let managerEmail = $("<span></span>").text(l[0][0].email);
-                bandInformation.append(bio, popularitet, sjanger, manager, managerFornavn, managerEmail)
-                bandInfo.append(bandImage, bandInformation);
-                $(container).append(bandOverskrift, bandInfo);
+                //Lager HTML-kode for nøkkelinformasjon om band
+                createBandInfoHTML(l[0], container);
 
                 // Lager HTML-kode til albuminformasjon
-                if (l[2].length > 0) {
-                    let albumDiv = $("<div></div>").addClass("albumsalg");
-                    let albumOverskrift = $("<h3></h3>").text("Album");
-                    let albumTable = $("<table></table>");
-                    let albumHeader = $("<tr></tr>");
-                    let albumHeaderNavn = $("<th></th>").text("Albumnavn");
-                    let albumHeaderAar = $("<th></th>").text("Utgivelsesår");
-                    let albumHeaderSalg = $("<th></th>").text("Salgtall");
-                    albumHeader.append(albumHeaderNavn, albumHeaderAar, albumHeaderSalg);
-                    albumTable.append(albumHeader);
-                    for (i in l[2]) {
-                        let tableRow = $("<tr></tr>");
-                        let albumNavn = $("<td></td>").text(l[2][i].navn);
-                        let albumAar = $("<td></td>").text(l[2][i].utgitt_aar);
-                        let albumSalg = $("<td></td>").text(l[2][i].salgstall);
-                        tableRow.append(albumNavn, albumAar, albumSalg);
-                        albumTable.append(tableRow);
-                    }
-                    albumDiv.append(albumOverskrift, albumTable);
-                    $(container).append(albumDiv);
-                }
+                if (l[2].length > 0) { createAlbumListHTML(l[2], container); }
 
                 // Lager HTML-kode til tidligere konserter
-                if (l[3].length > 0) {
-                    let konsertDiv = $("<div></div>").addClass("tidligereKonserter");
-                    let konsertOverskrift = $("<h3></h3>").text("Tidligere Konserter");
-                    let konsertTable = $("<table></table>");
-                    let konsertHeader = $("<tr></tr>");
-                    let konsertHeaderNavn = $("<th></th>").text("Konsertnavn");
-                    let konsertHeaderLokasjon = $("<th></th>").text("Lokasjon");
-                    let konsertHeaderDato = $("<th></th>").text("Dato");
-                    let konsertHeaderTilskuere = $("<th></th>").text("Tilskuere");
-                    konsertHeader.append(konsertHeaderNavn, konsertHeaderLokasjon, konsertHeaderDato, konsertHeaderTilskuere);
-                    konsertTable.append(konsertHeader);
-                    for (i in l[3]) {
-                        let tableRow = $("<tr></tr>");
-                        let konsertNavn = $("<td></td>").text(l[3][i].navn);
-                        let konsertLokasjon = $("<td></td>").text(l[3][i].lokasjon);
-                        let konsertDato = $("<td></td>").text(l[3][i].dato);
-                        let konsertTilskuere = $("<td></td>").text(l[3][i].tilskuere);
-                        tableRow.append(konsertNavn, konsertLokasjon, konsertDato, konsertTilskuere);
-                        konsertTable.append(tableRow);
-                    }
-                    konsertDiv.append(konsertOverskrift, konsertTable);
-                    $(container).append(konsertDiv);
-                }
+                if (l[3].length > 0) { createOldConcertListHTML(l[3], container); }
 
-                if (l[4].length > 0) {
-                  let omtaleDiv = $("<div></div>").addClass("bandOmtale");
-                  let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler");
-                  omtaleDiv.append(omtaleOverskrift);
-                  for (i in l[4]) {
-                    let link = $("<a></a><br>").attr('href', l[4][i].link).text(l[4][i].link);
-                    omtaleDiv.append(link);
-                  }
-                  $(container).append(omtaleDiv);
-                }
+                //Lager HTML-kode for presseomtaler
+                if (l[4].length > 0) { createMediaReviewHTML(l[4], container); }
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
@@ -495,26 +435,9 @@ function getSearchInfo(searchtype, id, container) {
             type: 'post',
             success: function(output) {
                 l = safeJsonParse(output); //gjør en try-catch sjekk.
-                let konsertOverskrift = $("<h3></h3>").text(l[0].knavn);
-                let konsertInfo = $("<div></div>").addClass("keyConcertInfo");
-                let konsertDato = $("<span></span><br>").text("Gjennomført dato: " + l[0].dato);
-                let konsertStartTid = $("<span></span><br>").text("Konserten Startet: " + l[0].start_tid);
-                let konsertSluttTid = $("<span></span><br>").text("Konserten avsluttet: " + l[0].slutt_tid);
-                let konsertBand = $("<span></span><br>").text("Spilt av: " + l[0].bnavn);
-                let konsertSjanger = $("<span></span><br>").text("Sjanger: " + l[0].sjanger);
-                let konsertScene = $("<span></span><br>").text("Spilt på scene: " + l[0].navn);
-                let konsertDetaljerOverskrift = $("<h4></h4>").text("Detaljer");
-                let konsertDetaljer = $("<div></div>").addClass("concertDetails");
-                let konsertTilskuere = $("<span></span><br>").text("Antall tilskuere: " + l[0].tilskuere);
-                let konsertMaks = $("<span></span><br>").text("Maksimalt antall plasser på scene: " + l[0].maks_plasser);
-                let konsertLedigePlasser = $("<span></span><br>").text("Antall ledige plasser under konsert: " + (l[0].maks_plasser - l[0].tilskuere));
-                let konsertInntekt = $("<span></span><br>").text("Inntekter fra billettsalg: " + (l[0].billettpris * l[0].tilskuere));
-                let konsertOverskudd = $("<span></span><br>").text("Økonomisk gevinst: " + ((l[0].billettpris * l[0].tilskuere) - l[0].kostnad));
-                let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[0].kostnad);
-                let konsertPris = $("<span></span><br>").text("Billettpris: " + l[0].billettpris);
-                konsertDetaljer.append(konsertDetaljerOverskrift, konsertMaks, konsertTilskuere, konsertLedigePlasser, konsertKostnad, konsertPris, konsertInntekt, konsertOverskudd);
-                konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
-                $(container).append(konsertOverskrift, konsertInfo, konsertDetaljer);
+
+                //Lager HTML-kode for Konserten
+                createConcertInfoHTML(l[0], container);
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
@@ -524,4 +447,109 @@ function getSearchInfo(searchtype, id, container) {
                 }
             }
         })};
+}
+
+// Lager HTML-kode til bandinformasjon
+function createBandInfoHTML(list, container) {
+  let bandInfo = $("<div></div>").addClass("bandInfo");
+  let bandInformation = $("<div></div>").addClass("nokkelinfo");
+  let bandImage = $('<img class="bandImage"/>').attr('src', list[0].bilde_url.replace("\/", "/"));
+  let bio = $("<span></span><br>").text("Bio: " + list[0].bio);
+  let popularitet = $("<span></span><br>").text("Popularitet: " +list[0].popularitet);
+  let sjanger = $("<span></span><br><br>").text("Sjanger: " + list[0].sjanger);
+  let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
+  let managerFornavn = $("<span></span><br>").text(list[0].fornavn + " " + list[0].etternavn);
+  let managerEmail = $("<span></span>").text(list[0].email);
+  bandInformation.append(bio, popularitet, sjanger, manager, managerFornavn, managerEmail)
+  bandInfo.append(bandImage, bandInformation);
+  $(container).append(bandInfo);
+}
+
+// Lager HTML-kode til albuminformasjon
+function createAlbumListHTML(list, container) {
+
+    let albumDiv = $("<div></div>").addClass("albumsalg");
+    let albumOverskrift = $("<h3></h3>").text("Album");
+    let albumTable = $("<table></table>");
+    let albumHeader = $("<tr></tr>");
+    let albumHeaderNavn = $("<th></th>").text("Albumnavn");
+    let albumHeaderAar = $("<th></th>").text("Utgivelsesår");
+    let albumHeaderSalg = $("<th></th>").text("Salgtall");
+    albumHeader.append(albumHeaderNavn, albumHeaderAar, albumHeaderSalg);
+    albumTable.append(albumHeader);
+
+    for (i in list) {
+        let tableRow = $("<tr></tr>");
+        let albumNavn = $("<td></td>").text(list[i].navn);
+        let albumAar = $("<td></td>").text(list[i].utgitt_aar);
+        let albumSalg = $("<td></td>").text(list[i].salgstall);
+        tableRow.append(albumNavn, albumAar, albumSalg);
+        albumTable.append(tableRow);
+    }
+    albumDiv.append(albumOverskrift, albumTable);
+    $(container).append(albumDiv);
+}
+
+// Lager HTML-kode til tidligere konserter
+function createOldConcertListHTML(list, container) {
+
+      let konsertDiv = $("<div></div>").addClass("tidligereKonserter");
+      let konsertOverskrift = $("<h3></h3>").text("Tidligere Konserter");
+      let konsertTable = $("<table></table>");
+      let konsertHeader = $("<tr></tr>");
+      let konsertHeaderNavn = $("<th></th>").text("Konsertnavn");
+      let konsertHeaderLokasjon = $("<th></th>").text("Lokasjon");
+      let konsertHeaderDato = $("<th></th>").text("Dato");
+      let konsertHeaderTilskuere = $("<th></th>").text("Tilskuere");
+      konsertHeader.append(konsertHeaderNavn, konsertHeaderLokasjon, konsertHeaderDato, konsertHeaderTilskuere);
+      konsertTable.append(konsertHeader);
+
+      for (i in list) {
+          let tableRow = $("<tr></tr>");
+          let konsertNavn = $("<td></td>").text(list[i].navn);
+          let konsertLokasjon = $("<td></td>").text(list[i].lokasjon);
+          let konsertDato = $("<td></td>").text(list[i].dato);
+          let konsertTilskuere = $("<td></td>").text(list[i].tilskuere);
+          tableRow.append(konsertNavn, konsertLokasjon, konsertDato, konsertTilskuere);
+          konsertTable.append(tableRow);
+      }
+      konsertDiv.append(konsertOverskrift, konsertTable);
+      $(container).append(konsertDiv);
+}
+
+//Lager HTML-kode for Presseomtaler
+function createMediaReviewHTML(list, container) {
+    let omtaleDiv = $("<div></div>").addClass("bandOmtale");
+    let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler");
+    omtaleDiv.append(omtaleOverskrift);
+
+    for (i in list) {
+      let link = $("<a target='_blank'></a><br>").attr('href', list[i].link).text(list[i].link);
+      omtaleDiv.append(link);
+    }
+    $(container).append(omtaleDiv);
+}
+
+// Lager HTML-kode for en konsert
+function createConcertInfoHTML(list, container) {
+  let konsertOverskrift = $("<h3></h3>").text(list.knavn);
+  let konsertInfo = $("<div></div>").addClass("keyConcertInfo");
+  let konsertDato = $("<span></span><br>").text("Gjennomført dato: " + list.dato);
+  let konsertStartTid = $("<span></span><br>").text("Konserten Startet: " + list.start_tid);
+  let konsertSluttTid = $("<span></span><br>").text("Konserten avsluttet: " + list.slutt_tid);
+  let konsertBand = $("<span></span><br>").text("Spilt av: " + list.bnavn);
+  let konsertSjanger = $("<span></span><br>").text("Sjanger: " + list.sjanger);
+  let konsertScene = $("<span></span><br>").text("Spilt på scene: " + list.navn);
+  let konsertDetaljerOverskrift = $("<h4></h4>").text("Detaljer");
+  let konsertDetaljer = $("<div></div>").addClass("concertDetails");
+  let konsertTilskuere = $("<span></span><br>").text("Antall tilskuere: " + list.tilskuere);
+  let konsertMaks = $("<span></span><br>").text("Maksimalt antall plasser på scene: " + list.maks_plasser);
+  let konsertLedigePlasser = $("<span></span><br>").text("Antall ledige plasser under konsert: " + (list.maks_plasser - list.tilskuere));
+  let konsertInntekt = $("<span></span><br>").text("Inntekter fra billettsalg: " + (list.billettpris * list.tilskuere));
+  let konsertOverskudd = $("<span></span><br>").text("Økonomisk gevinst: " + ((list.billettpris * list.tilskuere) - list.kostnad));
+  let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + list.kostnad);
+  let konsertPris = $("<span></span><br>").text("Billettpris: " + list.billettpris);
+  konsertDetaljer.append(konsertDetaljerOverskrift, konsertMaks, konsertTilskuere, konsertLedigePlasser, konsertKostnad, konsertPris, konsertInntekt, konsertOverskudd);
+  konsertInfo.append(konsertBand, konsertSjanger, konsertDato, konsertStartTid, konsertSluttTid, konsertScene);
+  $(container).append(konsertOverskrift, konsertInfo, konsertDetaljer);
 }
