@@ -1,3 +1,9 @@
+/*
+
+Javascript-funksjonalitet for arrangør-bruker
+
+*/
+
 var current_fid = 1;
 
 function getListOfScenes(bruker) {

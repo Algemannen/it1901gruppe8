@@ -1,3 +1,9 @@
+/*
+
+Javascript-funksjonalitet for bookingsjef-bruker
+
+*/
+
 function bookingsjeffane(index) {
     if (index=="0") {
         $("#listofscenes").show();
@@ -96,45 +102,45 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) {
 
 function BSbuildConcertReport(kid, sname, container){
 
-  $.ajax({ url: '/database.php?method=getConcertReport',
-      data: {cid : kid , fid:current_fid},
-      type: 'post',
-      success: function(output) {
+    $.ajax({ url: '/database.php?method=getConcertReport',
+        data: {cid : kid , fid:current_fid},
+        type: 'post',
+        success: function(output) {
 
-          l = safeJsonParse(output); //gjør en try-catch sjekk.
-          // Vi bygger et HTML-element
-          let listContainer = $("<div></div>").addClass("concertReportContainer");
-          listContainer.append('<br>');
-          for (i in l) {
+            l = safeJsonParse(output); //gjør en try-catch sjekk.
+            // Vi bygger et HTML-element
+            let listContainer = $("<div></div>").addClass("concertReportContainer");
+            listContainer.append('<br>');
+            for (i in l) {
 
-              let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
-              let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
-              let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
-              let inntekt = $("<span></span><br>").text('Inntekt: ' + l[i].billettpris * l[i].tilskuere)
-              if(!(l[i].billettpris)){
-                billettpris =  $("<span></span><br>").text('Billettpris: Utilgjengelig');
-                EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
-                inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
-              }
-              let tilskuere = $("<span></span><br>").text('Tilskuere: ' + l[i].tilskuere);
-              if(!(l[i].tilskuere)){
-                tilskuere = $("<span></span><br>").text('Tilskuere: Utilgjengelig');
-                EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
-                inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
-              }
-              listContainer.append(kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
-          }
-          $(container).append(listContainer);
+                let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
+                let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
+                let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
+                let inntekt = $("<span></span><br>").text('Inntekt: ' + l[i].billettpris * l[i].tilskuere)
+                if(!(l[i].billettpris)){
+                    billettpris =  $("<span></span><br>").text('Billettpris: Utilgjengelig');
+                    EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
+                    inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
+                }
+                let tilskuere = $("<span></span><br>").text('Tilskuere: ' + l[i].tilskuere);
+                if(!(l[i].tilskuere)){
+                    tilskuere = $("<span></span><br>").text('Tilskuere: Utilgjengelig');
+                    EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
+                    inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
+                }
+                listContainer.append(kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
+            }
+            $(container).append(listContainer);
 
-      },
-      error: function(xmlhttprequest, textstatus, message) {
-          if(textstatus==="timeout") {
-              alert("Timeout feil, kan ikke koble til databasen");
-          } else {
-              console.log("Error: "+message);
-          }
-      }
-  });
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
+        }
+    });
 }
 
 

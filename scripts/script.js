@@ -1,7 +1,6 @@
 /*
 
-
-
+Javascript side som er ansvarlig for korrekt valg av bruker, håndterer bla. logon-funksjonen. Må lastes sist.
 
 */
 
@@ -12,7 +11,7 @@ var options = "";
 
 
 
-// Functions to run after DOM is ready
+// Disse fimlskpmeme kalles første gang siden er ferdig innlastet
 $(document).ready(function(){
     // Initsiering
 
@@ -22,12 +21,13 @@ $(document).ready(function(){
     // Regex for å finne ut om ?debug-kommandoen er inkludert i URL
     if (/debug/i.test(options)) {
         $(".debug").show();
+        debug_mode = true;
     }
 
     // Sjekk om kobling mot databsen fungerer.
     pingDatabase();
 
-    // Database queries
+    // Sjekk at vi har kobling mot databasen
 
     function pingDatabase() {
         $.ajax({ url: '/database.php?method=ping',
@@ -46,7 +46,7 @@ $(document).ready(function(){
         });
     }
 
-    // FUNCTIONS
+    // FUNKSJONER
 
     // Tegner siden på nytt etter brukertype
     function redraw() {
@@ -91,16 +91,16 @@ $(document).ready(function(){
                 }});
                 break;
             case 5: //Bruker er bookingsjef
-              $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
-                $("#root").html(result);
-                $('#username').html(user.name);
-                getListOfScenesForBookingSjef(user);
-                concertPricing();
-                injectOffers(user);
-                bookingsjeffane(0);
+                $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
+                    $("#root").html(result);
+                    $('#username').html(user.name);
+                    getListOfScenesForBookingSjef(user);
+                    concertPricing();
+                    injectOffers(user);
+                    bookingsjeffane(0);
 
-              }});
-              break;
+                }});
+                break;
             case 6: //Bruker er PR-ansvarlig
                 $.ajax({url: "pransv.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
@@ -147,7 +147,7 @@ $(document).ready(function(){
                     alert("Timeout feil, kan ikke koble til databasen");
                 } else {
                     if(message=="Unauthorized user.") {
-                      alert("Invalid username or password")
+                        alert("Invalid username or password")
                     }
                     console.log("Error: "+message);
                 }
@@ -162,7 +162,7 @@ $(document).ready(function(){
         location.reload();
     }
 
-    // EVENTS
+    // ========= EVENTS =======================================================
 
     // Debug-knapper
     $(".debug_button").click(function() {
@@ -250,13 +250,14 @@ $(document).ready(function(){
     });
 
 
-
+    // Fang trykk på knapp for å søke som bookingansvarlig
     $('body').on('click', ".bookingnavnsok", function () {
       getSearchInfo(this.value[0], this.value[1]);
       $('.bookingnavnsok').css('background', 'rgba(0,0,0,0)');
       $(this).css('background', 'rgba(0,0,0,0.3)');
     });
 
+    //Knapper for fanevalg
     $('body').on('click', "#tekniskebehov_knapp", function () {
         bookingfane(0);
     });
@@ -269,24 +270,27 @@ $(document).ready(function(){
         bookingfane(2);
     });
 
+    // Fang trykk på søkeknapp
     $('body').on('click', "#sokebutton", function () {
         search();
     });
 
+    // Fang trykk på knapp for å registrerer et tilbud
     $('body').on('click', "#sendOfferButton", function () {
-      validateOfferData();
+        validateOfferData();
     });
 
+    // Fang trykk på knapp for å resette skjema for tilbud
     $('body').on('click', "#resetOfferButton", function () {
-      resetOfferData();
+        resetOfferData();
     });
 
+    // Fang trykk på knapp for å slette et teknisk behov
     $('body').on('click', ".delete_technical_need", function () {
         deleteTechinalNeed(this.value);
     });
 
-
-
+    // Fanevalg
     $('body').on('click', "#booking_behov_knapp", function () {
         managerfane(0);
     });
@@ -295,27 +299,37 @@ $(document).ready(function(){
         managerfane(1);
     });
 
+    // Fang trykk på knapp for å akseptere et tilbud
     $('body').on('click', ".offer_button_accept", function () {
         let obj = jQuery.parseJSON(this.value);
+
+        // Legger til et bitflag i statuskoden
         obj.statusflags = obj.statusflags | getAcceptStatusFlag(user.type);
+
+        // Sletter et bitflag i statuskoden
         obj.statusflags = obj.statusflags & ~ getRejectStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
+    // Fang trykk på knapp for å avslå et tilbud
     $('body').on('click', ".offer_button_reject", function () {
         let obj = jQuery.parseJSON(this.value);
+
+        // Legger til et bitflag i statuskoden
         obj.statusflags = obj.statusflags | getRejectStatusFlag(user.type);
+
+        // Fjerner et bitflag fra statuskoden
         obj.statusflags = obj.statusflags & ~ getAcceptStatusFlag(user.type);
         updateOfferStatus(obj);
     });
 
+    // Fang trykk på knapp for å slette et tilbud
     $('body').on('click', ".offer_button_delete", function () {
         let obj = jQuery.parseJSON(this.value);
         deleteOffer(obj);
     });
 
-
-
+    // Fanevalg
     $('body').on('click', "#ecorapport_knapp", function () {
         bookingsjeffane(0);
     });

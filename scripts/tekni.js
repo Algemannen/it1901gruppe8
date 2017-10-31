@@ -1,3 +1,9 @@
+/*
+
+Javascript-funksjonalitet for tekniker
+
+*/
+
 // Lager et html-element med konserter (FOR TEKNIKER)
 function getListOfConcertes(bruker) {
     let l = [];

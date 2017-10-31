@@ -1,13 +1,23 @@
-// Lager et html-element med informasjon om en konsert
+/*
+
+Javascript-side som inneholder funksjoner og variabler som blir brukt av flere (eller alle) andre script, må lastes først
+
+*/
+
+
+
 
 
 // Brukervariabler
 var user = {type: 0, id: 0, name: "NONAME"};
 
+// Bestemmer om siden skal vise utviklerinformasjon
 var debug_mode = false;
 
+// Teller hvor mange tilbud som venter på brukerrespons
 var ventende_tilbud = 0;
 
+// Lager et html-element med informasjon om en konsert
 function getConcertInfo(bruker, concert) {
 
     // Vi bygger et HTML-element
@@ -30,7 +40,7 @@ function getConcertInfo(bruker, concert) {
         concertReportDiv.append(cost_report);
         BSbuildConcertReport(concert.kid, concert.navn, concertReportDiv);
         container.append(concertReportDiv);
-      }
+    }
     container.hide();
     return container;
 }
@@ -71,14 +81,14 @@ function getListOfTechnicians(bruker, concert) {
 
 //Try catch funksjon for json-parse
 function safeJsonParse(output) {
-      try{
-          l = jQuery.parseJSON(output);
-      }
-      catch(err){
-          console.log(err);
-          console.log(output);
-          $("#root").after(output);
-      }
+    try{
+        l = jQuery.parseJSON(output);
+    }
+    catch(err){
+        console.log(err);
+        console.log(output);
+        $("#root").after(output);
+    }
     return l;
 }
 
@@ -95,12 +105,11 @@ det forventes at formateringsunfksjonen skal være på formen:
 
         ...
 
-        $(html_id).append(container);
+        $("#"+html_id).append(container);
     }
 
-Denne funksjonen er async-sikker
+Denne funksjonen er async-sikker og har som hovedoppgave å redusere boilerplate-kode i forbindelse med listebygging i sammenheng med ajax
 */
-
 function injectList(html_id, list, formatingfunction) {
     if (list.length === 0) {
         return;
@@ -150,7 +159,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
             let listContainer = $("<div></div>").addClass("behov");
             listContainer.append(kid);
             if (l.length === 0) {
-              listContainer.append('Ingen tekniske behov meldt enda.')
+                listContainer.append('Ingen tekniske behov meldt enda.')
             }
             listContainer.append('<br>');
             for (i in l) {
@@ -180,102 +189,108 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
 }
 
 
-
+// Bygger en liste over alle tilbud mottat av brukeren
 function injectOffers(bruker) {
     $.ajax({ url: '/database.php?method=getOffers',
-    data: {uid:bruker.id, brukertype:bruker.type},
-    type: 'post',
-    success: function(output) {
-        l = safeJsonParse(output);
+        data: {uid:bruker.id, brukertype:bruker.type},
+        type: 'post',
+        success: function(output) {
+            l = safeJsonParse(output);
 
-        ventende_tilbud = 0;
-        let yoffset = window.pageYOffset;
-        $("#manager_tilbud").empty();
-        
-        injectList("manager_tilbud",l,function(html_id,element){
-        
-        injectList(html_id,element,function(html_id,element){
+            // Registrerer y-posisjon på skjermen, vi bruker dette posisjonen for å forhindre at skjermen scrollen hvis et tilbud endres eller slettes
+            ventende_tilbud = 0;
+            let yoffset = window.pageYOffset;
+            $("#manager_tilbud").empty();
 
-            
+            injectList("manager_tilbud",l,function(html_id,element){
 
-            // Overskrift
-            let overskrift = $("<h2></h2>");
-            let band_navn = $("<span></span>").text("Band: "+element.band_navn);
-            let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
-            overskrift.append(band_navn," på ", scene_navn);
-
-            // Sender
-            //let sender = $("<p></p>");
-            let sender_navn = $("<span></span><br>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
-            //sender.append(sender_navn);
-
-
-            // Tidspunkt
-            //let tidsinfo = $("<p></p>");
-            let dato = $("<span></span><br>").text("Dato: "+element.dato);
-            let start_tid = $("<span></span><br>").text("Start: "+element.start_tid);
-            let slutt_tid = $("<span></span><br>").text("Slutt: "+element.slutt_tid);
-            //tidsinfo.append(dato, start_tid, slutt_tid);
-
-
-            // Pris
-            //let prisinfo = $("<p></p>")
-            let pris = $("<span></span><br>").text("Pris: "+element.pris);
-            //prisinfo.append(pris);
-
-            let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
-
-            let buttons = $("<span></span>").addClass("manager_buttons");
-            let status_text = $("<p></p>").html(getStatusName(element.statusflags));
-            buttons.append(status_text);
-            if (bruker.type === 4 && (element.statusflags === 0 || (element.statusflags & 2) === 2  || (element.statusflags & 8  ) === 8)) {
-                let delete_button = $("<button>Slett</button>").addClass("offer_button_delete").val(obj);
-                buttons.append(delete_button);
-            }
-
-            if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
-                || (bruker.type === 5 && element.statusflags === 0)) {
-                let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
-                buttons.append(accept_button);
-
-                ventende_tilbud++;
-            }
-            if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
-            || (bruker.type === 5 && element.statusflags === 0)) {
-                let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
-                buttons.append(reject_button);
-            }
-                
+                injectList(html_id,element,function(html_id,element){
 
 
 
-            $("#"+html_id).append(overskrift, dato, start_tid, slutt_tid, pris, sender_navn, buttons);
-            $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
-            /*if (debug_mode) {
+                    // Overskrift
+                    let overskrift = $("<h2></h2>");
+                    let band_navn = $("<span></span>").text("Band: "+element.band_navn);
+                    let scene_navn = $("<span></span>").text("Scene: "+element.scene_navn);
+                    overskrift.append(band_navn," på ", scene_navn);
+
+                    // Sender
+                    //let sender = $("<p></p>");
+                    let sender_navn = $("<span></span><br>").text("Sender: "+element.sender_fornavn +" "+element.sender_etternavn);
+                    //sender.append(sender_navn);
+
+
+                    // Tidspunkt
+                    //let tidsinfo = $("<p></p>");
+                    let dato = $("<span></span><br>").text("Dato: "+element.dato);
+                    let start_tid = $("<span></span><br>").text("Start: "+element.start_tid);
+                    let slutt_tid = $("<span></span><br>").text("Slutt: "+element.slutt_tid);
+                    //tidsinfo.append(dato, start_tid, slutt_tid);
+
+
+                    // Pris
+                    //let prisinfo = $("<p></p>")
+                    let pris = $("<span></span><br>").text("Pris: "+element.pris);
+                    //prisinfo.append(pris);
+
+                    let obj = JSON.stringify({tid:element.tid, statusflags:parseInt(element.statusflags)});
+
+                    let buttons = $("<span></span>").addClass("manager_buttons");
+                    let status_text = $("<p></p>").html(getStatusName(element.statusflags));
+                    buttons.append(status_text);
+
+                    // Bookingansvarlig skal ha muligheten til å slette ubehandlede tilbud eller tilbud som har blitt avslått
+                    if (bruker.type === 4 && (element.statusflags === 0 || (element.statusflags & 2) === 2  || (element.statusflags & 8  ) === 8)) {
+                        let delete_button = $("<button>Slett</button>").addClass("offer_button_delete").val(obj);
+                        buttons.append(delete_button);
+                    }
+
+                    // Manager og bookingsjef skal kunne akseptere ubehandlede tilbud
+                    if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
+                        || (bruker.type === 5 && element.statusflags === 0)) {
+                        let accept_button = $("<button>Godta</button>").addClass("offer_button_accept").val(obj);
+                        buttons.append(accept_button);
+
+                        ventende_tilbud++;
+                    }
+
+                    // Manager og bookingsjef skal kunne avslå ubehandlede tilbud
+                    if ((bruker.type === 3 && (element.statusflags & 1 ) === 1 && (element.statusflags & 4) === 0 )
+                        || (bruker.type === 5 && element.statusflags === 0)) {
+                        let reject_button = $("<button>Avslå</button>").addClass("offer_button_reject").val(obj);
+                        buttons.append(reject_button);
+                    }
+
+
+                    $("#"+html_id).append(overskrift, dato, start_tid, slutt_tid, pris, sender_navn, buttons);
+                    $("#"+html_id).addClass(getStatusColor(element.statusflags)).addClass("tilbud");
+                    /*if (debug_mode) {
                 let status = $("<span></span>").text("Status: "+element.statusflags);
                 $("#"+html_id).append(status);
             }*/
-        });
-    });
+                });
+            });
 
-    window.scrollTo(0,yoffset);
+            // Scroll skjermen til tidligere registrerte y-posisjon etter alle tilbud er lagt inn.
+            window.scrollTo(0,yoffset);
 
-    if (ventende_tilbud > 0) {
-        $(".tilbuds_notifikasjon").addClass("tilbud_attention");
-    } 
-    else {
-        $(".tilbud_attention").removeClass("tilbud_attention");
-    }
+            // Hvis brukeren har tilbud som må sees på så setter vi knappen til en stil som gjør at brukeren legger merke til det.
+            if (ventende_tilbud > 0) {
+                $(".tilbuds_notifikasjon").addClass("tilbud_attention");
+            } 
+            else {
+                $(".tilbud_attention").removeClass("tilbud_attention");
+            }
 
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
-    }
-});
+    });
 }
 
 /*
@@ -284,8 +299,9 @@ function injectOffers(bruker) {
     2 : Tilbud avslått av bookingsjef
     4 : Tilbud godkjent av manager
     8 : Tilbud avslått av manager
-*/
+    */
 
+// Returnerer navnet på css-klasse som bestemmer sitlen til forskjellige statustyper
 function getStatusColor(statusflags) {
     if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
         return "reject"
@@ -301,6 +317,7 @@ function getStatusColor(statusflags) {
     }
 }
 
+// Returnerer den tekstlige beskrivelsen til forskjellige statustyper
 function getStatusName(statusflags) {
     if ((statusflags &  2) == 2 || (statusflags & 8 ) == 8) {
         return "Avslått"
@@ -316,6 +333,7 @@ function getStatusName(statusflags) {
     }
 }
 
+// Returnerer hvilket bitflag som skal settes ved aksept fra bruker
 function getAcceptStatusFlag(usertype) {
     if (usertype == 3) {
         return 4;
@@ -328,6 +346,7 @@ function getAcceptStatusFlag(usertype) {
     }
 }
 
+// Returnerer hvilket bitflag som skal settes ved avslag fra bruker
 function getRejectStatusFlag(usertype) {
     if (usertype == 3) {
         return 8;
@@ -340,39 +359,38 @@ function getRejectStatusFlag(usertype) {
     }
 }
 
-
+// Oppdaterer status på tilbud
 function updateOfferStatus(obj) {
     $.ajax({ url: '/database.php?method=setOfferStatus',
-    data: {tid:obj.tid, status:obj.statusflags},
-    type: 'post',
-    success: function(output) {
-        injectOffers(user);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
+        data: {tid:obj.tid, status:obj.statusflags},
+        type: 'post',
+        success: function(output) {
+            injectOffers(user);
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
-    }
-});
+    });
 }
 
-
+// Sletter et tilbud
 function deleteOffer(obj) {
     $.ajax({ url: '/database.php?method=deleteOffer',
-    data: {tid:obj.tid},
-    type: 'post',
-    success: function(output) {
-        $("#manager_tilbud").empty();
-        injectOffers(user);
-    },
-    error: function(xmlhttprequest, textstatus, message) {
-        if(textstatus==="timeout") {
-            alert("Timeout feil, kan ikke koble til databasen");
-        } else {
-            console.log("Error: "+message);
+        data: {tid:obj.tid},
+        type: 'post',
+        success: function(output) {
+            injectOffers(user);
+        },
+        error: function(xmlhttprequest, textstatus, message) {
+            if(textstatus==="timeout") {
+                alert("Timeout feil, kan ikke koble til databasen");
+            } else {
+                console.log("Error: "+message);
+            }
         }
-    }
-});
+    });
 }
