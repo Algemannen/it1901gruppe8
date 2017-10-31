@@ -77,9 +77,14 @@ function buildListOfConcertsS(list,scene) {
         let listPoint = $("<li></li>");
         let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' + 
             list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
+        let sjangerServ = $("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0);
+        let forventetPub = $("<p></p>").text('Forventet publikum: ' + list[i].tilskuere).css("margin", 0)
+         if(!(list[i].tilskuere)){
+                    forventetPub =  $("<span></span><br>").text('Forventet publikum: Ikke beregnet');
+                }
         listPoint.append(concertInfo);
-        listPoint.append($("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0));
-        listPoint.append($("<p></p>").text('Tilskuere: ' + list[i].tilskuere).css("margin", 0));
+        listPoint.append(sjangerServ);
+        listPoint.append(forventetPub);
 
         let p = calculatePurchase(scene.maks_plasser);
         for (let key in p) {

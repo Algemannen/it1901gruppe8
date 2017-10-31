@@ -84,6 +84,7 @@ $(document).ready(function(){
                 $.ajax({url: "bookingans.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
+                    search();
                     getListOfTechnicalNeeds(user);
                     getListOfBandsAndScenes();
                     injectOffers(user);
@@ -128,15 +129,16 @@ $(document).ready(function(){
 
     // Henter informasjon fra bruker- og passord-felt og prøver å logge inn
     function logon() {
-        user.name = $("#username_field").val();
+        username = $("#username_field").val();
         password = $('#password_field').val();
 
         $.ajax({ url: '/database.php?method=login',
-            data: {username: user.name, password: password},
+            data: {username: username, password: password},
             type: 'post',
             success: function(output) {
                 let q = jQuery.parseJSON(output);
                 user.type = parseInt(q.brukertype);
+                user.name = q.fornavn + " " + q.etternavn;
                 user.id = parseInt(q.uid);
                 redraw();
 
@@ -251,7 +253,9 @@ $(document).ready(function(){
 
     // Fang trykk på knapp for å søke som bookingansvarlig
     $('body').on('click', ".bookingnavnsok", function () {
-        getSearchInfo(this.value[0], this.value[1]);
+      getSearchInfo(this.value[0], this.value[1]);
+      $('.bookingnavnsok').css('background', 'rgba(0,0,0,0)');
+      $(this).css('background', 'rgba(0,0,0,0.3)');
     });
 
     //Knapper for fanevalg

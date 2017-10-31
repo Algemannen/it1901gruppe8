@@ -1458,39 +1458,67 @@ case 'getOffers':
     /// Henter informasjon relatert til pris
 case 'getConcertPricingInfo':
 
-    $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
-        FROM konsert k
-        INNER JOIN konsert_band kb ON k.kid =kb.kid
-        INNER JOIN band b ON b.bid = kb.bid
-        INNER JOIN scene s ON s.sid = k.sid
-        WHERE k.billettpris IS NULL";
+  $query1 = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+          FROM konsert k
+          INNER JOIN konsert_band kb ON k.kid =kb.kid
+          INNER JOIN band b ON b.bid = kb.bid
+          INNER JOIN scene s ON s.sid = k.sid
+          WHERE k.billettpris IS NULL";
+
+  // Gjør klar objekt for spørringen
+  $stmt1 = $dbconn->stmt_init();
+
+  // Gjør spørringen klar for databasen
+  if(!$stmt1->prepare($query1)) {
+    header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+  } else {
+
+    // Utfører spørringen
+    $stmt1->execute();
+
+    // Returnerer resultat fra spørringen
+    $result1 = $stmt1->get_result();
+
+    // Hent ut alle rader fra en spørring
+    $encode1 = array();
+    while ($row = $result1->fetch_assoc()) {
+        $encode1[] = $row;
+    }
+
+    // Avslutt sql-setning
+    $stmt1->close();
+
+
+    $query2 = "SELECT  navn, sid, maks_plasser FROM scene";
 
     // Gjør klar objekt for spørringen
-    $stmt = $dbconn->stmt_init();
+    $stmt2 = $dbconn->stmt_init();
 
     // Gjør spørringen klar for databasen
-    if(!$stmt->prepare($query)) {
-        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    if(!$stmt2->prepare($query2)) {
+      header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Utfører spørringen
-        $stmt->execute();
+      // Utfører spørringen
+      $stmt2->execute();
 
-        // Returnerer resultat fra spørringen
-        $result = $stmt->get_result();
+      // Returnerer resultat fra spørringen
+      $result2 = $stmt2->get_result();
 
-        // Hent ut alle rader fra en spørring
-        $encode = array();
-        while ($row = $result->fetch_assoc()) {
-            $encode[] = $row;
-        }
+      // Hent ut alle rader fra en spørring
+      $encode2 = array();
+      while ($row = $result2->fetch_assoc()) {
+          $encode2[] = $row;
+      }
 
-        // Returner json-string med data
-        echo json_encode($encode);
+      // Avslutt sql-setning
+      $stmt2->close();
 
-        // Avslutt sql-setning
-        $stmt->close();
+    // Returner json-string med data
+    echo("[" . json_encode($encode1) . "," . json_encode($encode2) . "]");
+
     }
+  }
 
     break;
 
