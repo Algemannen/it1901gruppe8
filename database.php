@@ -260,6 +260,101 @@ case 'getListOfConcertsByScene':
 
     /// Returnerer en liste over alle teknikere på en gitt scene
 
+    /// Returnerer en liste over alle konserter med hvem som spiller på konserten på en gitt festival
+case 'getListOfConcertesByFestival':
+
+    // Gjør klar sql-setning
+    $query = "SELECT k.kid, b.navn, k.dato, s.navn as snavn
+        FROM konsert k
+        INNER JOIN konsert_band kb ON kb.kid = k.kid
+        INNER JOIN band b ON b.bid = kb.kid
+        INNER JOIN scene s ON k.sid = s.sid
+        WHERE fid = ?
+        ORDER BY k.kid ASC";
+
+    // Gjør klar objekt for spørring
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør klar spørringen for databsen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+        // Bind konsertid som heltall
+        $stmt->bind_param('i', $fid);
+
+        // Leser inn konsertid
+        $fid = $_POST['fid'];
+
+        // Utfør sql-setning
+        $stmt->execute();
+
+        // Henter resultat fra spørring
+        $result = $stmt->get_result();
+
+        // Hent ut alle rader fra en spørring
+        $encode = array();
+        while ($row = $result->fetch_assoc()) {
+            $encode[] = $row;
+        }
+
+        // Returner json-string med data
+        echo json_encode($encode);
+
+        // Avslutt sql-setning
+        $stmt->close();
+    }
+
+    break;
+
+
+
+    /// Returnerer en liste over alle band på en gitt festival
+    case 'getListofBandsByFestival':
+    
+        // Gjør klar sql-setning
+        $query = "SELECT band.bid, band.navn 
+            FROM band 
+            INNER JOIN konsert_band ON band.bid = konsert_band.bid 
+            INNER JOIN konsert ON konsert.kid = konsert_band.kid 
+            WHERE konsert.fid = ? 
+            ORDER BY band.navn ASC";
+    
+        // Gjør klar objekt for spørring
+        $stmt = $dbconn->stmt_init();
+    
+        // Gjør klar spørringen for databsen
+        if(!$stmt->prepare($query)) {
+            header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+        } else {
+    
+            // Bind konsertid som heltall
+            $stmt->bind_param('i', $fid);
+    
+            // Leser inn konsertid
+            $fid = $_POST['fid'];
+    
+            // Utfør sql-setning
+            $stmt->execute();
+    
+            // Henter resultat fra spørring
+            $result = $stmt->get_result();
+    
+            // Hent ut alle rader fra en spørring
+            $encode = array();
+            while ($row = $result->fetch_assoc()) {
+                $encode[] = $row;
+            }
+    
+            // Returner json-string med data
+            echo json_encode($encode);
+    
+            // Avslutt sql-setning
+            $stmt->close();
+        }
+    
+        break;
+
 /*
        _  _  _                                                                           _
     _ (_)(_)(_) _                                                                       (_)

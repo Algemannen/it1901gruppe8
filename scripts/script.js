@@ -104,6 +104,7 @@ $(document).ready(function(){
                 $.ajax({url: "pransv.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
                     $('#username').html(user.name);
+                    pr_bandListe(1);
                 }});
                 break;
             case 7: //Bruker er Serverings-ansvarlig

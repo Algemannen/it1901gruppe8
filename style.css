@@ -249,7 +249,7 @@ li.scenePoint {
 
 }
 
-#resultlist{
+#resultlist, #bandliste{
   width: 25%;
   height: 400px;
   background-color: #E3E3E3;
@@ -257,7 +257,7 @@ li.scenePoint {
   overflow-y: scroll;
 }
 
-#resultlist table, .albumsalg table, .tidligereKonserter table {
+#resultlist table, .albumsalg table, .tidligereKonserter table, #bandliste table{
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -265,25 +265,25 @@ li.scenePoint {
   margin: auto;
 }
 
-#resultlist th, #resultlist td , .albumsalg th, .tidligereKonserter th, .albumsalg td, .tidligereKonserter td{
+#resultlist th, #resultlist td , .albumsalg th, .tidligereKonserter th, .albumsalg td, .tidligereKonserter td, #bandliste th, #bandliste td{
   padding: 8px;
 }
 
-#resultlist th, .albumsalg th, .tidligereKonserter th {
+#resultlist th, .albumsalg th, .tidligereKonserter th, #bandliste th {
   background-color: #3738AF;
   color: #F4F4F4;
 }
 
-#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover {
+#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover, #bandliste tr:hover {
   background-color: #D8D8D8;
   cursor: pointer;
 }
 
-#resultlist .shortColumn {
+#resultlist .shortColumn, {
   width: 40px;
 }
 
-#informationlist{
+#informationlist, #bandinformasjon{
   border: 1px solid gray;
   width: 70%;
   min-height: 400px;
@@ -291,7 +291,7 @@ li.scenePoint {
   color: black;
 }
 
-#results{
+#results, #band{
   margin: auto;
   display: flex;
   width: 90%;
@@ -327,7 +327,7 @@ li.scenePoint {
   border-radius: 10px;
 }
 
-#informationlist h3 {
+#informationlist h3, #bandinformasjon {
   text-align: center;
 }
 
