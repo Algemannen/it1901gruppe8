@@ -1351,11 +1351,14 @@ case 'getConcertReport':
     /// Henter ut informasjon om en (gammel) konsert
 case 'getOldConcertInfo' :
 
-    $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser, k.kostnad, k.start_tid, k.slutt_tid, k.sjanger
+    $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser,
+        k.kostnad, k.start_tid, k.slutt_tid, k.sjanger, b.bio, b.bilde_url,
+        b.popularitet, b.sjanger, br.fornavn, br.etternavn, br.email
         FROM konsert k
         INNER JOIN konsert_band kb ON k.kid =kb.kid
         INNER JOIN band b ON b.bid = kb.bid
         INNER JOIN scene s ON s.sid = k.sid
+        INNER JOIN bruker br ON b.manager_uid = br.uid
         WHERE k.kid = ?";
 
     // Gjør klar objekt for spørring

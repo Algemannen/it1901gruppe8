@@ -442,7 +442,9 @@ function getSearchInfo(searchtype, id, container, bruker) {
                 if (bruker.type === 4) {
                   createConcertDetailsHTML(l[0], container);
                 } else if (bruker.type === 6) {
-
+                  let bandOverskrift = $("<h3></h3>").text(l[0].bnavn).addClass("centeredText");
+                  $(container).append(bandOverskrift);
+                  createBandInfoHTML(l, container);
                 }
             },
             error: function(xmlhttprequest, textstatus, message) {
