@@ -339,26 +339,27 @@ function getOffersForCalender() {
                     let knappID = '#knapp' +new Date(l[i].dato).yyyymmdd()
                     $(knappID).removeAttr('disabled').removeClass('disabledButton');
                     let offerCalenderStatusMessage;
+                    let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo');
 
                     switch(l[i].status){
                         case 0:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Tilbud sendt fra Bookingansvarlig').css('border', '1px solid #FFFF00');
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Tilbud sendt fra Bookingansvarlig').addClass('partial-accept');
                             break;
                         case 1:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Venter på svar fra manager').css('border', '1px solid #FFFF00');
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Venter på svar fra manager').addClass('partial-accept');
                             break;
                         case 2:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').css('border', '1px solid green');
+                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').addClass('accept');
                             break;
                     }
+                    offerCalenderStatusMessage.addClass("statusMessages");
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
                     $(standardID).css('display','none');
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
                     $(statusID).css('display','none');
-                    let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo');
                     let offerCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let offerCalenderScene = $('<p></p>').text(l[i].snavn);
-                    $(offerCalenderDiv).append(offerCalenderStatusMessage, offerCalenderScene,offerCalenderTime);
+                    $(offerCalenderDiv).append(offerCalenderStatusMessage, '<br />', '<br />', offerCalenderScene, offerCalenderTime, '<br />');
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(offerCalenderDiv);
                 }
