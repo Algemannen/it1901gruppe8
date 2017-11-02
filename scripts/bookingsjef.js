@@ -220,10 +220,10 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let calcontainer = $("<div></div").addClass("calscenes")
 
             for(let i = 0; i < dateArray.length; i++){
-                let concertButton = $("<button></button>").addClass("concert_button").addClass("calenderButton").text("Mer info");
                 let calenderText = dateArray[i].toString();
                 let calenderText2 = calenderText.substr(0,16);
                 let calenderID = dateArray[i].yyyymmdd();
+                let concertButton = $("<button></button>").addClass("concert_button").addClass("calenderButton").addClass('disabledButton').attr('id','knapp'+ calenderID).text("Mer info").attr('disabled', true);
                 let mainCalenderHeadline = $('<div></div>');
                 let headlineStatus = $('<div></div>').text("Denne datoen er ledig").attr('id', 'Status' + calenderID).addClass('headlineStatus');
                 let calenderHeadline = $('<div></div>').text(calenderText2).addClass('calenderHeadline');
@@ -272,6 +272,8 @@ function getConcertsForCalender(){
             for(i in l){
                 let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
                 if(element){
+                    let knappID = '#knapp' +new Date(l[i].dato).yyyymmdd()
+                    $(knappID).removeAttr('disabled').removeClass('disabledButton');
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
                     $(standardID).css('display','none');
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
@@ -334,6 +336,8 @@ function getOffersForCalender() {
             for(i in l){
                 let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
                 if(element){
+                    let knappID = '#knapp' +new Date(l[i].dato).yyyymmdd()
+                    $(knappID).removeAttr('disabled').removeClass('disabledButton');
                     let offerCalenderStatusMessage;
 
                     switch(l[i].status){
