@@ -462,13 +462,16 @@ function createBandInfoHTML(list, container) {
   let bandInfo = $("<div></div>").addClass("bandInfo");
   let bandInformation = $("<div></div>").addClass("nokkelinfo");
   let bandImage = $('<img class="bandImage"/>').attr('src', list[0].bilde_url.replace("\/", "/"));
-  let bio = $("<span></span><br>").text("Bio: " + list[0].bio);
-  let popularitet = $("<span></span><br>").text("Popularitet: " +list[0].popularitet);
-  let sjanger = $("<span></span><br><br>").text("Sjanger: " + list[0].sjanger);
+  let bioUthevet = $("<span></span>").text("Bio: ").css('font-weight', 'bold');
+  let bio = $("<span></span><br>").text(list[0].bio);
+  let popularitetUthevet = $("<span></span>").text("Popularitet: ").css('font-weight', 'bold');
+  let popularitet = $("<span></span><br>").text(list[0].popularitet);
+  let sjangerUthevet = $("<span></span>").text("Sjanger: ").css('font-weight', 'bold');
+  let sjanger = $("<span></span><br><br>").text(list[0].sjanger);
   let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
   let managerFornavn = $("<span></span><br>").text(list[0].fornavn + " " + list[0].etternavn);
   let managerEmail = $("<span></span>").text(list[0].email);
-  bandInformation.append(bio, popularitet, sjanger, manager, managerFornavn, managerEmail)
+  bandInformation.append(bioUthevet, bio, popularitetUthevet, popularitet, sjangerUthevet, sjanger, manager, managerFornavn, managerEmail)
   bandInfo.append(bandImage, bandInformation);
   $(container).append(bandInfo);
 }
