@@ -505,3 +505,11 @@ margin-left:10px;
     background-color:#E3E3E3;
     color: black;
 }
+.disabledButton{
+    background-color: rgba(211,211,211,0.6);
+    border: rgba(0,0,0,1);
+    border-width: 1px;
+    border-style:solid;
+    pointer-events: none;
+    color: rgb(220,220,220);
+}
