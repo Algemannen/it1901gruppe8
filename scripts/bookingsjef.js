@@ -279,6 +279,29 @@ function getConcertsForCalender(){
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
                     let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: ' + l[i].billettpris);
+                    if(!(l[i].billettpris)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: Ikke tilgjengelig');
+                    }
+                    if(!(l[i].kostnad)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: Ikke tilgjengelig' + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: ' + l[i].billettpris);
+                    }
+                    if(!(l[i].tilskuere)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: Ikke tilgjengelig'  + ' | Billettpris: ' + l[i].billettpris);
+                    }
+                    if(!(l[i].billettpris) && !(l[i].kostnad)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: Ikke tilgjengelig' + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: Ikke tilgjengelig');
+                    }
+                    if(!(l[i].billettpris) && !(l[i].tilskuere)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: Ikke tilgjengelig' + ' | Billettpris: Ikke tilgjengelig');
+                    }
+                    if(!(l[i].tilskuere) && !(l[i].kostnad)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: Ikke tilgjengelig' + ' | Tilskuere: Ikke tilgjengelig' + ' | Billettpris: ' + l[i].billettpris);
+                    }
+                    if(!(l[i].tilskuere) && !(l[i].kostnad) && !(l[i].billettpris)){
+                        concertCalenderEconomics = $('<p></p>').text('Kostnad: Ikke tilgjengelig' + ' | Tilskuere: Ikke tilgjengelig' + ' | Billettpris: Ikke tilgjengelig');
+                    }
+
+
                     $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
