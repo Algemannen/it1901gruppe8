@@ -1660,7 +1660,7 @@ case 'setOfferStatus':
     break;
 
     /// Returnerer en liste over alle band og alle scener
-case 'getListOfBandsAndScenes':
+case 'getOfferFormInfo':
 
 
     // [1] Finner liste av band
@@ -1718,12 +1718,45 @@ case 'getListOfBandsAndScenes':
                 $encode2[] = $row;
             }
 
+
+          // [3] Finner start- og sluttdato for festivalen
+
+
+          // Lager SQL-query
+          $query3 = "SELECT startDag, sluttDag FROM festival WHERE fid = ?";
+
+          // Gjør klar objekt for spørring
+          $stmt3 = $dbconn->stmt_init();
+
+          // Gjør klar spørringen for databsen
+          if(!$stmt3->prepare($query3)) {
+              header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+          } else {
+
+              // Binder festivalid som heltall
+              $stmt3->bind_param('i', $fid);
+
+              // Leser inn variabler
+              $fid = $_POST['fid'];
+
+              // Utfør sql-setning
+              $stmt3->execute();
+
+              // Henter resultat fra spørring
+              $result3 = $stmt3->get_result();
+
+              // Hent ut alle rader fra en spørring
+              $encode3 = array();
+              while ($row = $result3->fetch_assoc()) {
+                  $encode3[] = $row;
+              }
+
             // Returner json-string med data
-            echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "]");
+            echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "," . json_encode($encode3) . "]");
 
             // Avslutt sql-setning
             $stmt2->close();
-        }
+        }}
     }
     break;
 

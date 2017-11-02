@@ -83,9 +83,9 @@ function search() { //search funksjon for bookingansvarlig
                     tableRow.append(tableElementNavn);
                     table.append(tableRow);
                     $("#resultlist").append(table);
-                    
+
                 }
-                $('.bookingnavnsok').first().trigger('click');        
+                $('.bookingnavnsok').first().trigger('click');
             }
             else {
                 $("#resultlist").append("Ingen resultater.");
@@ -103,22 +103,30 @@ function search() { //search funksjon for bookingansvarlig
 }
 
 
-function getListOfBandsAndScenes(){
+function getOfferFormInfo(){
     let l = [];
 
-    $.ajax({ url: '/database.php?method=getListOfBandsAndScenes',
-        data: {},
+    $.ajax({ url: '/database.php?method=getOfferFormInfo',
+        data: {fid: current_fid},
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+            // Legger inn alle band i en dropdown-liste
             for (i in l[0]){
                 let bandOption = $("<option></option>").text(l[0][i].navn).attr('value', l[0][i].bid);
                 $("#bandSelect").append(bandOption);
             }
+
+            // Legger inn alle scener i en dropdown-liste
             for (i in l[1]){
                 let sceneOption = $("<option></option>").text(l[1][i].navn).attr('value', l[1][i].sid);
                 $("#sceneSelect").append(sceneOption);
             }
+
+            // Legger inn riktig min- og maxdato
+            $("#tilbudDato").attr('min', l[2][0].startDag);
+            $("#tilbudDato").attr('max', l[2][0].sluttDag);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
