@@ -1878,6 +1878,114 @@ case 'serveringInfo':
 
     break;
 
+
+case 'getListOfConcertDays':
+  $query = "SELECT startDag, sluttDag FROM festival WHERE fid = ?";
+
+    // Gjør klar objekt for spørringen
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+      // Binder brukerid som heltall
+      $stmt->bind_param('i', $fid);
+
+      // Leser inn sceneid
+      $fid = $_POST['fid'];
+
+      // Utfører spørringen
+      $stmt->execute();
+
+      // Returnerer resultat fra spørringen
+      $result = $stmt->get_result();
+
+      // Hent ut alle rader fra en spørring
+
+      // Returner json-string med data
+      echo json_encode($result->fetch_assoc());
+
+      // Avslutt sql-setning
+      $stmt->close();
+}
+break;
+
+case 'getOffersForCalender':
+    $query = "SELECT scene.navn AS snavn, tilbud.*, band.* FROM tilbud
+            INNER JOIN band ON tilbud.bid = band.bid
+            INNER JOIN scene ON tilbud.sid = scene.sid
+    ";
+
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+      // Utfører spørringen
+      $stmt->execute();
+
+      // Returnerer resultat fra spørringen
+      $result = $stmt->get_result();
+
+      // Hent ut alle rader fra en spørring
+
+      // Returner json-string med data
+      $encode = array();
+      while ($row = $result->fetch_assoc()) {
+          $encode[] = $row;
+      }
+
+      echo json_encode($encode);
+
+      // Avslutt sql-setning
+      $stmt->close();
+  }
+break;
+case 'getConcertsForCalender':
+    $query = "SELECT scene.navn AS snavn, band.*, konsert.* FROM konsert
+            INNER JOIN konsert_band ON konsert.kid = konsert_band.kid
+            INNER JOIN band ON konsert_band.bid = band.bid
+            INNER JOIN scene ON konsert.sid = scene.sid
+    ";
+
+    $stmt = $dbconn->stmt_init();
+
+    // Gjør spørringen klar for databasen
+    if(!$stmt->prepare($query)) {
+        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
+    } else {
+
+      /*// Binder brukerid som heltall
+      $stmt->bind_param('i', $fid);
+
+      // Leser inn sceneid
+      $fid = $_POST['fid'];*/
+
+      // Utfører spørringen
+      $stmt->execute();
+
+      // Returnerer resultat fra spørringen
+      $result = $stmt->get_result();
+
+      // Hent ut alle rader fra en spørring
+
+      // Returner json-string med data
+      $encode2 = array();
+      while ($row = $result->fetch_assoc()) {
+          $encode2[] = $row;
+      }
+
+      echo json_encode($encode2);
+
+      // Avslutt sql-setning
+      $stmt->close();
+  }
+break;
+
     /// Hvis det er en skrivefeil i metodekallet så returnerer vi denne feilbeskjeden.
 default:
     header('HTTP/1.0 501 Not implemented method.');

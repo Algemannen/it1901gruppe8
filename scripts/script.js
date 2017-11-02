@@ -91,16 +91,17 @@ $(document).ready(function(){
                 }});
                 break;
             case 5: //Bruker er bookingsjef
-                $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
-                    $("#root").html(result);
-                    $('#username').html(user.name);
-                    getListOfScenesForBookingSjef(user);
-                    concertPricing();
-                    injectOffers(user);
-                    bookingsjeffane(0);
+              $.ajax({url: "bookingsjef.html",dataType: 'html', success: function(result){
+                $("#root").html(result);
+                $('#username').html(user.name);
+                getListOfScenesForBookingSjef(user);
+                createListOfConcertDays()
+                concertPricing();
+                injectOffers(user);
+                bookingsjeffane(0);
 
-                }});
-                break;
+              }});
+              break;
             case 6: //Bruker er PR-ansvarlig
                 $.ajax({url: "pransv.html",dataType: 'html', success: function(result){
                     $("#root").html(result);
@@ -338,8 +339,13 @@ $(document).ready(function(){
     $('body').on('click', "#prisgen_knapp", function () {
         bookingsjeffane(1);
     });
+
     $('body').on('click', "#tilbud_knapp", function () {
         bookingsjeffane(2);
+    });
+
+    $('body').on('click', "#kalender_knapp", function () {
+        bookingsjeffane(3);
     });
 
 
