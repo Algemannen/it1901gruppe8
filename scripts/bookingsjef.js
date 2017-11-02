@@ -273,8 +273,8 @@ function getConcertsForCalender(){
                     $(standardID).css('display','none');
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
                     $(statusID).css('display','none')
-                    let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
-                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
+                    let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv').css('border', '1px solid #565656').css('width', '95%').css('background-color', 'rgba(86,86,86,0.3)');
+                    let concertCalenderName = $('<p></p>').text('Bekreftet konsert | ' + l[i].navn + ' | ' + l[i].knavn);
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
@@ -311,13 +311,13 @@ function getOffersForCalender() {
 
                     switch(l[i].status){
                         case 0:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Tilbud sendt fra Bookingansvarlig').css('border', '1px solid #FFFF00');
+                            offerCalenderStatusMessage = $('<p></p>').text('Tilbud | ' + l[i].navn + ' | Sendt fra Bookingansvarlig').css('border', '1px solid #FFFF00').css('width', '95%').css('background-color', 'rgba(255,255,0,0.15');
                             break;
                         case 1:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Venter på svar fra manager').css('border', '1px solid #FFFF00');
+                            offerCalenderStatusMessage = $('<p></p>').text('Tilbud |' + l[i].navn + ' | Venter på svar fra manager').css('border', '1px solid #FFFF00').css('width', '95%').css('background-color', 'rgba(255,255,0,0.15');
                             break;
                         case 2:
-                            offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').css('border', '1px solid green');
+                            offerCalenderStatusMessage = $('<p></p>').text('Tilbud | ' +l[i].navn + ' | Godkjent av manager').css('border', '1px solid #21b000').css('width', '95%').css('background-color', 'rgba(33,176,0,0.15)');
                             break;
                     }
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
@@ -327,7 +327,8 @@ function getOffersForCalender() {
                     let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo');
                     let offerCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let offerCalenderScene = $('<p></p>').text(l[i].snavn);
-                    $(offerCalenderDiv).append(offerCalenderStatusMessage, offerCalenderScene,offerCalenderTime);
+                    $(offerCalenderStatusMessage).append(offerCalenderScene,offerCalenderTime);
+                    $(offerCalenderDiv).append(offerCalenderStatusMessage);
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(offerCalenderDiv);
                 }
