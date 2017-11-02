@@ -253,9 +253,9 @@ $(document).ready(function(){
 
     // Fang trykk på knapp for å søke som bookingansvarlig
     $('body').on('click', ".bookingnavnsok", function () {
-      getSearchInfo(this.value[0], this.value[1], '#informationlist', user);
-      $('.bookingnavnsok').css('background', 'rgba(0,0,0,0)');
-      $(this).css('background', 'rgba(0,0,0,0.3)');
+        getSearchInfo(this.value[0], this.value[1], '#informationlist', user);
+        $('.bookingnavnsok').css('background', 'rgba(0,0,0,0)');
+        $(this).css('background', 'rgba(0,0,0,0.3)');
     });
 
     //Knapper for fanevalg
