@@ -422,6 +422,7 @@ li.scenePoint {
 
 #kalender {
     display: none;
+    padding-top: 10px;
 }
 
 .calscenes {
@@ -453,10 +454,15 @@ li.scenePoint {
     right: 0;
 }
 .headlineStatus{
-    float: left;
+    position: absolute;
+    left: 15%;
 }
 .calenderHeadline{
     display:inline-block;
     float:left;
     margin-right: 10px;
+}
+
+.listofscenesForCalender{
+    padding-top: 15px;
 }

@@ -55,7 +55,7 @@ function getListOfScenesForBookingSjef(bruker) { //Starter oppbygging av hele de
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             let overskrift = $("<h2></h2>").text('Økonomisk rapport').addClass('brukeroverskrift');
-            let BSscenelist = $("<div></div>").attr('id', 'listofscenes')
+            let BSscenelist = $("<div></div>").attr('id', 'listofscenes').addClass('listofscenesForCalender')
             $('#divBS').append(BSscenelist);
             let container = $("<div></div>").addClass("scenelist");
             $('#listofscenes').append(overskrift, container);
@@ -222,7 +222,7 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
                 let calenderText2 = calenderText.substr(0,16);
                 let calenderID = dateArray[i].yyyymmdd();
                 let mainCalenderHeadline = $('<div></div>');
-                let headlineStatus = $('<div></div>').text(" | Denne datoen er ledig").attr('id', 'Status' + calenderID).addClass('headlineStatus');
+                let headlineStatus = $('<div></div>').text("Denne datoen er ledig").attr('id', 'Status' + calenderID).addClass('headlineStatus');
                 let calenderHeadline = $('<div></div>').text(calenderText2).addClass('calenderHeadline');
                 mainCalenderHeadline.append(calenderHeadline, headlineStatus);
                 let standardTextForCalender = $('<p></p>').text("Denne datoen er ledig").attr('id','Standard'+calenderID);
