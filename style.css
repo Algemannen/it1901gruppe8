@@ -271,7 +271,7 @@ overflow-y:scroll;
   height: calc(100vh - 100px - 235px);
 }
 
-#results,#band {
+#results,#pr_ansvarlig_oversikt {
 display:flex;
 width:90%;
 justify-content:space-between;
