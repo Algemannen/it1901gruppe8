@@ -19,6 +19,8 @@ function pr_bandListe(festivalid){
             let container = $("<span></span>").text(element.knavn).addClass('listElementConcert').val(element.kid);
             $('#bandliste').append(container);
         });
+
+        $('#bandliste').children('span').first().trigger('click');
     },
     error: function(xmlhttprequest, textstatus, message) {
         if(textstatus==="timeout") {

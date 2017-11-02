@@ -83,9 +83,13 @@ function search() { //search funksjon for bookingansvarlig
                     tableRow.append(tableElementNavn);
                     table.append(tableRow);
                     $("#resultlist").append(table);
-                }} else {
-                    $("#resultlist").append("Ingen resultater.");
+                    
                 }
+                $('.bookingnavnsok').first().trigger('click');        
+            }
+            else {
+                $("#resultlist").append("Ingen resultater.");
+            }
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
