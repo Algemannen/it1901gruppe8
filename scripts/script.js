@@ -259,7 +259,7 @@ $(document).ready(function(){
         $(this).css('background', 'rgba(0,0,0,0.3)');
     });
 
-    //Knapper for fanevalg
+    // Fanevalg for bookingansvarlig-side
     $('body').on('click', "#tekniskebehov_knapp", function () {
         bookingfane(0);
     });
@@ -277,6 +277,13 @@ $(document).ready(function(){
         search();
     });
 
+    // Fang 'enter'-trykk fra søke-feltet
+    $('body').on('keyup', "#textinput", function (e) {
+        if (e.keyCode === 13) {
+            search();
+        }
+    });
+
     // Fang trykk på knapp for å registrerer et tilbud
     $('body').on('click', "#sendOfferButton", function () {
         validateOfferData();
@@ -292,7 +299,7 @@ $(document).ready(function(){
         deleteTechinalNeed(this.value);
     });
 
-    // Fanevalg
+    // Fanevalg på manager-side
     $('body').on('click', "#booking_behov_knapp", function () {
         managerfane(0);
     });
@@ -331,7 +338,7 @@ $(document).ready(function(){
         deleteOffer(obj);
     });
 
-    // Fanevalg
+    // Fanevalg for bookingsjef-side
     $('body').on('click', "#ecorapport_knapp", function () {
         bookingsjeffane(0);
     });
@@ -347,7 +354,6 @@ $(document).ready(function(){
     $('body').on('click', "#kalender_knapp", function () {
         bookingsjeffane(3);
     });
-
 
     // Fang band-liste trykk for PR-ansvarlig
     $('body').on('click', ".listElementBand", function () {

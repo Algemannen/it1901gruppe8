@@ -7,8 +7,9 @@ Javascript-funksjonalitet for bookingansvarlig-bruker
 let defaultcolor = 'rgba(255,255,255,0.4)'
 let selectedcolor = 'rgba(0,0,0,0.4)'
 
+// Funksjon for fanevisning på siden. Viser og skjuler faner basert på index
 function bookingfane(index) {
-    if (index==0) {
+    if (index==0) { // Viser tekniske behov
         $("#tekniskebehov").show();
         $("#tekniskebehov_knapp").css("background",selectedcolor);
 
@@ -18,7 +19,7 @@ function bookingfane(index) {
         $("#bookingtilbud").hide();
         $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == 1) {
+    else if (index == 1) { // Viser søke-fane
         $("#sok").show();
         $("#sok_knapp").css("background",selectedcolor);
 
@@ -28,7 +29,7 @@ function bookingfane(index) {
         $("#bookingtilbud").hide();
         $("#bookingtilbud_knapp").css("background",defaultcolor);
     }
-    else if (index == 2) {
+    else if (index == 2) { // Viser bookingtilbud-fane
         $("#bookingtilbud").show();
         $("#bookingtilbud_knapp").css("background",selectedcolor);
 
@@ -40,6 +41,7 @@ function bookingfane(index) {
     }
 }
 
+// Henter tekniske behov for alle konserter på en festival
 function getListOfTechnicalNeeds(bruker) {
     let l = [];
 
@@ -48,6 +50,8 @@ function getListOfTechnicalNeeds(bruker) {
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+            // Henter tekniske behov for konserter
             for (i in l) {
                 getTechnicalNeedsByKid(bruker.id,l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
             }
@@ -62,8 +66,8 @@ function getListOfTechnicalNeeds(bruker) {
     })
 };
 
-
-function search() { //search funksjon for bookingansvarlig
+// Gjør søk basert på tekstinput og radio-knapper og viser resultat i liste
+function search() {
     let l = [];
     let inputText = $("#textinput").val();
     let searchType = $('input[name=type]:checked').val();
@@ -76,6 +80,8 @@ function search() { //search funksjon for bookingansvarlig
             l = safeJsonParse(output); //gjør en try-catch sjekk.
             if (l.length > 0) {
                 let table = $("<table></table>");
+
+                // Legger inn alle resultater som rader i en tabell
                 for (i in l) {
                     let tableRow = $("<tr></tr>");
                     let obj = [searchType, l[i].id];
@@ -85,8 +91,12 @@ function search() { //search funksjon for bookingansvarlig
                     $("#resultlist").append(table);
 
                 }
+
+                // Første treff skal velges som standard
                 $('.bookingnavnsok').first().trigger('click');
             }
+
+            // Lar bruker vite om søkeresultat var tomt
             else {
                 $("#resultlist").append("Ingen resultater.");
             }
@@ -102,7 +112,7 @@ function search() { //search funksjon for bookingansvarlig
 
 }
 
-
+// Funksjon for å hente informasjon til tilbuds-skjema
 function getOfferFormInfo(){
     let l = [];
 
@@ -138,6 +148,8 @@ function getOfferFormInfo(){
     });
 }
 
+
+// Funksjon som validerer tilbud-skjema. Sender tilbudet videre dersom validering godkjennes
 function validateOfferData(){
     let dato = $("#tilbudDato").val();
     let starttid = $("#tilbudStarttid").val();
@@ -153,6 +165,7 @@ function validateOfferData(){
     }
 }
 
+// Funksjon for å lagre tilbud i database. Funksjonen antar korrekt info
 function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
     console.log(dato, starttid, sluttid, beløp, scene, band, bruker.id);
 
@@ -161,6 +174,8 @@ function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
         type: 'post',
         success: function(output) {
             alert("Tilbudet er sendt.");
+
+            // Nullstiller skjema
             resetOfferData();
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -173,6 +188,7 @@ function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
     });
 }
 
+// Nullstiller tilbud-skjema
 function resetOfferData(){
     $("#tilbudDato").val('');
     $("#tilbudStarttid").val('');
