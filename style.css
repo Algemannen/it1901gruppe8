@@ -313,22 +313,50 @@ margin:auto;
 
 .reject {
 border:1px solid red;
-background-color:rgba(255,0,0,0.05);
+background: repeating-linear-gradient(
+    45deg,
+    #c9b3b3,
+    #c9b3b3 10px,
+    #E3E3E3 10px,
+    #E3E3E3 20px
+  );
+color: black;
 }
 
 .partial-accept {
 border:1px solid #ffe600;
-background-color:rgba(255,230,0,0.05);
+background: repeating-linear-gradient(
+    45deg,
+    #fffde8,
+    #fffde8 10px,
+    #E3E3E3 10px,
+    #E3E3E3 20px
+  );
+color: black;
 }
 
 .accept {
 border:1px solid #006400;
-background-color:rgba(0,96,0,0.05);
+background: repeating-linear-gradient(
+    45deg,
+    #e8fce8,
+    #e8fce8 10px,
+    #E3E3E3 10px,
+    #E3E3E3 20px
+  );
+color: black;
 }
 
 .unknown {
 border:1px solid #B0B0B0;
-background-color:rgba(60,60,60,0.05);
+background: repeating-linear-gradient(
+    45deg,
+    #d6d6d6,
+    #d6d6d6 10px,
+    #E3E3E3 10px,
+    #E3E3E3 20px
+  );
+color: black;
 }
 
 #prisgenerering {
@@ -471,4 +499,9 @@ text-align:center;
 
 .concertInfo > div,.offer_button_reject {
 margin-left:10px;
+}
+
+.concertlist li, .behov li, div.behov, #prisgenerering div, .calenderItemsDiv {
+    background-color:#E3E3E3;
+    color: black;
 }
