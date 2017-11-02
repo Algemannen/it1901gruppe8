@@ -199,7 +199,7 @@ ul.singleScene {
     text-align: center;
 }
 
-.scene1, .scene2, .scene3 {
+.scene1, .scene2, .scene3, .calscene1, .calscene2, .calscene3 {
   width: 100%;
   padding-right: 20px;
   padding-left: 20px;
@@ -465,4 +465,49 @@ li.scenePoint {
 
 .centeredText {
   text-align: center;
+}
+
+#kalender {
+    display: none;
+    padding-top: 10px;
+}
+
+.calscenes {
+  width: 100%;
+}
+.datoliste {
+    margin: 5px;
+    margin-top: 30px;
+    width: 100%;
+    margin-right: 10px;
+    list-style: none;
+    text-align: center;
+}
+.calenderDiv {
+    display: none;
+}
+
+.calenderItemsDiv{
+    border: 1px solid #565656;
+    margin: 10px;
+    position: relative;
+    min-height: 26px;
+}
+.calenderButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.headlineStatus{
+    position: absolute;
+    left: 15%;
+}
+.calenderHeadline{
+    display:inline-block;
+    float:left;
+    margin-right: 10px;
+}
+
+.listofscenesForCalender{
+    padding-top: 15px;
 }
