@@ -1,193 +1,170 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
 
 body {
-    background: url("img/bg_frost.jpeg") no-repeat center center fixed;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-color: #454547;
-    font-family: "Candara", "Charcoal", sans-serif;
-    color: #F0F0F0;
+background:url(img/bg_frost.jpeg) no-repeat center center fixed;
+background-size:cover;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+background-color:#454547;
+font-family:Candara, Charcoal, sans-serif;
+color:#F0F0F0;
 }
 
 ul {
-    list-style-type: none;
+list-style-type:none;
 }
 
 button {
-    border: none;
-    padding: 5px 10px 5px 10px;
-    background-color: rgba(0,0,0,.4);
-    font-weight: bold;
-    letter-spacing: .075em;
-    color: #fff;
-    text-shadow: 0 1px 0 rgba(0,0,0,.1);
-}
-
-input{
-  color: #FFF;
+border:none;
+background-color:rgba(0,0,0,.4);
+font-weight:700;
+letter-spacing:.075em;
+color:#fff;
+text-shadow:0 1px 0 rgba(0,0,0,.1);
+padding:5px 10px;
 }
 
 button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    color: #000;
+background-color:rgba(255,255,255,0.4);
+color:#000;
 }
 
 button.delete_button {
-  background-color: rgba(0, 0, 0, 0);
-  color: #F00;
-  text-decoration: underline;
-  padding-bottom: 1em;
+background-color:rgba(0,0,0,0);
+color:red;
+text-decoration:underline;
+padding-bottom:1em;
 }
 
-button.delete_button:hover {
-  color: #FFF;
+button.delete_button:active,button.delete_button:focus {
+outline:0;
 }
 
-button.delete_button:active, button.delete_button:focus {
-  outline: 0px;
+.loginbox input,.needs input,.needs textarea {
+margin-bottom:19px;
 }
 
-.loginbox input, .needs input, .needs textarea{
-  margin-bottom: 19px;
-}
-
-.loginbox input, .loginbox button, .needs input, .needs textarea, .needs button{
-  border: 1px solid gray;
-  background-color: rgba(0,0,0,.2);
-  padding: 8px 24px 8px 10px;
+.loginbox input,.loginbox button,.needs input,.needs textarea,.needs button {
+border:1px solid gray;
+background-color:rgba(0,0,0,.2);
+padding:8px 24px 8px 10px;
 }
 
 button.logout_button {
-    position: absolute;
-    top:10px;
-    right:10px;
+position:absolute;
+top:10px;
+right:10px;
 }
 
-.login_button, .submit_button{
-    width: 89%;
+.login_button,.submit_button {
+width:89%;
 }
 
 .content {
-    background-color:rgba(130,130,130,.6);
-    margin:5px auto;
-    margin-top: 50px;
-    margin-bottom: 100px;
-    padding: 12px;
-    width: 80%;
-    min-height: 180px;
-    border: 1px solid gray;
-    position: relative;
+background-color:rgba(130,130,130,.6);
+width:80%;
+min-height:180px;
+border:1px solid gray;
+position:relative;
+margin:50px auto 100px;
+padding:12px;
 }
 
 .brukeroverskrift {
-  margin: auto;
-  text-align: center;
-  margin-bottom: 15px;
+text-align:center;
+margin:auto auto 15px;
 }
 
 #forsidetittel {
-    text-align: center;
-    color: #DDDCCA;
-    font-size: 500%;
-    margin: 50px 0px;
-    text-shadow: black 1px 1px 2px
+text-align:center;
+color:#DDDCCA;
+font-size:500%;
+text-shadow:#000 1px 1px 2px;
+margin:50px 0;
 }
 
-.loginbox, .needs{
-  position: relative;
-  width: 400px;
-  margin: 0 auto;
-  background: rgba(130,130,130,.6);
-  padding: 20px 22px;
-  border: 1px solid gray;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #DDDCCA;
+.loginbox,.needs {
+position:relative;
+width:400px;
+background:rgba(130,130,130,.6);
+border:1px solid gray;
+display:flex;
+flex-direction:column;
+align-items:center;
+color:#DDDCCA;
+margin:0 auto;
+padding:20px 22px;
 }
 
-#password_field::placeholder, #username_field::placeholder,  #title_field::placeholder, #description_field::placeholder{
-  color: white;
-  opacity: 0.7;
+#password_field::placeholder,#username_field::placeholder,#title_field::placeholder,#description_field::placeholder {
+color:#FFF;
+opacity:0.7;
 }
 
-#password_field, #username_field, #title_field, #description_field {
-    width: 80%;
+#password_field,#username_field,#title_field,#description_field {
+width:80%;
 }
 
 .concertlist {
-    position: relative;
-    margin:0px;
-    padding:0px;
-    display: flex;
-    flex-direction: column;
+position:relative;
+display:flex;
+flex-direction:column;
+margin:0;
+padding:0;
 }
 
 .concertlist li {
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid #565656;
-    position: relative;
+border:1px solid #565656;
+position:relative;
+margin:5px;
+padding:5px;
 }
 
-ul.concertlist li span{
-    width: calc(100% - 4.5em);
-    display: inline-block;
+ul.concertlist li span {
+width:calc(100%-4.5em);
+display:inline-block;
 }
 
 .technicianlist {
-    border: 0px transparent;
-    text-align: center;
-    margin-top: 0px;
-    padding-top: 0px;
+border:0 transparent;
+text-align:center;
+margin-top:0;
+padding-top:0;
 }
 
-.concertInfo .tb_overskrift{
-  display: none;
-}
-
-.concertInfo .behov{
-  text-align: center;
-  border: none;
+.concertInfo .behov {
+text-align:center;
+border:none;
 }
 
 .behov {
-  border: 1px solid #565656;
-  margin: 10px;
-  padding: 10px;
+border:1px solid #565656;
+margin:10px;
+padding:10px;
 }
 
 .concert_button {
-    display: block;
-    width: 30%;
-    font-size: 10vm;
-    margin: auto;
+display:block;
+width:30%;
+font-size:10vm;
+margin:auto;
 }
 
-.button_text{
-  width: 100%;
-  text-align: center;
-  margin-bottom: 10px;
+.button_text {
+width:100%;
+text-align:center;
+margin-bottom:10px;
 }
 
 button.scene_button {
-    width:120px;
-    height:80px;
-    margin-left: 16.666%;
-}
-
-.concertInfo {
-  text-align: center;
-}
-
-.concertInfo > div{
-  margin-left: 10px;
+width:120px;
+height:80px;
+margin-left:16.666%;
 }
 
 ul.singleScene {
-  padding-left: 15px;
+padding-left:15px;
 }
 
 .scenelist {
@@ -211,261 +188,241 @@ ul.singleScene {
 }
 
 li.scenePoint {
-    display: inline;
+display:inline;
 }
 
 .needs > * {
-  max-width: 89%;
-  min-width: 89%;
-  min-height: 1.5em;
+max-width:89%;
+min-width:89%;
+min-height:1.5em;
 }
 
 .manager_radio {
-    border: 0px;
-    width: 100%;
-    height:2em;
-    position: absolute;
-    left: 2em;
-    transform: translate(-50%, -0.25em)
+border:0;
+width:100%;
+height:2em;
+position:absolute;
+left:2em;
+transform:translate(-50%,-0.25em);
 }
 
-.sokeinput{
-  width: 30%;
-  margin: auto;
+.sokeinput {
+width:30%;
+margin:auto;
 }
 
 .sokeinput input[type="text"] {
-  width: calc(100% - 60px);
-  padding: 8px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid gray;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: black;
+width:calc(100%-60px);
+display:inline-block;
+border:1px solid gray;
+border-radius:4px;
+box-sizing:border-box;
+color:#000;
+margin:8px 0;
+padding:8px 20px;
 }
 
-.sokeinput input[type="radio"] {
-
+#resultlist,#bandliste {
+width:25%;
+height:450px;
+background-color:#E3E3E3;
+color:#000;
+overflow-y:scroll;
 }
 
-#resultlist, #bandliste{
-  width: 25%;
-  height: 450px;
-  background-color: #E3E3E3;
-  color: black;
-  overflow-y: scroll;
+#resultlist table,.albumsalg table,.tidligereKonserter table,#bandliste table {
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+text-align:left;
+margin:auto;
 }
 
-#resultlist table, .albumsalg table, .tidligereKonserter table, #bandliste table{
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  text-align: left;
-  margin: auto;
+#resultlist th,#resultlist td,.albumsalg th,.tidligereKonserter th,.albumsalg td,.tidligereKonserter td,#bandliste th,#bandliste td {
+padding:8px;
 }
 
-#resultlist th, #resultlist td , .albumsalg th, .tidligereKonserter th, .albumsalg td, .tidligereKonserter td, #bandliste th, #bandliste td{
-  padding: 8px;
+#resultlist th,.albumsalg th,.tidligereKonserter th,#bandliste th {
+background-color:#3738AF;
+color:#F4F4F4;
 }
 
-#resultlist th, .albumsalg th, .tidligereKonserter th, #bandliste th {
-  background-color: #3738AF;
-  color: #F4F4F4;
-}
-
-#resultlist tr:hover , .albumsalg tr:hover, .tidligereKonserter tr:hover, #bandliste span:hover {
-  background-color: #D8D8D8;
-  cursor: pointer;
+#resultlist tr:hover,.albumsalg tr:hover,.tidligereKonserter tr:hover,#bandliste span:hover {
+background-color:#D8D8D8;
+cursor:pointer;
 }
 
 #resultlist .shortColumn, {
-  width: 40px;
+width:40px;
 }
 
-#informationlist, #bandinformasjon{
-  border: 1px solid gray;
-  width: 70%;
-  height: 450px;
-  background-color: #E3E3E3;
-  color: black;
-  overflow-y: scroll;
+#informationlist,#bandinformasjon {
+border:1px solid gray;
+width:70%;
+height:450px;
+background-color:#E3E3E3;
+color:#000;
+overflow-y:scroll;
 }
 
-#results, #band{
-  margin: auto;
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
+#results,#band {
+display:flex;
+width:90%;
+justify-content:space-between;
+margin:auto;
 }
 
-#sokeinput{
-  margin: auto;
-}
-
-.fane {
-  display: none;
+#sokeinput {
+margin:auto;
 }
 
 #sok {
-  display: initial;
+display:initial;
 }
 
 .faneknapp {
-  background: rgba(255,255,255,0.4);
+background:rgba(255,255,255,0.4);
 }
 
 #sok_knapp {
-  background: rgba(0,0,0,0.4);
+background:rgba(0,0,0,0.4);
 }
 
 .bandImage {
-  width: 200px;
-  height: 140px;
-  float:left;
-  object-fit: cover;
-  margin-right: 20px;
-  border-radius: 10px;
+width:200px;
+height:140px;
+float:left;
+object-fit:cover;
+margin-right:20px;
+border-radius:10px;
 }
 
-#informationlist a, #bandinformasjon a {
-  text-align: center;
-  display: block;
-  margin: 0 auto;
+#informationlist a,#bandinformasjon a {
+text-align:center;
+display:block;
+margin:0 auto;
 }
 
-.bandInfo{
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-
-.keyConcertInfo, .concertDetails {
-  text-align: center;
+.bandInfo {
+width:90%;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:auto;
 }
 
 .reject {
-  border: 1px solid #F00;
-  background-color: rgba(255, 0, 0, 0.05);
+border:1px solid red;
+background-color:rgba(255,0,0,0.05);
 }
 
 .partial-accept {
-  border: 1px solid rgb(255, 230, 0);
-  background-color: rgba(255, 230, 0, 0.05);
+border:1px solid #ffe600;
+background-color:rgba(255,230,0,0.05);
 }
 
 .accept {
-  border: 1px solid #006400;
-  background-color: rgba(0, 96, 0, 0.05);
+border:1px solid #006400;
+background-color:rgba(0,96,0,0.05);
 }
 
 .unknown {
-  border: 1px solid #B0B0B0;
-  background-color: rgba(60, 60, 60, 0.05)
+border:1px solid #B0B0B0;
+background-color:rgba(60,60,60,0.05);
 }
+
 #prisgenerering {
-  display: none;
-  text-align: center;
+display:none;
+text-align:center;
 }
 
 #prisgenerering > div {
-  display: inline-block;
-  border: 1px solid #565656;
-  margin: 10px;
-  padding: 10px;
+display:inline-block;
+border:1px solid #565656;
+margin:10px;
+padding:10px;
 }
 
 .tilbud {
-  margin: 1em;
-  padding: 0.5;
-  position: relative;
+position:relative;
+margin:1em;
+padding:.5px;
 }
 
 .tilbud h2 {
-  margin-top:0px;
+margin-top:0;
 }
 
 .manager_buttons {
-  position: absolute;
-  bottom:35px;
-  right:10px;
-  text-align: center;
-  width: 20%;
+position:absolute;
+bottom:35px;
+right:10px;
+text-align:center;
+width:20%;
 }
 
 .manager_buttons button {
-  padding: 8px 16px;
-}
-
-.offer_button_reject {
-  margin-left: 10px;
+padding:8px 16px;
 }
 
 #manager_tilbud ul {
-  padding: 0;
+padding:0;
 }
 
 #manager_tilbud li {
-  padding: 10px;
+padding:10px;
 }
 
-.sendNyttTilbud input, .sendNyttTilbud select {
-  padding: 6px 10px;
-  color: black;
-  font-size: 16px;
-  border: 1px solid gray;
-  border-radius: 4px;
+.sendNyttTilbud input,.sendNyttTilbud select {
+color:#000;
+font-size:16px;
+border:1px solid gray;
+border-radius:4px;
+padding:6px 10px;
 }
 
-.tilbudInputs div select, .tilbudInputs div input {
-  width: 100%;
+.tilbudInputs div select,.tilbudInputs div input {
+width:100%;
 }
 
 .tilbudInputs {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.tilbudButtons, .sendNyttTilbud h2 {
-  text-align: center;
+display:flex;
+justify-content:space-between;
+padding:10px;
 }
 
 .tilbudButtons button {
-  padding:  10px 18px;
-}
-
-@keyframes blinking {
-  50% {background-color: rgb(219, 142, 40);}
+padding:10px 18px;
 }
 
 .tilbud_attention {
-  animation-name: blinking;
-  animation-duration: 1.6s;
-  animation-iteration-count: infinite;
+animation-name:blinking;
+animation-duration:1.6s;
+animation-iteration-count:infinite;
 }
 
-#bandliste ul{
-  padding-left: 0;
-  margin: 0;
+#bandliste ul {
+padding-left:0;
+margin:0;
 }
 
 #bandliste span {
-  display: block;
-  padding: 8px 10px;
+display:block;
+padding:8px 10px;
 }
 
-#bandliste h3 {
-  text-align: center;
+input,button.delete_button:hover {
+color:#FFF;
 }
 
-.centeredText {
-  text-align: center;
+.concertInfo .tb_overskrift,.fane {
+display:none;
 }
+
+.concertInfo,.keyConcertInfo,.concertDetails,.tilbudButtons,.sendNyttTilbud h2,#bandliste h3,.centeredText {
+text-align:center;
+}
+
 
 #kalender {
     display: none;
@@ -510,4 +467,8 @@ li.scenePoint {
 
 .listofscenesForCalender{
     padding-top: 15px;
+}
+
+.concertInfo > div,.offer_button_reject {
+margin-left:10px;
 }
