@@ -278,7 +278,7 @@ function getConcertsForCalender(){
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
-                    let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Bilettpris: ' + l[i].billettpris);
+                    let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: ' + l[i].billettpris);
                     $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
