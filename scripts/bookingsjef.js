@@ -279,7 +279,7 @@ function getConcertsForCalender(){
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
                     $(statusID).css('display','none')
                     let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
-                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
+                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn).addClass('unknown').addClass("statusMessages");
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
@@ -308,7 +308,7 @@ function getConcertsForCalender(){
                     }
 
 
-                    $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
+                    $(concertCalenderDiv).append(concertCalenderName, '<br /> <br />', concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics, '<br />');
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
                 }
