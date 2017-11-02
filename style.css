@@ -73,7 +73,7 @@ button.logout_button {
     background-color:rgba(130,130,130,.6);
     margin:5px auto;
     margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     padding: 12px;
     width: 80%;
     min-height: 180px;
@@ -251,7 +251,6 @@ li.scenePoint {
 
 #resultlist, #bandliste{
   width: 25%;
-  height: 450px;
   background-color: #E3E3E3;
   color: black;
   overflow-y: scroll;
@@ -286,11 +285,19 @@ li.scenePoint {
 #informationlist, #bandinformasjon{
   border: 1px solid gray;
   width: 70%;
-  height: 450px;
   background-color: #E3E3E3;
   color: black;
   overflow-y: scroll;
 }
+
+#bandinformasjon, #bandliste {
+  height: calc(100vh - 100px - 135px);
+}
+
+#resultlist, #informationlist {
+  height: calc(100vh - 100px - 235px);
+}
+
 
 #results, #band{
   margin: auto;
@@ -320,9 +327,8 @@ li.scenePoint {
 }
 
 .bandImage {
-  width: 200px;
-  height: 140px;
-  float:left;
+  width: 250px;
+  height: 190px;
   object-fit: cover;
   margin-right: 20px;
   border-radius: 10px;
@@ -341,7 +347,6 @@ li.scenePoint {
   justify-content: center;
   align-items: center;
 }
-
 
 
 .keyConcertInfo, .concertDetails {
@@ -465,4 +470,8 @@ li.scenePoint {
 
 .centeredText {
   text-align: center;
+}
+
+.nokkelinfo {
+  width: 50%;
 }
