@@ -1082,11 +1082,11 @@ case 'getBandInfo':
     }
 
     /*
-    [3] Tidligere konserter band har spilt på
+    [4] Presseomtaler fra media
      */
 
     // Gjør klar sql-setning
-    $query5 = "SELECT link
+    $query5 = "SELECT link, link_text
         FROM band_presseomtale
         WHERE bid = ?";
 
