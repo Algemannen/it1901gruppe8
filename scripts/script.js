@@ -86,7 +86,7 @@ $(document).ready(function(){
                     $('#username').html(user.name);
                     search();
                     getListOfTechnicalNeeds(user);
-                    getListOfBandsAndScenes();
+                    getOfferFormInfo();
                     injectOffers(user);
                 }});
                 break;

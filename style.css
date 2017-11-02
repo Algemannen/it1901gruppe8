@@ -67,7 +67,7 @@ width:80%;
 min-height:180px;
 border:1px solid gray;
 position:relative;
-margin:50px auto 100px;
+margin:50px auto;
 padding:12px;
 }
 
@@ -224,7 +224,6 @@ padding:8px 20px;
 
 #resultlist,#bandliste {
 width:25%;
-height:450px;
 background-color:#E3E3E3;
 color:#000;
 overflow-y:scroll;
@@ -259,10 +258,17 @@ width:40px;
 #informationlist,#bandinformasjon {
 border:1px solid gray;
 width:70%;
-height:450px;
 background-color:#E3E3E3;
 color:#000;
 overflow-y:scroll;
+}
+
+#bandinformasjon, #bandliste {
+  height: calc(100vh - 100px - 135px);
+}
+
+#resultlist, #informationlist {
+  height: calc(100vh - 100px - 235px);
 }
 
 #results,#band {
@@ -289,12 +295,11 @@ background:rgba(0,0,0,0.4);
 }
 
 .bandImage {
-width:200px;
-height:140px;
-float:left;
-object-fit:cover;
-margin-right:20px;
-border-radius:10px;
+  width: 250px;
+  height: 190px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 10px;
 }
 
 #informationlist a,#bandinformasjon a {
@@ -509,6 +514,11 @@ margin-left:10px;
     background-color:#E3E3E3;
     color: black;
 }
+
+.nokkelinfo {
+  width: 50%;
+}
+
 .disabledButton{
     background-color: rgba(190,190,190,0.6);
     pointer-events: none;
