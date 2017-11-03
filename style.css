@@ -402,10 +402,11 @@ margin-top:0;
 
 .manager_buttons {
 position:absolute;
-bottom:35px;
+bottom:50%;
 right:10px;
 text-align:center;
 width:20%;
+transform: translateY(50%);
 }
 
 .manager_buttons button {
