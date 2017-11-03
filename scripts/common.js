@@ -394,29 +394,33 @@ function deleteOffer(obj) {
     });
 }
 
+
 // Henter informasjon om band eller konsert
 function getSearchInfo(searchtype, id, container, bruker) {
     $(container).empty();
 
+    // Finner ut om band-info eller konsert-info skal hentes
     if (searchtype === 'band' | searchtype === 'scene') {
         $.ajax({ url: '/database.php?method=getBandInfo',
             data: {bid: id},
             type: 'post',
             success: function(output) {
                 l = safeJsonParse(output); //gjør en try-catch sjekk.
+
+                // Lager overskrift til band
                 let bandOverskrift = $("<h2></h2>").text(l[0][0].navn).addClass("centeredText");
                 $(container).append(bandOverskrift);
 
-                //Lager HTML-kode for nøkkelinformasjon om band
+                // Lager HTML-kode for nøkkelinformasjon om band
                 createBandInfoHTML(l[0], container);
 
                 // Lager HTML-kode til albuminformasjon
                 if (l[2].length > 0  && searchtype === 'band') { createAlbumListHTML(l[2], container); }
 
-                // Lager HTML-kode til tidligere konserter
+                // Lager HTML-kode til tidligere konserter dersom bruker er bookingansvarlig
                 if (l[3].length > 0 && bruker.type === 4) { createOldConcertListHTML(l[3], container); }
 
-                //Lager HTML-kode for presseomtaler
+                //Lager HTML-kode for presseomtaler dersom bruker er PR-ansvarlig
                 if (l[4].length > 0 && bruker.type === 6) { createMediaReviewHTML(l[4], container); }
             },
             error: function(xmlhttprequest, textstatus, message) {
@@ -428,6 +432,8 @@ function getSearchInfo(searchtype, id, container, bruker) {
                 }
             }
         })}
+
+    // Dersom container skal fylles med konsert-info
     else {
 
         $.ajax({ url: '/database.php?method=getOldConcertInfo',
@@ -439,9 +445,13 @@ function getSearchInfo(searchtype, id, container, bruker) {
                 //Lager HTML-kode for Konserten
                 createConcertInfoHTML(l[0], container);
 
+                // Lager økonomisk rapport for konserten dersom bruker er bookingansvarlig
                 if (bruker.type === 4) {
                   createConcertDetailsHTML(l[0], container);
-                } else if (bruker.type === 6) {
+                }
+
+                // Legger inn band-informasjon dersom bruker er PR-ansvarlig
+                else if (bruker.type === 6) {
                   let bandOverskrift = $("<h3></h3>").text(l[0].bnavn).addClass("centeredText");
                   $(container).append(bandOverskrift);
                   createBandInfoHTML(l, container);
@@ -489,6 +499,7 @@ function createAlbumListHTML(list, container) {
     albumHeader.append(albumHeaderNavn, albumHeaderAar, albumHeaderSalg);
     albumTable.append(albumHeader);
 
+    // Legger inn alle radene i tabellen
     for (i in list) {
         let tableRow = $("<tr></tr>");
         let albumNavn = $("<td></td>").text(list[i].navn);
@@ -515,6 +526,7 @@ function createOldConcertListHTML(list, container) {
       konsertHeader.append(konsertHeaderNavn, konsertHeaderLokasjon, konsertHeaderDato, konsertHeaderTilskuere);
       konsertTable.append(konsertHeader);
 
+      // Legger inn alle radene i tabellen
       for (i in list) {
           let tableRow = $("<tr></tr>");
           let konsertNavn = $("<td></td>").text(list[i].navn);
@@ -534,8 +546,9 @@ function createMediaReviewHTML(list, container) {
     let omtaleOverskrift = $("<h3></h3>").text("Presseomtaler").addClass("centeredText");
     omtaleDiv.append(omtaleOverskrift);
 
+    // Lister opp alle linkene
     for (i in list) {
-      let link = $("<a target='_blank'></a><br>").attr('href', list[i].link).text(list[i].link);
+      let link = $("<a target='_blank'></a><br>").attr('href', list[i].link).text(list[i].link_text);
       omtaleDiv.append(link);
     }
     $(container).append(omtaleDiv);

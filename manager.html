@@ -1,16 +1,23 @@
+<!-- Formateringside for manager-->
 <div class=content>
 	<button class = "logout_button">Logg ut</button>
 
 	<p>Manager: <span id="username"></span></p>
 	<div id="sa">
+
+	<!-- Faneknapper -->
 	<button class="faneknapp" id="booking_behov_knapp" style="background:rgba(0,0,0,0.4)">Tekniske behov</button>
 	<button class="faneknapp tilbuds_notifikasjon" id="booking_tilbud_knapp" style="background:rgba(255,255,255,0.4)">Tilbud</button>
 
+	<!-- Fane for tekniske behov -->
 	<span id="booking_behov_fane">
+
+			<!-- Liste over tekniske behov -->
 			<div id="komplett_liste_over_tekniske_behov">
 				<h2>Liste over tekniske behov</h2>
-
 			</div>
+
+			<!-- Skjema for registrering av nye tekniske behov -->
 			<span class="needs_container" style="display:none">
 					<h2 class="leggTilTekniskeBehov">Legg til tekniske behov</h2>
 					<div class="needs" style="width: 95%;">
@@ -21,8 +28,10 @@
 			</span>
 	</span>
 
+	<!-- Fane for tilbud -->
 	<span id="booking_tilbud_fane" style="display:none">
 
+		<!-- Liste over tilbud -->
 		<div id ="manager_tilbud"></div>
 
 	</span>

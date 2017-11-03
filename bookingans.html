@@ -1,13 +1,17 @@
+<!-- Formateringside for bookingansvarlig -->
 <div class=content>
     <button class = "logout_button">Logg ut</button>
     <p>Bookingansvarlig: <span id="username"></span></p>
     <div>
+        <!-- Faneknapper -->
         <button class="faneknapp" id="sok_knapp">Søk</button>
         <button class="faneknapp" id="tekniskebehov_knapp">Tekniske behov</button>
         <button class="faneknapp" id="bookingtilbud_knapp">Bookingtilbud</button>
 
-
+        <!-- Fane for søk -->
         <div class="fane" id="sok">
+
+            <!-- Inputfelt for søk -->
             <div class="sokeinput">
                 <input type="text" name="tekstinput" placeholder="Søk etter..." id="textinput">
                 <button type="button" id="sokebutton">Søk</button><br>
@@ -16,20 +20,27 @@
                 <input type="radio" name="type" value="scene" id="radioScene"><label for="radioScene">Scene</label><br>
             </div>
             <br>
+
+            <!-- Resultat-containers for søk -->
             <div id="results">
                 <div id="resultlist"></div>
                 <div id="informationlist"></div>
             </div>
         </div>
 
+        <!-- Fane for tekniske behov -->
         <div class="fane" id="tekniskebehov"></div>
 
+        <!-- Fane for bookingtilbud -->
         <div class="fane" id="bookingtilbud">
 
+            <!-- Skjema for innsending av tilbud -->
             <div class="sendNyttTilbud">
               <h2>Send nytt tilbud!</h2>
 
               <div class="tilbudInputs">
+
+                <!-- Input dato og beløp -->
                 <div>
                   <label for="dato">Dato:</label>
                   <input type="date" id="tilbudDato"><br><br>
@@ -37,6 +48,7 @@
                   <input type="number" id="tilbudBeløp">
                 </div>
 
+                <!-- Input start- og sluttid -->
                 <div>
                   <label for="starttid">Start-tid:</label>
                   <input type="time" id="tilbudStarttid" value="18:00"><br><br>
@@ -44,6 +56,7 @@
                   <input type="time" id="tilbudSluttid" value="21:00">
                 </div>
 
+                <!-- Input scene- og bandvalg -->
                 <div>
                   <label for="sceneSelect">Scene:</label>
                   <select id="sceneSelect" required></select><br><br>
@@ -52,6 +65,8 @@
                 </div>
               </div>
               <br>
+
+              <!-- Skjema-knapper -->
               <div class="tilbudButtons">
                 <button id="sendOfferButton">Send Tilbud</button>
                 <button id="resetOfferButton">Reset</button>
@@ -60,6 +75,7 @@
 
             </div>
 
+            <!-- Liste over registrerte tilbud -->
             <div id="manager_tilbud">
             </div>
 

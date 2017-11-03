@@ -271,7 +271,7 @@ overflow-y:scroll;
   height: calc(100vh - 100px - 235px);
 }
 
-#results,#band {
+#results,#pr_ansvarlig_oversikt {
 display:flex;
 width:90%;
 justify-content:space-between;
@@ -481,7 +481,7 @@ text-align:center;
     border: 1px solid #565656;
     margin: 10px;
     position: relative;
-    min-height: 26px;
+    min-height: 32px;
 }
 .calenderButton{
     position: absolute;
@@ -491,15 +491,20 @@ text-align:center;
     border: rgba(0,0,0,1);
     border-width: 1px;
     border-style: solid;
+    margin-top: 3px;
+    margin-right: 3px;
 }
 .headlineStatus{
     position: absolute;
     left: 15%;
+    margin-top: 4px;
 }
 .calenderHeadline{
     display:inline-block;
     float:left;
     margin-right: 10px;
+    margin-left: 5px;
+    margin-top: 3px;
 }
 
 .listofscenesForCalender{

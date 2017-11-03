@@ -1,4 +1,5 @@
-function bookingsjeffane(index) {  //Visning og skjuling av divs for å vise korrekt info for fanesystemet
+//Visning og skjuling av divs for å vise korrekt info for fanesystemet
+function bookingsjeffane(index) {
     if (index=="0") { //Viser den økonomiske rapporten
         $("#listofscenes").show();
         $("#ecorapport_knapp").css("background",selectedcolor);
@@ -45,7 +46,8 @@ function bookingsjeffane(index) {  //Visning og skjuling av divs for å vise kor
     }
 }
 
-function getListOfScenesForBookingSjef(bruker) { //Starter oppbygging av hele den økonomiske rapporten. Henter scenelistene.
+//Starter oppbygging av hele den økonomiske rapporten. Henter scenelistene.
+function getListOfScenesForBookingSjef(bruker) {
 
     l = [];
 
@@ -108,7 +110,8 @@ function getListOfConcertesBySceneForBookingSjef(bruker, scene) { //Bygger scene
     });
 }
 
-function BSbuildConcertReport(kid, sname, container){ //Setter inn inforasjon i økonomisk rapport til bookingsjef
+//Setter inn inforasjon i økonomisk rapport til bookingsjef
+function BSbuildConcertReport(kid, sname, container){
 
   $.ajax({ url: '/database.php?method=getConcertReport',
       data: {cid : kid , fid:current_fid},
@@ -152,6 +155,7 @@ function BSbuildConcertReport(kid, sname, container){ //Setter inn inforasjon i 
 }
 
 
+// Gir prisforslag på alle scener til konserter uten registrert billettpris
 function concertPricing(){
   let l = [];
 
@@ -163,6 +167,8 @@ function concertPricing(){
     let container = $("<div></div>").attr('id', 'prisgenerering');
     let overskrift = $("<h2></h2>").text("Prisgenerering");
     container.append(overskrift);
+
+    // Legger HTML-kode for hver konsert i listen
     for (i in l[0]){
       let konsertDiv = $("<div></div>");
       let konsertHeader = $("<h4></h4>").text(l[0][i].knavn);
@@ -190,7 +196,8 @@ function concertPricing(){
 });
 }
 
-function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
+//Bygger en liste for dager i konserten.
+function createListOfConcertDays(){
 
     $.ajax({ url: '/database.php?method=getListOfConcertDays',
         data: {fid: current_fid},
@@ -293,7 +300,7 @@ function getConcertsForCalender(){
                     $(statusID).css('display','none')
                     // Bygger opp elementene som skal vises fra konserten
                     let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
-                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
+                    let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn).addClass('unknown').addClass("statusMessages");
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
@@ -323,7 +330,7 @@ function getConcertsForCalender(){
                     }
 
                     // Legger inn informasjon inn i en div som gjør det mulig å skjule den
-                    $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
+                    $(concertCalenderDiv).append(concertCalenderName, '<br /> <br />', concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics, '<br />');
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
                 }
