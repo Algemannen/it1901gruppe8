@@ -160,7 +160,6 @@ $(document).ready(function(){
 
     // Logger ut, for nå så laster den bare siden på nytt
     function logout() {
-        console.log("Logout");
         location.reload();
     }
 
@@ -242,9 +241,6 @@ $(document).ready(function(){
         let kid = manager_kid;
         let tittel = $("#title_field").val();
         let desc = $("#description_field").val();
-        console.log("KID: "+kid);
-        console.log("Tittel: "+tittel);
-        console.log("Desc.: "+desc);
         $("#title_field").val('');
         $("#description_field").val('');
 

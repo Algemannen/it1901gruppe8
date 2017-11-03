@@ -33,7 +33,6 @@ function addNeedsForTechs(bruker, concert, title, needs) {
         data: {username:user.name, usertype:user.type, concertid:concert.kid, title:title, needs:needs},
         type: 'post',
         success: function(output) {
-            console.log(output);
 
 
         },
@@ -81,7 +80,6 @@ function deleteTechinalNeed(tbid) {
         data: {tbid:tbid},
         type: 'post',
         success: function(output) {
-            console.log("Database delete entry: "+tbid);
             $("#komplett_liste_over_tekniske_behov").empty();
             injectListOfAllNeeds();
 
@@ -106,7 +104,6 @@ function registerConcertNeed(kid,title,desc) {
         data: {concertid:kid, behov:desc, tittel:title},
         type: 'post',
         success: function(output) {
-            console.log("Database insert: "+kid+", "+title+", "+desc);
             $("#komplett_liste_over_tekniske_behov").empty();
             injectListOfAllNeeds();
 
@@ -120,4 +117,3 @@ function registerConcertNeed(kid,title,desc) {
         }
     });
 }
-

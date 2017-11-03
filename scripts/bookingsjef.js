@@ -205,8 +205,6 @@ function createListOfConcertDays(){
         type: 'post',
         success: function(output) {
             let l = safeJsonParse(output);
-            console.log(l);
-
 
             //Her hentes det ut informasjon om start og sluttdatoer
             let startdate = l.startDag;

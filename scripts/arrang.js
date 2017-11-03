@@ -14,7 +14,6 @@ function getListOfScenes(bruker) {
         data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let container = $("<div></div>").addClass("scenelist");
