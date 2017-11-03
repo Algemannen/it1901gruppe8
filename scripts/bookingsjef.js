@@ -199,10 +199,12 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
             let l = safeJsonParse(output);
             console.log(l);
 
+
+            //Her hentes det ut informasjon om start og sluttdatoer
             let startdate = l.startDag;
             let sluttdate = l.sluttDag;
 
-
+            //Endrer format av datoobjektene for å bedre presentere dem
             let dateArray = [];
             let date = new Date(startdate);
             let e = new Date(sluttdate);
@@ -213,12 +215,13 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
               date = new Date(date.setDate(date.getDate() + 1));
             }
 
-
+            //Bygger opp generell kode for siden
             let headline = $("<h2></h2>").text('Kalender').addClass('brukeroverskrift');
             let calscenelist = $("<div></div>").attr('id', 'kalender')
             $('#divBS').append(calscenelist);
             let calcontainer = $("<div></div").addClass("calscenes")
 
+            //Looper gjennom alle datoer for å skape datoelementer
             for(let i = 0; i < dateArray.length; i++){
                 let calenderText = dateArray[i].toString();
                 let calenderText2 = calenderText.substr(0,16);
@@ -235,7 +238,10 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
                 calenderItemsDiv.append(mainCalenderHeadline, concertButton, temp);
                 $(calcontainer).append(calenderItemsDiv);
             }
+            //Kjører funksjoner for appending av informasjon til datoer.
+            //Henter først ut konserter som er satt
             getConcertsForCalender();
+            //Henter ut tilbud
             getOffersForCalender();
             $('#kalender').append(headline, calcontainer);
 
@@ -251,7 +257,10 @@ function createListOfConcertDays(){ //Bygger en liste for dager i konserten.
     });
 }
 
-Date.prototype.yyyymmdd = function() {  //Hentet fra https://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+
+ //Hentet fra https://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+ //Brukes til reformatering av datoen for å kunne bruke den som ID
+Date.prototype.yyyymmdd = function() {
   var mm = this.getMonth() + 1; // getMonth() is zero-based
   var dd = this.getDate();
 
@@ -261,6 +270,8 @@ Date.prototype.yyyymmdd = function() {  //Hentet fra https://stackoverflow.com/q
          ].join('');
 };
 
+
+//Appender konserter inn i kalenderen
 function getConcertsForCalender(){
     let l = [];
 
@@ -270,21 +281,25 @@ function getConcertsForCalender(){
         success: function(output) {
             l = safeJsonParse(output);
             for(i in l){
+                // Henter ut elementene basert på ID for å sjekke om det skal bygges på denne datoen
                 let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
                 if(element){
+                    // Henter ut IDer for å gjemme standardstatus når det ikke er noe planlagt den dagen
                     let knappID = '#knapp' +new Date(l[i].dato).yyyymmdd()
                     $(knappID).removeAttr('disabled').removeClass('disabledButton');
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
                     $(standardID).css('display','none');
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
                     $(statusID).css('display','none')
+                    // Bygger opp elementene som skal vises fra konserten
                     let concertCalenderDiv = $('<div></div>').addClass('CalenderDiv');
                     let concertCalenderName = $('<p></p>').text(l[i].navn + ' | ' + l[i].knavn);
                     let concertCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let concertCalenderSjanger = $('<p></p>').text(l[i].sjanger);
                     let concertCalenderScene = $('<p></p>').text(l[i].snavn);
-                    let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: ' + l[i].billettpris);
 
+                    // Sjekker for nullverdier
+                    let concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: ' + l[i].billettpris);
                     if(!(l[i].billettpris)){
                         concertCalenderEconomics = $('<p></p>').text('Kostnad: ' + l[i].kostnad + ' | Tilskuere: ' + l[i].tilskuere + ' | Billettpris: Ikke tilgjengelig');
                     }
@@ -307,7 +322,7 @@ function getConcertsForCalender(){
                         concertCalenderEconomics = $('<p></p>').text('Kostnad: Ikke tilgjengelig' + ' | Tilskuere: Ikke tilgjengelig' + ' | Billettpris: Ikke tilgjengelig');
                     }
 
-
+                    // Legger inn informasjon inn i en div som gjør det mulig å skjule den
                     $(concertCalenderDiv).append(concertCalenderName, concertCalenderScene,concertCalenderTime, concertCalenderSjanger, concertCalenderEconomics);
                     let dateID = '#' +new Date(l[i].dato).yyyymmdd() ;
                     $(dateID).append(concertCalenderDiv);
@@ -332,15 +347,17 @@ function getOffersForCalender() {
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output);
-            console.log(l);
+            // Går gjennom alle elemente basert på dato så vi kan sjekke om det finnes tilbud på aktuell dato.
             for(i in l){
                 let element = document.getElementById(new Date(l[i].dato).yyyymmdd());
+                // gjennomføring av sjekk for om det eksisterer noe denne datoen
                 if(element){
                     let knappID = '#knapp' +new Date(l[i].dato).yyyymmdd()
                     $(knappID).removeAttr('disabled').removeClass('disabledButton');
                     let offerCalenderStatusMessage;
                     let offerCalenderDiv = $('<div></div>').addClass('CalenderDiv').addClass('concertInfo');
 
+                    // For å sette rett status basert på bitflag - så vi vet korrekt status
                     switch(l[i].status){
                         case 0:
                             offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Tilbud sendt fra Bookingansvarlig').addClass('partial-accept');
@@ -352,11 +369,17 @@ function getOffersForCalender() {
                             offerCalenderStatusMessage = $('<p></p>').text(l[i].navn + ' | Godkjent av manager').addClass('accept');
                             break;
                     }
+
+                    //class for css
                     offerCalenderStatusMessage.addClass("statusMessages");
+
+                    //skjule ikke brukt informasjon
                     let standardID = '#Standard' +new Date(l[i].dato).yyyymmdd() ;
                     $(standardID).css('display','none');
                     let statusID = '#Status' +new Date(l[i].dato).yyyymmdd() ;
                     $(statusID).css('display','none');
+
+                    //legger inn informasjon
                     let offerCalenderTime = $('<p></p>').text(l[i].start_tid + ' - ' + l[i].slutt_tid );
                     let offerCalenderScene = $('<p></p>').text(l[i].snavn);
                     $(offerCalenderDiv).append(offerCalenderStatusMessage, '<br />', '<br />', offerCalenderScene, offerCalenderTime, '<br />');
