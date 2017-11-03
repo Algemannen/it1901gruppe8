@@ -124,6 +124,7 @@ function BSbuildConcertReport(kid, sname, container){
           listContainer.append('<br>');
           for (i in l) {
 
+              let sjanger = $("<span></span><br>").text('Sjanger: ' + l[i].sjanger);
               let kostnad = $("<span></span><br>").text('Kostnad: ' + l[i].kostnad);
               let billettpris = $("<span></span><br>").text('Billettpris: ' + l[i].billettpris );
               let EcResult = $("<span></span><br>").text('Økonomisk resultat: ' + ((l[i].billettpris * l[i].tilskuere) - l[i].kostnad));
@@ -139,7 +140,7 @@ function BSbuildConcertReport(kid, sname, container){
                 EcResult = $("<span></span><br>").text('Økonomisk resultat: Utilgjengelig');
                 inntekt = $("<span></span><br>").text('Inntekt: Utilgjengelig');
               }
-              listContainer.append(kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
+              listContainer.append(sjanger, kostnad, billettpris, tilskuere, inntekt,  EcResult, '<br>');
           }
           $(container).append(listContainer);
 
