@@ -167,7 +167,6 @@ function validateOfferData(){
 
 // Funksjon for å lagre tilbud i database. Funksjonen antar korrekt info
 function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
-    console.log(dato, starttid, sluttid, beløp, scene, band, bruker.id);
 
     $.ajax({ url: '/database.php?method=insertOffer',
         data: {dato: dato, start_tid: starttid, slutt_tid: sluttid, pris: beløp, sid: scene, bid: band, sender_uid: bruker.id},
