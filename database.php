@@ -820,7 +820,7 @@ case 'search':
 
         /// Søker konserter i databasen etter sjanger
     case 'konsert':
-        $query = "SELECT knavn AS navn, kid AS id FROM konsert WHERE NOT fid = ? AND sjanger LIKE ?";
+        $query = "SELECT knavn AS navn, kid AS id, sjanger AS columnTwo FROM konsert WHERE NOT fid = ? AND sjanger LIKE ?";
 
         $stmt = $dbconn->stmt_init();
 
@@ -866,7 +866,7 @@ case 'search':
 
         /// Søker etter band i databasen etter scene
     case 'scene':
-        $query = "SELECT DISTINCT b.navn, b.bid AS id
+        $query = "SELECT DISTINCT b.navn, b.bid AS id, s.navn AS columnTwo
             FROM band b
             INNER JOIN konsert_band kb ON kb.bid = b.bid
             INNER JOIN konsert k ON k.kid = kb.kid
@@ -927,7 +927,7 @@ case 'getBandInfo':
      */
 
 
-    $query1 = "SELECT navn, bio, popularitet, sjanger, fornavn, etternavn, email, bilde_url
+    $query1 = "SELECT navn, bio, popularitet, sjanger AS bsjanger, fornavn, etternavn, email, bilde_url
         FROM band b
         INNER JOIN bruker br ON b.manager_uid = br.uid
         WHERE b.bid = ?";
@@ -961,48 +961,9 @@ case 'getBandInfo':
         $stmt1->close();
     }
 
-    /*
-    [1] Medialinker tilhørende band (youtube?)
-     */
-
-    // Gjør klar sql-setning
-    $query2 = "SELECT *
-        FROM band_strommelinker
-        WHERE bid = ?
-        ORDER BY  visninger DESC";
-
-    // Gjør klar objekt for spørring
-    $stmt2 = $dbconn->stmt_init();
-
-    // Gjør klar spørringen for databsen
-    if(!$stmt2->prepare($query2)) {
-        header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
-    } else {
-
-        // Bind konsertid som heltall
-        $stmt2->bind_param('i', $bid);
-
-        // Leser inn band id
-        $bid = $_POST['bid'];
-
-        // Utfør sql-setning
-        $stmt2->execute();
-
-        // Henter resultat fra spørring
-        $result2 = $stmt2->get_result();
-
-        // Hent ut alle rader fra en spørring
-        $encode2 = array();
-        while ($row2 = $result2->fetch_assoc()) {
-            $encode2[] = $row2;
-        }
-
-        // Avslutt sql-setning
-        $stmt2->close();
-    }
 
     /*
-    [2] Album spilt inn av band
+    [1] Album spilt inn av band
      */
 
     // Gjør klar sql-setning
@@ -1042,7 +1003,7 @@ case 'getBandInfo':
     }
 
     /*
-    [3] Tidligere konserter band har spilt på
+    [2] Tidligere konserter band har spilt på
      */
 
     // Gjør klar sql-setning
@@ -1082,7 +1043,7 @@ case 'getBandInfo':
     }
 
     /*
-    [4] Presseomtaler fra media
+    [3] Presseomtaler fra media
      */
 
     // Gjør klar sql-setning
@@ -1123,7 +1084,7 @@ case 'getBandInfo':
 
 
     // Koder bandinformasjon til liste over javascriptobjekter
-    echo ("[" . json_encode($encode1) . "," . json_encode($encode2) . "," .json_encode($encode3) . "," . json_encode($encode4) . "," . json_encode($encode5) . "]");
+    echo ("[" . json_encode($encode1) . "," . json_encode($encode3) . "," . json_encode($encode4) . "," . json_encode($encode5) . "]");
 
     break;
 /*
@@ -1213,7 +1174,7 @@ case 'getOldConcertInfo' :
 
     $query = "SELECT knavn, k.dato, k.tilskuere, k.billettpris, b.navn AS bnavn, s.navn, s.maks_plasser,
         k.kostnad, k.start_tid, k.slutt_tid, k.sjanger, b.bio, b.bilde_url,
-        b.popularitet, b.sjanger, br.fornavn, br.etternavn, br.email
+        b.popularitet, b.sjanger AS bsjanger, br.fornavn, br.etternavn, br.email
         FROM konsert k
         INNER JOIN konsert_band kb ON k.kid =kb.kid
         INNER JOIN band b ON b.bid = kb.bid

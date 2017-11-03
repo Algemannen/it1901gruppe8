@@ -81,18 +81,40 @@ function search() {
             if (l.length > 0) {
                 let table = $("<table></table>");
 
-                // Legger inn alle resultater som rader i en tabell
-                for (i in l) {
-                    let tableRow = $("<tr></tr>");
-                    let obj = [searchType, l[i].id];
-                    let tableElementNavn = $("<td></td>").text(l[i].navn).addClass("bookingnavnsok").val(obj);
-                    tableRow.append(tableElementNavn);
-                    table.append(tableRow);
-                    $("#resultlist").append(table);
-
+                // Lager tableHeader dersom søkefunksjon trenger flere kolonner
+                if(!(searchType === 'band')){
+                  let tableHeader = $("<tr></tr>");
+                  let tableHeaderNavn = $("<th></th>").text("Navn");
+                  let tableHeaderColumnTwo = $("<th></th>");
+                  if (searchType === 'konsert') {
+                    tableHeaderColumnTwo.text("Sjanger");
+                  } else {
+                    tableHeaderColumnTwo.text("Scene");
+                  }
+                  tableHeader.append(tableHeaderNavn, tableHeaderColumnTwo);
+                  table.append(tableHeader);
                 }
 
-                // Første treff skal velges som standard
+                // Legger inn alle resultater som rader i en tabell
+                for (i in l) {
+                    let obj = [searchType, l[i].id];
+                    let tableRow = $("<tr></tr>").addClass("bookingnavnsok").val(obj);  
+                    let tableElementNavn = $("<td></td>").text(l[i].navn);
+
+
+                    // Dersom søkeresultater trenger flere kolonner
+                    if(!(searchType === 'band')) {
+                      let tableElementColumnTwo = $("<td></td>").text(l[i].columnTwo);
+                      tableRow.append(tableElementNavn, tableElementColumnTwo);
+                    } else {
+                      tableRow.append(tableElementNavn);
+                    }
+
+                    table.append(tableRow);
+                }
+                $("#resultlist").append(table);
+
+                // Første treff skal velges som default
                 $('.bookingnavnsok').first().trigger('click');
             }
 

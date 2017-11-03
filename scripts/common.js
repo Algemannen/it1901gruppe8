@@ -415,13 +415,13 @@ function getSearchInfo(searchtype, id, container, bruker) {
                 createBandInfoHTML(l[0], container);
 
                 // Lager HTML-kode til albuminformasjon
-                if (l[2].length > 0  && searchtype === 'band') { createAlbumListHTML(l[2], container); }
+                if (l[1].length > 0  && searchtype === 'band') { createAlbumListHTML(l[1], container); }
 
                 // Lager HTML-kode til tidligere konserter dersom bruker er bookingansvarlig
-                if (l[3].length > 0 && bruker.type === 4) { createOldConcertListHTML(l[3], container); }
+                if (l[2].length > 0 && bruker.type === 4) { createOldConcertListHTML(l[2], container); }
 
                 //Lager HTML-kode for presseomtaler dersom bruker er PR-ansvarlig
-                if (l[4].length > 0 && bruker.type === 6) { createMediaReviewHTML(l[4], container); }
+                if (l[3].length > 0 && bruker.type === 6) { createMediaReviewHTML(l[3], container); }
             },
             error: function(xmlhttprequest, textstatus, message) {
                 if(textstatus==="timeout") {
@@ -477,7 +477,7 @@ function createBandInfoHTML(list, container) {
   let popularitetUthevet = $("<span></span>").text("Popularitet: ").css('font-weight', 'bold');
   let popularitet = $("<span></span><br>").text(list[0].popularitet);
   let sjangerUthevet = $("<span></span>").text("Sjanger: ").css('font-weight', 'bold');
-  let sjanger = $("<span></span><br><br>").text(list[0].sjanger);
+  let sjanger = $("<span></span><br><br>").text(list[0].bsjanger);
   let manager = $("<span></span><br>").text("Manager Informasjon").css("font-weight", "bold");
   let managerFornavn = $("<span></span><br>").text(list[0].fornavn + " " + list[0].etternavn);
   let managerEmail = $("<span></span>").text(list[0].email);

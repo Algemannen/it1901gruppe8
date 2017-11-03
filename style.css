@@ -229,6 +229,10 @@ color:#000;
 overflow-y:scroll;
 }
 
+#resultlist {
+  width: 30% !important;
+}
+
 #resultlist table,.albumsalg table,.tidligereKonserter table,#bandliste table {
 width:100%;
 border-collapse:collapse;
@@ -251,10 +255,6 @@ background-color:#D8D8D8;
 cursor:pointer;
 }
 
-#resultlist .shortColumn, {
-width:40px;
-}
-
 #informationlist,#bandinformasjon {
 border:1px solid gray;
 width:70%;
@@ -263,17 +263,21 @@ color:#000;
 overflow-y:scroll;
 }
 
+#informationlist {
+  width: 68% !important;
+}
+
 #bandinformasjon, #bandliste {
   height: calc(100vh - 100px - 135px);
 }
 
 #resultlist, #informationlist {
-  height: calc(100vh - 100px - 235px);
+  height: calc(100vh - 170px - 235px);
 }
 
 #results,#pr_ansvarlig_oversikt {
 display:flex;
-width:90%;
+width:95%;
 justify-content:space-between;
 margin:auto;
 }
@@ -534,4 +538,8 @@ margin-left:10px;
     left: 0;
     width: calc(100% - 2px);
     text-align: center;
+}
+
+.noBottomMargins {
+  margin-bottom: 0;
 }
