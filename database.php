@@ -1141,7 +1141,7 @@ case 'getBandInfo':
 
     /// Henter informasjon for økonomisk rapport om en konsert fra databasen
 case 'getConcertReport':
-    $query = "SELECT konsert.tilskuere, konsert.billettpris, konsert.kostnad
+    $query = "SELECT konsert.tilskuere, konsert.billettpris, konsert.kostnad, konsert.sjanger
         FROM konsert
         INNER JOIN scene ON konsert.sid = scene.sid
         INNER JOIN konsert_band ON konsert.kid = konsert_band.kid

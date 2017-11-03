@@ -177,6 +177,8 @@ function sendOffer(dato, starttid, sluttid, beløp, scene, band, bruker){
 
             // Nullstiller skjema
             resetOfferData();
+
+            injectOffers(user);
         },
         error: function(xmlhttprequest, textstatus, message) {
             if(textstatus==="timeout") {
