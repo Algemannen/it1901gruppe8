@@ -11,13 +11,15 @@
         <!-- Fane for søk -->
         <div class="fane" id="sok">
 
+            <h2 class="centeredText">Søk i databasen</h2>
+
             <!-- Inputfelt for søk -->
             <div class="sokeinput">
-                <input type="text" name="tekstinput" placeholder="Søk etter..." id="textinput">
-                <button type="button" id="sokebutton">Søk</button><br>
-                <input type="radio" name="type" value="konsert" id="radioKonsert"><label for="radioKonsert">Sjanger på tidligere konserter</label> <br>
-                <input type="radio" name="type" value="band" id="radioBand" checked><label for="radioBand">Band</label><br>
-                <input type="radio" name="type" value="scene" id="radioScene"><label for="radioScene">Scene</label><br>
+                <input type="radio" name="type" value="konsert" id="radioKonsert" class="searchRadioButton"><label for="radioKonsert">Sjanger på tidligere konserter</label> <br>
+                <input type="radio" name="type" value="band" id="radioBand" class="searchRadioButton" checked><label for="radioBand">Band</label><br>
+                <input type="radio" name="type" value="scene" id="radioScene" class="searchRadioButton"><label for="radioScene">Scene</label><br>
+                <input type="text" name="tekstinput" placeholder="Filtrer etter..." id="textinput">
+                <button type="button" id="sokebutton">Oppdater</button><br>
             </div>
             <br>
 

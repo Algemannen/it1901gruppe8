@@ -212,7 +212,7 @@ margin:auto;
 }
 
 .sokeinput input[type="text"] {
-width:calc(100%-60px);
+width: calc(100% - 95px);
 display:inline-block;
 border:1px solid gray;
 border-radius:4px;
