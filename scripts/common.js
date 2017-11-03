@@ -472,7 +472,7 @@ function createBandInfoHTML(list, container) {
   let bandInfo = $("<div></div>").addClass("bandInfo");
   let bandInformation = $("<div></div>").addClass("nokkelinfo");
   let bandImage = $('<img class="bandImage"/>').attr('src', list[0].bilde_url.replace("\/", "/"));
-  let bioUthevet = $("<span></span>").text("Bio: ").css('font-weight', 'bold');
+  let bioUthevet = $("<span></span>").text("Omtale: ").css('font-weight', 'bold');
   let bio = $("<span></span><br>").text(list[0].bio);
   let popularitetUthevet = $("<span></span>").text("Popularitet: ").css('font-weight', 'bold');
   let popularitet = $("<span></span><br>").text(list[0].popularitet);

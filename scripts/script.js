@@ -277,6 +277,12 @@ $(document).ready(function(){
         search();
     });
 
+    // Fang trykk på radioknapp på søkeside
+    $('body').on('change', ".searchRadioButton", function () {
+        $("#textinput").val('');
+        search();
+    });
+
     // Fang 'enter'-trykk fra søke-feltet
     $('body').on('keyup', "#textinput", function (e) {
         if (e.keyCode === 13) {

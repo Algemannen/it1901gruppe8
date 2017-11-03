@@ -11,6 +11,10 @@ font-family:Candara, Charcoal, sans-serif;
 color:#F0F0F0;
 }
 
+textarea {
+    font-family:Candara, Charcoal, sans-serif;
+}
+
 ul {
 list-style-type:none;
 }
@@ -45,11 +49,21 @@ outline:0;
 margin-bottom:19px;
 }
 
-.loginbox input,.loginbox button,.needs input,.needs textarea,.needs button {
+.loginbox input,.loginbox button {
 border:1px solid gray;
 background-color:rgba(0,0,0,.2);
 padding:8px 24px 8px 10px;
 }
+
+.needs input,.needs textarea,.needs button {
+    border:1px solid gray;
+    padding:8px 24px 8px 10px;
+}
+
+.needs input,.needs textarea {
+    color: black;
+}
+
 
 button.logout_button {
 position:absolute;
@@ -97,7 +111,7 @@ margin:0 auto;
 padding:20px 22px;
 }
 
-#password_field::placeholder,#username_field::placeholder,#title_field::placeholder,#description_field::placeholder {
+#password_field::placeholder,#username_field::placeholder {
 color:#FFF;
 opacity:0.7;
 }
@@ -212,7 +226,7 @@ margin:auto;
 }
 
 .sokeinput input[type="text"] {
-width:calc(100%-60px);
+width: calc(100% - 95px);
 display:inline-block;
 border:1px solid gray;
 border-radius:4px;
@@ -515,7 +529,7 @@ text-align:center;
 margin-left:10px;
 }
 
-.concertlist li, .behov li, div.behov, #prisgenerering div, .calenderItemsDiv {
+.concertlist li, .behov li, div.behov, #prisgenerering div, .calenderItemsDiv, .needs {
     background-color:#E3E3E3;
     color: black;
 }
