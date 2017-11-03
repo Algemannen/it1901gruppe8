@@ -174,15 +174,15 @@ function concertPricing(){
       let konsertDiv = $("<div></div>");
       let konsertHeader = $("<h4></h4>").text(l[0][i].knavn);
       let konsertBand = $("<span></span><br>").text("Band: " + l[0][i].bnavn);
-      let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[0][i].kostnad);
+      let konsertKostnad = $("<span></span><br>").text("Kostnad for band: " + l[0][i].kostnad + " kr.");
 
       let prisForslagByscenen = Math.ceil(l[0][i].kostnad*5 / l[1][0].maks_plasser);
       let prisForslagStorsalen = Math.ceil(l[0][i].kostnad*5 / l[1][1].maks_plasser);
       let prisForslagAmfiet = Math.ceil(l[0][i].kostnad*5 / l[1][2].maks_plasser);
-      let konsertPrisByscenen = $("<span></span><br>").text("Prisforslag Byscenen: " + prisForslagByscenen);
-      let konsertPrisStorsalen = $("<span></span><br>").text("Prisforslag Storsalen: " + prisForslagStorsalen);
-      let konsertPrisAmfiet = $("<span></span><br>").text("Prisforslag Amfiet: " + prisForslagAmfiet);
-      konsertDiv.append(konsertHeader, konsertBand, konsertKostnad, konsertPrisByscenen, konsertPrisStorsalen, konsertPrisAmfiet);
+      let konsertPrisByscenen = $("<span></span><br>").text("Prisforslag Byscenen: " + prisForslagByscenen + " kr.");
+      let konsertPrisStorsalen = $("<span></span><br>").text("Prisforslag Storsalen: " + prisForslagStorsalen + " kr.");
+      let konsertPrisAmfiet = $("<span></span><br>").text("Prisforslag Amfiet: " + prisForslagAmfiet + " kr.");
+      konsertDiv.append(konsertHeader, konsertBand,'<br />', konsertKostnad,'<br />', konsertPrisByscenen, konsertPrisStorsalen, konsertPrisAmfiet);
       container.append(konsertDiv);
     }
     $("#divBS").append(container);
