@@ -15,7 +15,6 @@ function setupServering(bruker) {
         data: {username: bruker.name, usertype: bruker.type},
         type: 'post',
         success: function(output) {
-            console.log(output);
             l = safeJsonParse(output); //gjør en try-catch sjekk.
 
             let container = $("<div></div>").addClass("scenelist");
@@ -75,7 +74,7 @@ function buildListOfConcertsS(list,scene) {
     let listContainer = $("<ul></ul>").addClass("concertlist");
     for (i in list) {
         let listPoint = $("<li></li>");
-        let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' + 
+        let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' +
             list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
         let sjangerServ = $("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0);
         let forventetPub = $("<p></p>").text('Forventet publikum: ' + list[i].tilskuere).css("margin", 0)
