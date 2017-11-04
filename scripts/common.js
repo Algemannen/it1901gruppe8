@@ -162,7 +162,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
             }
             listContainer.append('<br>');
             for (i in l) {
-                let tittel = $("<span></span>").text('Tittel: ').css('font-weight', 'bold');
+                let tittel = $("<span></span><br>").text('Tittel: ').css('font-weight', 'bold');
                 let tittel2 = $("<span></span><br>").text(l[i].tittel);
                 let behov2 = $("<span></span><br>").text(l[i].behov);
                 let behov = $("<span></span>").text('Beskrivelse: ').css('font-weight', 'bold');
