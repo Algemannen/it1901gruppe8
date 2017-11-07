@@ -5,8 +5,7 @@ Javascript-funksjonalitet for serveringsansvarlig
 */
 
 
-// getListOfScenesS
-
+// Henter inn liste med alle scener og sender disse videre for å hente konserter på hver av scenene
 function setupServering(bruker) {
 
     l = [];
@@ -20,6 +19,7 @@ function setupServering(bruker) {
             let container = $("<div></div>").addClass("scenelist");
             $('#listofscenes').append(container);
 
+            // Finner konserter basert på hver scene
             for (i in l) {
                 let scenediv = $("<ul></ul>").addClass("scene"+l[i].sid);
                 $('.scenelist').append(scenediv);
@@ -70,17 +70,23 @@ function getListOfConcertesBySceneS(bruker, scene) {
 
 }
 
+// Bygger opp innhold i konsert-elementene
 function buildListOfConcertsS(list,scene) {
     let listContainer = $("<ul></ul>").addClass("concertlist");
+
+    // Traverserer gjennom alle konsertene og bygger HTML-kode for de
     for (i in list) {
         let listPoint = $("<li></li>");
         let concertInfo = $("<p></p>").text(' ' + list[i].knavn +' | ' +
             list[i].dato +  ' | ' + list[i].start_tid + " - " + list[i].slutt_tid);
         let sjangerServ = $("<p></p>").text('Sjanger: ' + list[i].sjanger).css("margin", 0);
         let forventetPub = $("<p></p>").text('Forventet publikum: ' + list[i].tilskuere).css("margin", 0)
-         if(!(list[i].tilskuere)){
-                    forventetPub =  $("<span></span><br>").text('Forventet publikum: Ikke beregnet');
-                }
+
+        // Sjekker om publikum er registerer i database
+        if(!(list[i].tilskuere)){
+            forventetPub =  $("<span></span><br>").text('Forventet publikum: Ikke beregnet');
+        }
+
         listPoint.append(concertInfo);
         listPoint.append(sjangerServ);
         listPoint.append(forventetPub);
@@ -94,7 +100,7 @@ function buildListOfConcertsS(list,scene) {
     return listContainer;
 }
 
-
+// Regner ut anbefalt mengde varer for en konsert
 function calculatePurchase(seats) {
     let sodarate = 0.1;
     let beerrate = 0.7;

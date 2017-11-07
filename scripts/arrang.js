@@ -6,6 +6,7 @@ Javascript-funksjonalitet for arrangør-bruker
 
 var current_fid = 1;
 
+// Henter liste over alle scener og sender listen videre til getListOfConcertesByScene
 function getListOfScenes(bruker) {
 
     l = [];

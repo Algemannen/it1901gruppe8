@@ -4,7 +4,7 @@ Javascript-funksjonalitet for tekniker
 
 */
 
-// Lager et html-element med konserter (FOR TEKNIKER)
+// Lager liste over konserter teknikeren skal jobbe med
 function getListOfConcertes(bruker) {
     let l = [];
 

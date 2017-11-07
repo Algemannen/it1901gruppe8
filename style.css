@@ -286,7 +286,7 @@ overflow-y:scroll;
 }
 
 #resultlist, #informationlist {
-  height: calc(100vh - 170px - 235px);
+  height: calc(100vh - 150px - 235px);
 }
 
 #results,#pr_ansvarlig_oversikt {
@@ -557,4 +557,8 @@ margin-left:10px;
 
 .noBottomMargins {
   margin-bottom: 0;
+}
+
+#listofconcerts {
+  padding-left: 0;
 }
