@@ -7,6 +7,8 @@ Javascript-funksjonalitet for manager-bruker
 var manager_kid;
 var manager_uid;
 
+
+// Oppretting av faner for managerbruker og system for visning og fjerning av brukte og ubrukte diver
 function managerfane(index) {
     if (index=="0") {
         $("#booking_behov_fane").show();
@@ -27,6 +29,7 @@ function managerfane(index) {
 
 }
 
+//Funksjon for å lagre nye tekniske behov i databasen.
 function addNeedsForTechs(bruker, concert, title, needs) {
 
     $.ajax({ url: '/database.php?method=addNeedsForTechs',
@@ -46,6 +49,7 @@ function addNeedsForTechs(bruker, concert, title, needs) {
     });
 }
 
+// Setter alle tekniske behov inn på siden
 function injectListOfAllNeeds() {
     $.ajax({ url: '/database.php?method=getListOfConcertesByFestivalAndId',
         data: {fid:1, uid:manager_uid},
@@ -75,13 +79,14 @@ function injectListOfAllNeeds() {
 
 }
 
+// Fjerner tekniske behov fra databasen
 function deleteTechinalNeed(tbid) {
     $.ajax({ url: '/database.php?method=deleteTechnicalNeed',
         data: {tbid:tbid},
         type: 'post',
         success: function(output) {
             $("#komplett_liste_over_tekniske_behov").empty();
-            injectListOfAllNeeds();
+            injectListOfAllNeeds(); // Oppdaterer listen over tekniske behov
 
         },
         error: function(xmlhttprequest, textstatus, message) {
@@ -94,6 +99,8 @@ function deleteTechinalNeed(tbid) {
     });
 }
 
+
+// Registering av nye tekniske behov
 function registerConcertNeed(kid,title,desc) {
     if(title.length == 0 || desc.length ==0 ) {
         alert("Både tittel of beskrivelse må fylles inn");
@@ -105,7 +112,7 @@ function registerConcertNeed(kid,title,desc) {
         type: 'post',
         success: function(output) {
             $("#komplett_liste_over_tekniske_behov").empty();
-            injectListOfAllNeeds();
+            injectListOfAllNeeds(); // Oppdaterer listen over tekniske behov
 
         },
         error: function(xmlhttprequest, textstatus, message) {
