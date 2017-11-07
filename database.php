@@ -167,7 +167,7 @@ case 'getListOfConcertsForTechs':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som et heltall
+        // Binder brukerid og festivalID som et heltall
         $stmt->bind_param('ii', $brukerid, $fid);
 
         // Leser brukerid fra metodekallet
@@ -228,7 +228,7 @@ case 'getListOfConcertsByScene':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder sceneID og festivalID som heltall
         $stmt->bind_param('ii', $sid, $fid);
 
         // Leser inn sceneid
@@ -280,10 +280,10 @@ case 'getListOfConcertesByFestival':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind festivalID som heltall
         $stmt->bind_param('i', $fid);
 
-        // Leser inn konsertid
+        // Leser inn festivalid
         $fid = $_POST['fid'];
 
         // Utfør sql-setning
@@ -328,10 +328,10 @@ case 'getListOfConcertesByFestival':
             header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
         } else {
 
-            // Bind konsertid som heltall
+            // Bind festivalID som heltall
             $stmt1->bind_param('i', $fid);
 
-            // Leser inn konsertid
+            // Leser inn festivalid
             $fid = $_POST['fid'];
 
             // Utfør sql-setning
@@ -361,10 +361,10 @@ case 'getListOfConcertesByFestival':
                 header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
             } else {
 
-                // Bind konsertid som heltall
+                // Bind festivalID som heltall
                 $stmt2->bind_param('i', $fid);
 
-                // Leser inn konsertid
+                // Leser inn festivalid
                 $fid = $_POST['fid'];
 
                 // Utfør sql-setning
@@ -423,10 +423,10 @@ case 'getListOfConcertesByFestival':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind festivalID som heltall
         $stmt->bind_param('i', $fid);
 
-        // Leser inn konsertid
+        // Leser inn festivalID
         $fid = $_POST['fid'];
 
         // Utfør sql-setning
@@ -484,13 +484,13 @@ case 'getListOfConcertesByFestivalAndId':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind brukerid og festivalid som heltall
         $stmt->bind_param('ii', $fid, $uid);
 
-        // Leser inn konsertid
+        // Leser inn festivalid
         $fid = $_POST['fid'];
 
-        // Leser inn konsertid
+        // Leser inn brukerid
         $uid = $_POST['uid'];
 
         // Utfør sql-setning
@@ -667,7 +667,7 @@ case 'insertTechnicalNeeds':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind konsertid som heltal, tittel for behov og behov som string
         $stmt->bind_param('iss', $kid,$tittel,$behov);
 
         // Leser inn konsertid
@@ -737,10 +737,10 @@ case 'deleteTechnicalNeed' :
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind tilbudsid som heltall
         $stmt->bind_param('i', $tbid);
 
-        // Leser inn konsertid
+        // Leser inn tilbudsid
         $tbid = $_POST['tbid'];
 
         // Utfør sql-setning
@@ -782,7 +782,7 @@ case 'search':
             header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
         } else {
 
-
+            //bind søk
             $stmt->bind_param("s", $text);
 
             // Utfør sql-setning
@@ -879,7 +879,7 @@ case 'search':
             header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
         } else {
 
-
+            //bind søketekst som string
             $stmt->bind_param("s", $text);
 
             // Utfør sql-setning
@@ -938,7 +938,7 @@ case 'getBandInfo':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-
+        //henter ut bandid som heltall
         $stmt1->bind_param("i", $bid);
 
         // Leser inn band id
@@ -1019,7 +1019,7 @@ case 'getBandInfo':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind bandid som heltall
         $stmt4->bind_param('i', $bid);
 
         // Leser inn band id
@@ -1059,7 +1059,7 @@ case 'getBandInfo':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Bind konsertid som heltall
+        // Bind bandid som heltall
         $stmt5->bind_param('i', $bid);
 
         // Leser inn band id
@@ -1118,10 +1118,10 @@ case 'getConcertReport':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder sceneid og festivalid som heltall
         $stmt->bind_param('ii', $cid, $fid);
 
-        // Leser inn sceneid
+        // Leser inn sceneid og festivalid
         $cid = $_POST['cid'];
         $fid = $_POST['fid'];
 
@@ -1290,7 +1290,7 @@ case 'getOffers':
             $stmt->bind_param('i', $uid);
         }
 
-        // Leser inn sceneid
+        // Leser inn brukerid
         $uid = $_POST['uid'];
 
         // Utfører spørringen
@@ -1471,13 +1471,13 @@ case 'setOfferStatus':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder status og tilbudsid som heltall
         $stmt->bind_param('ii', $status, $tid);
 
         // Leser inn status
         $status = $_POST['status'];
 
-        // Leser inn sceneid
+        // Leser inn tilbudsid
         $tid = $_POST['tid'];
 
         // Utfører spørringen
@@ -1606,7 +1606,7 @@ case 'insertOffer':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder variabler som heltall og stringer
         $stmt->bind_param('sssiiii', $dato, $start_tid, $slutt_tid, $pris, $bid, $sid, $uid);
 
         // Leser inn variabler
@@ -1645,7 +1645,7 @@ case 'deleteOffer':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder tilbudid som heltall
         $stmt->bind_param('i', $tid);
 
         // Leser inn variabler
@@ -1687,7 +1687,7 @@ case 'serveringInfo':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-        // Binder brukerid som heltall
+        // Binder sceneid og festivalid som heltall
         $stmt->bind_param('ii', $sid, $fid);
 
         // Leser inn sceneid
@@ -1739,10 +1739,10 @@ case 'getListOfConcertDays':
         header("HTTP/1.0 500 Internal Server Error: Failed to prepare statement.");
     } else {
 
-      // Binder brukerid som heltall
+      // Binder festivalid som heltall
       $stmt->bind_param('i', $fid);
 
-      // Leser inn sceneid
+      // Leser inn festivalid
       $fid = $_POST['fid'];
 
       // Utfører spørringen
@@ -1751,7 +1751,6 @@ case 'getListOfConcertDays':
       // Returnerer resultat fra spørringen
       $result = $stmt->get_result();
 
-      // Hent ut alle rader fra en spørring
 
       // Returner json-string med data
       echo json_encode($result->fetch_assoc());
@@ -1781,13 +1780,11 @@ case 'getOffersForCalender':
       $result = $stmt->get_result();
 
       // Hent ut alle rader fra en spørring
-
-      // Returner json-string med data
       $encode = array();
       while ($row = $result->fetch_assoc()) {
           $encode[] = $row;
       }
-
+      // Returner json-string med data
       echo json_encode($encode);
 
       // Avslutt sql-setning
@@ -1817,13 +1814,11 @@ case 'getConcertsForCalender':
       $result = $stmt->get_result();
 
       // Hent ut alle rader fra en spørring
-
-      // Returner json-string med data
       $encode2 = array();
       while ($row = $result->fetch_assoc()) {
           $encode2[] = $row;
       }
-
+      // Returner json-string med data
       echo json_encode($encode2);
 
       // Avslutt sql-setning
