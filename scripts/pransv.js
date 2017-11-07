@@ -1,3 +1,10 @@
+/*
+
+Javascript-funksjonalitet for PR-ansvarlig-bruker
+
+*/
+
+
 // Henter liste over band som er booket til en festival og konserter innad den festivalen
 function pr_bandListe(festivalid){
     $.ajax({ url: '/database.php?method=getListofBandsAndConcertes',
