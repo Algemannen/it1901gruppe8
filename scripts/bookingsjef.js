@@ -1,3 +1,9 @@
+/*
+
+Javascript-funksjonalitet for booking-sjef-bruker
+
+*/
+
 //Visning og skjuling av divs for å vise korrekt info for fanesystemet
 function bookingsjeffane(index) {
     if (index=="0") { //Viser den økonomiske rapporten
