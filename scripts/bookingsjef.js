@@ -172,7 +172,7 @@ function concertPricing(){
   success: function(output) {
     l = safeJsonParse(output);
     let container = $("<div></div>").attr('id', 'prisgenerering');
-    let overskrift = $("<h2></h2>").text("Prisgenerering");
+    let overskrift = $("<h2></h2>").text("Prisgenerering for konserter uten satt pris");
     container.append(overskrift);
 
     // Legger HTML-kode for hver konsert i listen

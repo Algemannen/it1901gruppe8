@@ -90,8 +90,19 @@ function buildListOfConcertsS(list,scene) {
         listPoint.append(concertInfo);
         listPoint.append(sjangerServ);
         listPoint.append(forventetPub);
+        
+        let beregningsTall = 0; 
 
-        let p = calculatePurchase(scene.maks_plasser);
+        if(!(list[i].tilskuere)){
+            beregningsTall = (scene.maks_plasser*2)/3;
+        } else {
+            beregningsTall = parseInt(list[i].tilskuere);
+        }
+
+        let forP = beregningsTall;
+
+        let p = calculatePurchase(forP);
+
         for (let key in p) {
             listPoint.append($("<p></p>").text(key + ": " + p[key]).css("margin", 0));
         }
@@ -106,8 +117,8 @@ function calculatePurchase(seats) {
     let beerrate = 0.7;
 
     let retval = {
-        "Anbefalt antall brus": seats*sodarate,
-        "Anbefalt antall øl": seats*beerrate
+        "Anbefalt antall brus": Math.ceil(seats*sodarate),
+        "Anbefalt antall øl": Math.ceil(seats*beerrate)
     };
     return retval;
 }
