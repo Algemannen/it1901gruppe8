@@ -267,7 +267,7 @@ case 'getListOfConcertesByFestival':
     $query = "SELECT k.kid, b.navn, k.dato, s.navn as snavn
         FROM konsert k
         INNER JOIN konsert_band kb ON kb.kid = k.kid
-        INNER JOIN band b ON b.bid = kb.kid
+        INNER JOIN band b ON b.bid = kb.bid
         INNER JOIN scene s ON k.sid = s.sid
         WHERE fid = ?
         ORDER BY k.kid ASC";

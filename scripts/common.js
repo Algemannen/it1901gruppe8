@@ -152,7 +152,7 @@ function getTechnicalNeedsByKid(bruker_id,kid, kname, dato, container) {
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-
+            console.log(output);
             // Vi bygger et HTML-element
             let kid = $("<h3></h3").text('Konsert : ' + kname + " - " + dato).addClass("tb_overskrift");
             let listContainer = $("<div></div>").addClass("behov");

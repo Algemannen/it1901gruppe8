@@ -50,7 +50,7 @@ function getListOfTechnicalNeeds(bruker) {
         type: 'post',
         success: function(output) {
             l = safeJsonParse(output); //gjør en try-catch sjekk.
-
+            console.log(output);
             // Henter tekniske behov for konserter
             for (i in l) {
                 getTechnicalNeedsByKid(bruker.id,l[i].kid, l[i].navn, l[i].dato, '#tekniskebehov');
@@ -98,7 +98,7 @@ function search() {
                 // Legger inn alle resultater som rader i en tabell
                 for (i in l) {
                     let obj = [searchType, l[i].id];
-                    let tableRow = $("<tr></tr>").addClass("bookingnavnsok").val(obj);  
+                    let tableRow = $("<tr></tr>").addClass("bookingnavnsok").val(obj);
                     let tableElementNavn = $("<td></td>").text(l[i].navn);
 
 
